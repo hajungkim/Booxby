@@ -73,7 +73,6 @@ def main():
     print("[최고 리뷰 유저]")
     print(f"{separater}\n")
     for i, store in stores_most_reviewed_user.iterrows():
-        print(store)
         print(
             "{rank}위: {user} ({review_cnt:.0f}개)".format(
                 rank=i + 1, user=store["index"], review_cnt=store.user
