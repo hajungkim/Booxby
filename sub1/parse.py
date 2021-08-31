@@ -29,18 +29,20 @@ review_columns = (
     "reg_time",  # 리뷰 등록 시간
 )
 
-menu_columns = (
-    # "id",
+menu_columns=(
+    #"id",
     "store",
     "menu_name",
     "price",
 )
 
-user_columns = (
+user_columns=(
     "id",
     "gender",
     "age",
 )
+
+
 
 def import_data(data_path=DATA_FILE):
     """
@@ -56,8 +58,9 @@ def import_data(data_path=DATA_FILE):
 
     stores = []  # 음식점 테이블
     reviews = []  # 리뷰 테이블
-    menus = [] # 메뉴 테이블
-    users = [] # 유저 테이블
+    menus = []
+    users = []
+
     for d in data:
 
         categories = [c["category"] for c in d["category_list"]]
@@ -75,14 +78,6 @@ def import_data(data_path=DATA_FILE):
                 d["review_cnt"],
             ]
         )
-        for m in d["menu_list"]:
-            menus.append(
-                [
-                    d["id"], # 스토어
-                    m["menu"], # 메뉴이름
-                    m["price"], # 가격들
-                ]
-            )
 
         for review in d["review_list"]:
             r = review["review_info"]
@@ -92,15 +87,23 @@ def import_data(data_path=DATA_FILE):
                 [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
             )
             users.append(
-                [u["id"],u["gender"], 2022-int(u["born_year"])]
+                [u["id"], u["gender"], 2022-int(u["born_year"]) ]
             )
+
+        for menu in d["menu_list"]:
+            menus.append(
+                #[ 1  , d["id"], menu["menu"], menu["price"]  ]
+                [d["id"], menu["menu"], menu["price"]]
+            )
+
+
 
     store_frame = pd.DataFrame(data=stores, columns=store_columns)
     review_frame = pd.DataFrame(data=reviews, columns=review_columns)
     menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
-    user_frame = pd.DataFrame(data=users, columns=user_columns)
+    user_frmae = pd.DataFrame(data=users, columns=user_columns)
 
-    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame,}
+    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users":user_frmae}
 
 
 def dump_dataframes(dataframes):
@@ -141,7 +144,7 @@ def main():
     print(data["menus"].head())
     print(f"\n{separater}\n\n")
 
-    print("[유저]")
+    print("[사용자]")
     print(f"{separater}\n")
     print(data["users"].head())
     print(f"\n{separater}\n\n")
