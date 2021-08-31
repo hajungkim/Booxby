@@ -1,10 +1,15 @@
 import itertools
 from collections import Counter
-from parse import load_dataframes
+#from parse import load_dataframes
+import parse
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
+
+from matplotlib import font_manager,rc
+import matplotlib
 
 def set_config():
     # 폰트, 그래프 색상 설정
@@ -62,41 +67,95 @@ def show_store_categories_graph(dataframes, n=100):
 
 def show_store_review_distribution_graph(dataframes):
     """
-    Req. 1-3-1 전체 음식점의 리뷰 개수 분포를 그래프로 나타냅니다. 
+    Req. 1-3-1 전체 음식점의 리뷰 개수 분포를 그래프로 나타냅니다.
     리뷰가 0 개인게 몇개
     1개인게 몇개
     2개인게 몇개 이거인듯?
+
+    x축이 리뷰의 개수
+    y축이 리뷰수인 가게 수
     """
+
     data = dataframes["stores"]
     df = data["review_cnt"].value_counts().reset_index()
+
     # 그래프 그리기
     chart = sns.barplot(x="index", y="review_cnt", data=df)
     chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
-    plt.title("음식점 리뷰 개수 분포")
+    plt.title("Req 3-1. 음식점 리뷰 개수 분포")
     plt.show()
 
-    raise NotImplementedError
+    #raise NotImplementedError
 
 
-def show_store_average_ratings_graph():
+def show_store_average_ratings_graph(dataframes):
     """
-    Req. 1-3-2 각 음식점의 평균 평점을 그래프로 나타냅니다.
+    Req. 1-3-2 각 음식점의 평균 평점 분포를 그래프로 나타냅니다.
+
+    x축은 음식점 이름
+    y축은 평점
     """
-    raise NotImplementedError
+
+    stores_reviews = pd.merge(
+        dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+
+    scores_group = stores_reviews.groupby(["store", "store_name"])
+
+    scores = scores_group.mean()
+
+    scores = scores["score"].value_counts().reset_index().round(1)
+
+    # 그래프 그리기
+    chart = sns.barplot(x="index", y="score", data=scores)
+    chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
+    plt.title("Req 3-2. 음식점 평점 분포")
+    plt.show()
+
+    #raise NotImplementedError
 
 
 def show_user_review_distribution_graph(dataframes):
     """
     Req. 1-3-3 전체 유저의 리뷰 개수 분포를 그래프로 나타냅니다.
     """
-    raise NotImplementedError
+    review = dataframes["reviews"]["user"].value_counts().reset_index()
+    review = review["user"].value_counts().reset_index()
+
+    #print(review)
+
+    # 그래프 그리기
+    chart = sns.barplot(x="index", y="user", data=review)
+    chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
+    plt.title("Req 3-3. 유저의 리뷰 개수 분포")
+    plt.show()
+
+
+    #raise NotImplementedError
 
 
 def show_user_age_gender_distribution_graph(dataframes):
     """
     Req. 1-3-4 전체 유저의 성별/나이대 분포를 그래프로 나타냅니다.
     """
-    raise NotImplementedError
+    users = dataframes["users"]
+
+    male = users[users["gender"]=="남"].value_counts().reset_index()
+    female = users[users["gender"]=="여"].value_counts().reset_index()
+
+    # 그래프 그리기
+    chart = sns.barplot(x="index", y="age", data=male)
+    chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
+    plt.title("Req 3-4. 남자 유저 나이대별 분포")
+    plt.show()
+
+    # 그래프 그리기
+    chart = sns.barplot(x="index", y="age", data=female)
+    chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
+    plt.title("Req 3-4. 여자 유저 나이대별 분포")
+    plt.show()
+
+    #raise NotImplementedError
 
 
 def show_stores_distribution_graph(dataframes):
@@ -107,10 +166,19 @@ def show_stores_distribution_graph(dataframes):
 
 
 def main():
-    set_config()
-    data = load_dataframes()
+
+    #set_config()
+    font_path = "C:/Windows/Fonts/SeoulNamsanB.TTF"
+    font_name = font_manager.FontProperties(fname=font_path).get_name()
+    matplotlib.rc('font', family=font_name)
+
+    data = parse.load_dataframes()
+
     # show_store_categories_graph(data)
-    show_store_review_distribution_graph(data)
+    #show_store_review_distribution_graph(data)
+    #show_store_average_ratings_graph(data)
+    show_user_review_distribution_graph(data)
+    show_user_age_gender_distribution_graph(data)
 
 if __name__ == "__main__":
     main()
