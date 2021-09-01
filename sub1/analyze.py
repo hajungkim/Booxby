@@ -11,10 +11,10 @@ def sort_stores_by_score(dataframes, n=20, min_reviews=30):
     stores_reviews = pd.merge(
         dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
     )
-    stores_reviews = stores_reviews[stores_reviews["review_cnt"] > min_reviews]
+    stores_reviews = stores_reviews[stores_reviews["review_cnt"] >= min_reviews]
     scores_group = stores_reviews.groupby(["store", "store_name"])
     scores = scores_group.mean()
-    scores = scores.sort_values(by=["score"], axis=0, ascending=False)
+    scores = scores.sort_values(by=["score"], ascending=False)
     return scores.head(n=n).reset_index()
 
 
@@ -25,20 +25,21 @@ def get_most_reviewed_stores(dataframes, n=20):
     stores_reviews = pd.merge(
         dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
     )
-    scores_group = stores_reviews.groupby(["store", "store_name"])
-    scores = scores_group.mean()
-    reviews = scores.sort_values(by=["review_cnt"], axis=0, ascending=False)
-    get_most_active_users(dataframes)
-    return reviews.head(n=n).reset_index()
-    raise NotImplementedError
+    stores_group = stores_reviews.groupby(["store", "store_name"])
+    stores = stores_group.mean()
+    stores = stores.sort_values(by=["review_cnt"], ascending=False)
+    return stores.head(n=n).reset_index()
+
+    # raise NotImplementedError
+
 
 def get_most_active_users(dataframes, n=20):
     """
     Req. 1-2-4 가장 많은 리뷰를 작성한 `n`명의 유저를 정렬하여 리턴합니다.
     """
-    newdata = dataframes["reviews"]["user"].value_counts()
-    return newdata.head(n=n).reset_index()
-    raise NotImplementedError
+    users_reviews = dataframes["reviews"]["user"].value_counts();
+    return users_reviews.head(n=n).reset_index()
+    # raise NotImplementedError
 
 
 def main():
@@ -48,38 +49,39 @@ def main():
     separater = "-" * term_w
 
     stores_most_scored = sort_stores_by_score(data)
-    stores_most_reviewed = get_most_reviewed_stores(data)
-    stores_most_reviewed_user = get_most_active_users(data)
+    get_most_reviewed = get_most_reviewed_stores(data)
+    get_most_users = get_most_active_users(data)
+
     print("[최고 평점 음식점]")
     print(f"{separater}\n")
     for i, store in stores_most_scored.iterrows():
         print(
-            "{rank}위: {store}({score:.3f}점)".format(
+            "{rank}위: {store}({score}점)".format(
                 rank=i + 1, store=store.store_name, score=store.score
             )
         )
     print(f"\n{separater}\n\n")
 
-    print("[최고 리뷰 음식점]")
+    print("[최고 리뷰개수 음식점]")
     print(f"{separater}\n")
-    for i, store in stores_most_reviewed.iterrows():
+    for i, store in get_most_reviewed.iterrows():
         print(
-            "{rank}위: {store}({review_cnt:.0f}개)".format(
+            "{rank}위: {store}({review_cnt}개)".format(
                 rank=i + 1, store=store.store_name, review_cnt=store.review_cnt
             )
         )
     print(f"\n{separater}\n\n")
 
-    print("[최고 리뷰 유저]")
+    print("[최고 리뷰개수 유저]")
     print(f"{separater}\n")
-    for i, store in stores_most_reviewed_user.iterrows():
-        print(store)
+    for i, store in get_most_users.iterrows():
         print(
-            "{rank}위: {user} ({review_cnt:.0f}개)".format(
+            "{rank}위: {user}({review_cnt}개)".format(
                 rank=i + 1, user=store["index"], review_cnt=store.user
             )
         )
     print(f"\n{separater}\n\n")
+
 
 if __name__ == "__main__":
     main()

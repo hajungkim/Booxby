@@ -42,6 +42,7 @@ user_columns = (
     "age",
 )
 
+
 def import_data(data_path=DATA_FILE):
     """
     Req. 1-1-1 음식점 데이터 파일을 읽어서 Pandas DataFrame 형태로 저장합니다
@@ -56,11 +57,13 @@ def import_data(data_path=DATA_FILE):
 
     stores = []  # 음식점 테이블
     reviews = []  # 리뷰 테이블
-    menus = [] # 메뉴 테이블
-    users = [] # 유저 테이블
+    menus = []
+    users = []
+
     for d in data:
 
         categories = [c["category"] for c in d["category_list"]]
+        
         stores.append(
             [
                 d["id"],
@@ -75,14 +78,6 @@ def import_data(data_path=DATA_FILE):
                 d["review_cnt"],
             ]
         )
-        for m in d["menu_list"]:
-            menus.append(
-                [
-                    d["id"], # 스토어
-                    m["menu"], # 메뉴이름
-                    m["price"], # 가격들
-                ]
-            )
 
         for review in d["review_list"]:
             r = review["review_info"]
@@ -91,8 +86,16 @@ def import_data(data_path=DATA_FILE):
             reviews.append(
                 [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
             )
+
+            age = 2022 - int(u["born_year"])
+
             users.append(
-                [u["id"],u["gender"], 2022-int(u["born_year"])]
+                [u["id"], u["gender"], age]
+            )
+
+        for m in d["menu_list"]:
+            menus.append(
+                [d["id"], m["menu"], m["price"]]
             )
 
     store_frame = pd.DataFrame(data=stores, columns=store_columns)
@@ -100,7 +103,7 @@ def import_data(data_path=DATA_FILE):
     menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
     user_frame = pd.DataFrame(data=users, columns=user_columns)
 
-    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame,}
+    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame}
 
 
 def dump_dataframes(dataframes):
@@ -145,6 +148,7 @@ def main():
     print(f"{separater}\n")
     print(data["users"].head())
     print(f"\n{separater}\n\n")
+
 
 if __name__ == "__main__":
     main()
