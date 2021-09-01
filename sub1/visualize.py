@@ -6,7 +6,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import folium as folium
-
+from folium.plugins import MarkerCluster
 
 def set_config():
     # 폰트, 그래프 색상 설정
@@ -125,17 +125,17 @@ def show_stores_distribution_graph(dataframes):
     """
     Req. 1-3-5 각 음식점의 위치 분포를 지도에 나타냅니다.
     """
-    # stores = dataframes["stores"].head(n=100).reset_index()
-    # map = folium.Map(location=[37.541, 126.986], zoom_start=10)
-    # marker_cluster = MarkerCluster().add_to(map)
+    store = dataframes["stores"].head(1000).reset_index()
 
-    # for i in range(len(stores)):
-    #     folium.Marker([stores["latitude"][i], stores["longitude"][i]]).add_to(marker_cluster)
-   
-    # marker = folium.Marker([37.541, 126.986])
-    # marker.add_to(m)
+    center = [37.541, 126.986]
+    m = folium.Map( center, zoom_start=10)
+    marker_cluster = MarkerCluster().add_to(m)
 
-    m.save('result.html')
+    for i in range(len(store)):
+        folium.Marker([store["latitude"][i], store["longitude"][i]], 
+        tooltip=store["store_name"][i]).add_to(marker_cluster)
+    
+    m.save("result.html")
     
     # raise NotImplementedError
 
