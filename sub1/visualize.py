@@ -11,6 +11,10 @@ import matplotlib.font_manager as fm
 from matplotlib import font_manager,rc
 import matplotlib
 
+import folium
+import googlemaps
+from datetime import datetime
+
 def set_config():
     # 폰트, 그래프 색상 설정
     font_list = fm.findSystemFonts(fontpaths=None, fontext="ttf")
@@ -134,23 +138,32 @@ def show_user_review_distribution_graph(dataframes):
     #raise NotImplementedError
 
 
+def make_age(x):
+    return int(x/10) * 10
+
 def show_user_age_gender_distribution_graph(dataframes):
     """
     Req. 1-3-4 전체 유저의 성별/나이대 분포를 그래프로 나타냅니다.
     """
     users = dataframes["users"]
 
-    male = users[users["gender"]=="남"].value_counts().reset_index()
-    female = users[users["gender"]=="여"].value_counts().reset_index()
+    male = users[users["gender"]=="남"]
+    male = male["age"].apply(make_age).value_counts().reset_index()
+
+    female = users[users["gender"]=="여"]
+    female = female["age"].apply(make_age).value_counts().reset_index()
+
+    male.columns=["age","usercount"]
+    female.columns = ["age", "usercount"]
 
     # 그래프 그리기
-    chart = sns.barplot(x="index", y="age", data=male)
+    chart = sns.barplot(x="age", y="usercount", data=male)
     chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
     plt.title("Req 3-4. 남자 유저 나이대별 분포")
     plt.show()
 
     # 그래프 그리기
-    chart = sns.barplot(x="index", y="age", data=female)
+    chart = sns.barplot(x="age", y="usercount", data=female)
     chart.set_xticklabels(chart.get_xticklabels(), rotation=45)
     plt.title("Req 3-4. 여자 유저 나이대별 분포")
     plt.show()
@@ -158,11 +171,39 @@ def show_user_age_gender_distribution_graph(dataframes):
     #raise NotImplementedError
 
 
+location=[[37.31355679999999, 127.08034150000003],
+ [37.35959300000016, 127.105316],
+ [37.388204699999996, 126.66208460000007],
+ [37.19821445962207, 127.07333060688757],
+ [37.3862876275833, 126.96253325015414],
+ [37.31864776315991, 127.08885641049494],
+ [37.56661020000001, 126.97838810000007],
+]
+
 def show_stores_distribution_graph(dataframes):
     """
     Req. 1-3-5 각 음식점의 위치 분포를 지도에 나타냅니다.
     """
-    raise NotImplementedError
+    stores = dataframes["stores"].head(n=500).reset_index()
+    print(stores)
+
+    m = folium.Map(
+        location=[36.5053542, 127.7043419],
+        zoom_start=8,
+        tiles='Cartodb Positron'
+    )
+
+    for i in range(len(stores)):
+        folium.Circle(
+            [stores["latitude"][i],
+            stores["longitude"][i]] ,
+           tooltip=stores["store_name"][i],
+        ).add_to(m)
+
+    m.save('result.html')
+
+
+    #raise NotImplementedError
 
 
 def main():
@@ -174,11 +215,12 @@ def main():
 
     data = parse.load_dataframes()
 
-    # show_store_categories_graph(data)
-    #show_store_review_distribution_graph(data)
-    #show_store_average_ratings_graph(data)
-    show_user_review_distribution_graph(data)
-    show_user_age_gender_distribution_graph(data)
+    #show_store_categories_graph(data)
+    # show_store_review_distribution_graph(data)
+    # show_store_average_ratings_graph(data)
+    # show_user_review_distribution_graph(data)
+    # show_user_age_gender_distribution_graph(data)
+    show_stores_distribution_graph(data)
 
 if __name__ == "__main__":
     main()
