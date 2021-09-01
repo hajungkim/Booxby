@@ -17,7 +17,7 @@ store_columns = (
     "latitude",  # 음식점 위도
     "longitude",  # 음식점 경도
     "category",  # 음식점 카테고리
-    "review_cnt",
+    "review_cnt"
 )
 
 review_columns = (
@@ -30,17 +30,18 @@ review_columns = (
 )
 
 menu_columns = (
-    # "id",
+    "id",
     "store",
-    "menu_name",
+    "menu",
     "price",
 )
 
 user_columns = (
     "id",
     "gender",
-    "age",
+    "age"
 )
+
 
 def import_data(data_path=DATA_FILE):
     """
@@ -56,8 +57,9 @@ def import_data(data_path=DATA_FILE):
 
     stores = []  # 음식점 테이블
     reviews = []  # 리뷰 테이블
-    menus = [] # 메뉴 테이블
-    users = [] # 유저 테이블
+    menus = []
+    users = []
+
     for d in data:
 
         categories = [c["category"] for c in d["category_list"]]
@@ -76,23 +78,26 @@ def import_data(data_path=DATA_FILE):
             ]
         )
         for m in d["menu_list"]:
+            id = d["id"]
+            name = d["name"]
+            menu = m["menu"]
+            price = m["price"]
+
             menus.append(
-                [
-                    d["id"], # 스토어
-                    m["menu"], # 메뉴이름
-                    m["price"], # 가격들
-                ]
+                [id, name, menu, price]
             )
 
         for review in d["review_list"]:
             r = review["review_info"]
             u = review["writer_info"]
 
+            age = 2021 - int(u["born_year"]) + 1
+
             reviews.append(
                 [r["id"], d["id"], u["id"], r["score"], r["content"], r["reg_time"]]
             )
             users.append(
-                [u["id"],u["gender"], 2022-int(u["born_year"])]
+                [u["id"], u["gender"], age]
             )
 
     store_frame = pd.DataFrame(data=stores, columns=store_columns)
@@ -100,7 +105,7 @@ def import_data(data_path=DATA_FILE):
     menu_frame = pd.DataFrame(data=menus, columns=menu_columns)
     user_frame = pd.DataFrame(data=users, columns=user_columns)
 
-    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame,}
+    return {"stores": store_frame, "reviews": review_frame, "menus": menu_frame, "users": user_frame}
 
 
 def dump_dataframes(dataframes):
