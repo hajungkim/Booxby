@@ -174,6 +174,15 @@ def show_stores_distribution_graph(dataframes):
 
     raise NotImplementedError
 
+def show_user_store_matrix(dataframes):
+    stores_reviews = pd.merge(
+    dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+    df = stores_reviews[stores_reviews["user"] == 68632]
+    print(df,'@@')
+    df = stores_reviews[["user","store_name","score"]]
+    df = df.groupby(df["user"])
+    print(df.head(100),'!!')
 
 def main():
     set_config()
@@ -183,6 +192,7 @@ def main():
     # show_store_average_ratings_graph(data)
     # show_user_review_distribution_graph(data)
     # show_user_age_gender_distribution_graph(data)
-    show_stores_distribution_graph(data)
+    # show_stores_distribution_graph(data)
+    show_user_store_matrix(data)
 if __name__ == "__main__":
     main()
