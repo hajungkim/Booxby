@@ -12,8 +12,8 @@ from matplotlib import font_manager,rc
 import matplotlib
 
 import folium
-import googlemaps
-from datetime import datetime
+
+import numpy
 
 def set_config():
     # 폰트, 그래프 색상 설정
@@ -170,16 +170,6 @@ def show_user_age_gender_distribution_graph(dataframes):
 
     #raise NotImplementedError
 
-
-location=[[37.31355679999999, 127.08034150000003],
- [37.35959300000016, 127.105316],
- [37.388204699999996, 126.66208460000007],
- [37.19821445962207, 127.07333060688757],
- [37.3862876275833, 126.96253325015414],
- [37.31864776315991, 127.08885641049494],
- [37.56661020000001, 126.97838810000007],
-]
-
 def show_stores_distribution_graph(dataframes):
     """
     Req. 1-3-5 각 음식점의 위치 분포를 지도에 나타냅니다.
@@ -205,6 +195,51 @@ def show_stores_distribution_graph(dataframes):
 
     #raise NotImplementedError
 
+def user_store_matrix(dataframes):
+    """
+        Req. 1-4-1 유저-음식점 sparse 행렬 만들기
+    """
+    stores_reviews = pd.merge(
+        dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+
+    user_list = list(set(stores_reviews['user'].values.tolist()))
+    user_list.sort()
+
+    store_list = list(set(stores_reviews["store_name"].values.tolist()))
+
+    df = pd.DataFrame(data=numpy.nan, index=user_list, columns=store_list)
+
+    user_group = stores_reviews.sort_values(by='user').groupby(['user','store_name']).mean().loc[:,'score']
+
+    for index, score in user_group.items():
+        user, store_name = index
+        df.loc[user,store_name]=score
+
+    print(df)
+
+def user_category_matrix(dataframes):
+    """
+        Req. 1-4-2 유저-카테고리 sparse 행렬 만들기
+    """
+    stores_reviews = pd.merge(
+        dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+
+    user_list = list(set(stores_reviews['user'].values.tolist()))
+    user_list.sort()
+
+    store_list = list(set(stores_reviews["category"].values.tolist()))
+
+    df = pd.DataFrame(data=numpy.nan, index=user_list, columns=store_list)
+
+    user_group = stores_reviews.sort_values(by='user').groupby(['user','category']).mean().loc[:,'score']
+
+    for index, score in user_group.items():
+        user, category = index
+        df.loc[user,category]=score
+
+    print(df)
 
 def main():
 
@@ -215,12 +250,18 @@ def main():
 
     data = parse.load_dataframes()
 
-    #show_store_categories_graph(data)
-    # show_store_review_distribution_graph(data)
-    # show_store_average_ratings_graph(data)
-    # show_user_review_distribution_graph(data)
-    # show_user_age_gender_distribution_graph(data)
+    # show_store_categories_graph(data)
+    show_store_review_distribution_graph(data)
+    show_store_average_ratings_graph(data)
+    show_user_review_distribution_graph(data)
+    show_user_age_gender_distribution_graph(data)
     show_stores_distribution_graph(data)
+
+    """
+    Req 4번
+    """
+    user_store_matrix(data)
+    user_category_matrix(data)
 
 if __name__ == "__main__":
     main()
