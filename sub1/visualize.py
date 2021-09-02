@@ -178,11 +178,54 @@ def show_user_store_matrix(dataframes):
     stores_reviews = pd.merge(
     dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
     )
-    df = stores_reviews[stores_reviews["user"] == 68632]
-    print(df,'@@')
-    df = stores_reviews[["user","store_name","score"]]
-    df = df.groupby(df["user"])
-    print(df.head(100),'!!')
+    # df = stores_reviews[["user","store_name","score"]]
+    # print('그냥',df.dtypes)
+    # print('유저,가게,평점')
+    # print(df)
+    # sdf = df.astype(pd.SparseDtype("object"))
+    # print(sdf,'sparse')
+    # print('sparseDtype',sdf.dtypes)
+    user_list = list(set(stores_reviews['user'].values.tolist()))
+    user_list.sort()
+    store_list = list(set(stores_reviews['store_name'].values.tolist()))
+
+    df = pd.DataFrame(data=np.nan, index=user_list, columns=store_list)
+
+    user_group = stores_reviews.sort_values(by='user').groupby(['user','store_name']).mean().loc[:,'score']
+
+    
+    
+    for index,score in user_group.items():
+        user,store_name = index
+        df.loc[user,store_name] = score
+
+    sdf = df.astype(pd.SparseDtype("float"))
+
+    print(sdf)
+
+def show_user_category_matrix(dataframes):
+    stores_reviews = pd.merge(
+    dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+
+    user_list = list(set(stores_reviews['user'].values.tolist()))
+    user_list.sort()
+
+    category_list = list(set(stores_reviews['category'].values.tolist()))
+
+    df = pd.DataFrame(data=np.nan, index=user_list, columns=category_list)
+    
+
+    user_group = stores_reviews.sort_values(by='user').groupby(['user','category']).mean().loc[:,'score']
+    
+    for index,score in user_group.items():
+        user,category_name = index
+        df.loc[user,category_name] = score
+
+    sdf = df.astype(pd.SparseDtype("float"))
+
+    print(sdf)
+
 
 def main():
     set_config()
@@ -193,6 +236,7 @@ def main():
     # show_user_review_distribution_graph(data)
     # show_user_age_gender_distribution_graph(data)
     # show_stores_distribution_graph(data)
-    show_user_store_matrix(data)
+    # show_user_store_matrix(data)
+    show_user_category_matrix(data)
 if __name__ == "__main__":
     main()
