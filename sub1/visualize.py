@@ -1,5 +1,7 @@
 import itertools
 from collections import Counter
+
+import numpy
 from parse import load_dataframes
 import pandas as pd
 import seaborn as sns
@@ -142,6 +144,48 @@ def show_stores_distribution_graph(dataframes):
 
     raise NotImplementedError
 
+def users_stores_matrix(dataframes) :
+    df_stores = dataframes["stores"].head(n=100).reset_index()
+    df_reviews = dataframes["reviews"].head(n=100).reset_index()
+
+    data = pd.merge(
+        df_stores, df_reviews, left_on="id", right_on="store"
+    )
+    user = list(set(data["user"].values.tolist()))
+    user.sort()
+    store = list(set(data["store_name"].values.tolist()))
+
+    df = pd.DataFrame(data=numpy.nan, index=user, columns=store)
+
+    user_group = data.sort_values(by="user").groupby(["user", "store_name"]).mean().loc[:, "score"]
+
+    for index, score in user_group.items():
+        user, store_name = index
+        df.loc[user, store_name] = score
+
+    print(df)
+
+def users_caregory_matrix(dataframes) :
+    df_stores = dataframes["stores"].head(n=100).reset_index()
+    df_reviews = dataframes["reviews"].head(n=100).reset_index()
+
+    data = pd.merge(
+        df_stores, df_reviews, left_on="id", right_on="store"
+    )
+    user = list(set(data["user"].values.tolist()))
+    user.sort()
+    store = list(set(data["category"].values.tolist()))
+
+    df = pd.DataFrame(data=numpy.nan, index=user, columns=store)
+
+    user_group = data.sort_values(by="user").groupby(["user", "category"]).mean().loc[:, "score"]
+
+    for index, score in user_group.items():
+        user, category = index
+        df.loc[user, category] = score
+
+    print(df)
+
 
 def main():
     set_config()
@@ -151,7 +195,9 @@ def main():
     # show_store_average_ratings_graph(data)
     # show_user_review_distribution_graph(data)
     # show_user_age_gender_distribution_graph(data)
-    show_stores_distribution_graph(data)
+    # show_stores_distribution_graph(data)
+    # users_stores_matrix(data)
+    users_caregory_matrix(data)
 
 if __name__ == "__main__":
     main()
