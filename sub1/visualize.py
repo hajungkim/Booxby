@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 import matplotlib.font_manager as fm
 import folium as folium
 from folium.plugins import MarkerCluster
+import scipy.sparse as sps
+import numpy as np
 
 def set_config():
     # 폰트, 그래프 색상 설정
@@ -139,6 +141,43 @@ def show_stores_distribution_graph(dataframes):
     
     # raise NotImplementedError
 
+def show_matrix(dataframes):
+    stores_reviews = pd.merge(
+        dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+
+    user_list = list(set(stores_reviews['user'].values.tolist()))
+    user_list.sort()
+    store_list = list(set(stores_reviews['store_name'].values.tolist()))
+
+    df = pd.DataFrame(data=np.nan, index=user_list, columns=store_list)
+    user_group = stores_reviews.sort_values(by='user').groupby(['user','store_name']).mean().loc[:, 'score']
+
+    for index, score in user_group.items():
+        user, store_name = index
+        df.loc[user, store_name] = score
+
+    print(df)
+
+def show_matrix2(dataframes):
+    stores_reviews = pd.merge(
+        dataframes["stores"], dataframes["reviews"], left_on="id", right_on="store"
+    )
+
+    user_list = list(set(stores_reviews['user'].values.tolist()))
+    user_list.sort()
+    store_list = list(set(stores_reviews['category'].values.tolist()))
+
+    df = pd.DataFrame(data=np.nan, index=user_list, columns=store_list)
+    user_group = stores_reviews.sort_values(by='user').groupby(['user','category']).mean().loc[:, 'score']
+
+    for index, score in user_group.items():
+        user, store_name = index
+        df.loc[user, store_name] = score
+
+    print(df)
+  
+
 def main():
     set_config()
     data = load_dataframes()
@@ -146,8 +185,10 @@ def main():
     # show_store_review_distribution_graph(data)
     # show_store_average_ratings_graph(data)
     # show_user_review_distribution_graph(data)
-    show_user_age_gender_distribution_graph(data)
-    show_stores_distribution_graph(data)
+    # show_user_age_gender_distribution_graph(data)
+    # show_stores_distribution_graph(data)
+    # show_matrix(data)
+    show_matrix2(data)
 
 if __name__ == "__main__":
     main()
