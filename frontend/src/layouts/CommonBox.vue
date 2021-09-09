@@ -1,6 +1,8 @@
 <template>
-  <div class="mainBox">
-    <router-view />
+  <div class="container">
+    <div class="mainBox">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -12,10 +14,15 @@ export default {
 
 <style>
 .mainBox{
-  margin:100px auto;
-  width:2000px;
-  height:1000px;
+  width:1600px;
+  height:800px;
   border: 1px solid black;
   border-radius: 38px;
+}
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 </style>
