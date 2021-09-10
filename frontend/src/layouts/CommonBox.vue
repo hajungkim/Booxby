@@ -14,8 +14,8 @@ export default {
 
 <style>
 .mainBox{
-  width:1600px;
-  height:800px;
+  width:1300px;
+  height:650px;
   border: 1px solid black;
   border-radius: 38px;
 }
