@@ -2,7 +2,7 @@
   <div class="signup_container">
     <div class="signup_wrap">
       <div class="text-group">
-        <h3 class="m-0">회원가입</h3>
+        <h4 class="m-0">회원가입</h4>
       </div>
       <div class="form-group">
         <div class="form-input-email">
@@ -17,17 +17,18 @@
               checkEmail
               ]"
             />
-          <div class="mail_button">
-            <button><span>인증 메일 발송</span></button>
+          <div>
+            <q-btn rounded size="xs" class="mail_button" color="primary" label="인증 보내기" />
           </div>
         </div>
 
         <div class="form-mb">
-          <q-input class="p-0" label="인증 번호" />
-          <div>
-            <!-- 아이콘 -->
-            <span>인증 완료 or 인증번호 틀림</span>
-          </div>
+          <q-input style="width:400px;" label="인증 번호"
+            lazy-rules
+              :rules="[
+              val => !!val || '필수입력항목 입니다.',
+            ]"
+          />
         </div>
 
         <div class="form-mb">
@@ -40,7 +41,7 @@
         </div>
 
         <div class="form-mb">
-          <q-input label="비밀번호 재입력" type="password" v-model="form.passwordconfirmation"
+          <q-input label="Confirm Password" type="password" v-model="form.passwordconfirmation"
             lazy-rules
               :rules="[
                 val => val && val.length > 0 || '필수입력항목 입니다.',
@@ -58,12 +59,12 @@
               ]"/>
         </div>
         <!-- 성별 -->
-        <div style="margin-top:10px;">
+        <div>
           <q-radio style="margin-right:10px; margin-left:-10px;" keep-color v-model="color" val="cyan" label="남자" color="cyan" />
           <q-radio keep-color v-model="color" val="red" label="여자" color="red" />
         </div>
         <!-- 나이 -->
-        <div>
+        <div style="margin-top:-5px;">
            <q-select v-model="model" :options="options" label="연령대" />
         </div>
         <!-- 버튼 -->
@@ -75,7 +76,6 @@
     </div>
     <div class="signupImg">
       <!-- <img src="" alt=""> -->
-      Booxby
     </div>
   </div>
 </template>
@@ -86,15 +86,16 @@ import { ref } from 'vue'
 // import axios from 'axios'
 export default {
   setup(){
+    // const state = reactive({
+    //   isSend: false,
+    // })
     const form = reactive({
       email: '',
       password: '',
       passwordconfirmation: '',
       nickname: '',
     })
-    // const options = [
-    //     '유아', '초등학생', '청소년', '10대', '20대', '30대', '40대' ,'50대', '60대 이상'
-    //   ]
+
     function checkName (val) {
       const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
       return (reg.test(val)||'한글만 입력가능합니다.')
@@ -114,17 +115,18 @@ export default {
       const reg = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
       return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
     }
-
-    // function sendEmail() {
-		// 	const data = {
-		// 			'email': this.credentials.email
-		// 		}
-    //   HTTP.post('/email/auth/', data)
-    //   .then(() => {
-    //     this.certification.isSend = true
+    // function checkCertification (val) {
+    //   store.dispatch('module/authcheck', {
+    //     inputNum: val,
+    //   }).then(function (){
+    //     // 제대로된경우
     //   })
-    //   .catch(err => {
-    //     console.error(err)
+    // }
+    // function sendEmail() {
+    //   store.dispatch('module/sendEmail', {
+    //     id: form.email,
+    //   }).then(function (){
+    //     state.isSend = true
     //   })
     // }
 
@@ -134,6 +136,7 @@ export default {
         '유아', '초등학생', '청소년', '10대', '20대', '30대', '40대' ,'50대', '60대 이상'
       ],
       color: ref('cyan'),
+      // state,
       form,
       checkName,
       checkPassWord,
@@ -152,33 +155,34 @@ export default {
 .signup_wrap{
   display:flex;
   flex-direction: column;
-  width:800px;
-  height:798px;
+  width:650px;
+  height:648px;
   justify-content: center;
   align-items: center;
-  margin-top:40px;
+  margin-top:25px;
 }
 .text-group{
   display: flex;
   justify-content: center;
 }
 .form-group{
-  width:500px;
-  height:700px;
-  margin-top:20px;
+  width:400px;
+  height:600px;
 }
 .form-mb{
-  margin-top:8px;
-  margin-bottom:8px;
+   margin-top:-5px;
+}
+.form-input-email{
+  width:400px;
 }
 .mail_button{
   float:right;
-  margin: -15px 0px;
+  margin: -19px 0px 0px;
 }
 .signupImg{
   float:right;
-  width:800px;
-  height:798px;
+  width:650px;
+  height:648px;
   background-color : lightblue;
   border-top-right-radius: 38px;
   border-bottom-right-radius: 38px;
@@ -186,11 +190,11 @@ export default {
 .submit_bt{
   display: flex;
   justify-content: center;
-  margin-top:40px;
+  margin-top:20px;
 }
 .submit{
-  width:300px;
-  height:60px;
+  width:250px;
+  height:50px;
   border-radius: 15px;
 }
 </style>
