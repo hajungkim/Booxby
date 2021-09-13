@@ -38,3 +38,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+bootJar{
+    archiveBaseName="booxby"
+    archiveVersion = "0.0.1-SNAPSHOT"
+}
