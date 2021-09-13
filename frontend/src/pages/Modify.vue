@@ -1,10 +1,14 @@
 <template>
-  <div class="signup_container">
-    <div class="signup_wrap">
+  <div class="modify_container">
+    <div class="modify_wrap">
+    <q-icon class="back_btn" size="md" name="arrow_back" @click="moveMy"></q-icon>
       <div class="text-group">
-        <h4 class="m-0">회원가입</h4>
+        <h4 class="m-0">개인 정보 수정</h4>
       </div>
       <div class="form-group">
+        
+        <img class="change_img" src="../assets/user_default.png" alt="">
+
         <div class="form-input-email">
           <q-input
               class="input"
@@ -17,18 +21,6 @@
               checkEmail
               ]"
             />
-          <div>
-            <q-btn rounded size="xs" class="mail_button" color="primary" label="인증 보내기" />
-          </div>
-        </div>
-
-        <div class="form-mb">
-          <q-input style="width:400px;" label="인증 번호"
-            lazy-rules
-              :rules="[
-              val => !!val || '필수입력항목 입니다.',
-            ]"
-          />
         </div>
 
         <div class="form-mb">
@@ -58,18 +50,9 @@
                 checkName
               ]"/>
         </div>
-        <!-- 성별 -->
-        <div>
-          <q-radio style="margin-right:10px; margin-left:-10px;" keep-color v-model="color" val="cyan" label="남자" color="cyan" />
-          <q-radio keep-color v-model="color" val="red" label="여자" color="red" />
-        </div>
-        <!-- 나이 -->
-        <div style="margin-top:-5px;">
-           <q-select v-model="model" :options="options" label="연령대" />
-        </div>
         <!-- 버튼 -->
         <div class="submit_bt">
-          <q-btn class="submit" color="primary" label="회원가입하기" />
+          <q-btn class="submit" color="primary" label="정보수정하기" />
         </div>
 
       </div>
@@ -83,12 +66,14 @@
 <script>
 import { reactive } from 'vue'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router' 
 // import axios from 'axios'
 export default {
   setup(){
-    // const state = reactive({
-    //   isSend: false,
-    // })
+    const router = useRouter()
+    const moveMy = function(){
+      router.push('/my')
+    }
     const form = reactive({
       email: '',
       password: '',
@@ -132,16 +117,13 @@ export default {
 
     return {
       model: ref(null),
-      options: [
-        '유아', '초등학생', '청소년', '10대', '20대', '30대', '40대' ,'50대', '60대 이상'
-      ],
       color: ref('cyan'),
-      // state,
       form,
       checkName,
       checkPassWord,
       checkEmail,
-      checkPassWordConfirmation
+      checkPassWordConfirmation,
+      moveMy
     }
   }
 }
@@ -149,17 +131,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "../css/app.scss";
-.signup_container{
+.back_btn{
+  margin-right:550px;
+}
+.modify_container{
   display:flex;
 }
-.signup_wrap{
+.modify_wrap{
   display:flex;
   flex-direction: column;
   width:650px;
   height:648px;
   justify-content: center;
   align-items: center;
-  margin-top:25px;
+  margin-top:40px;
 }
 .text-group{
   display: flex;
@@ -175,18 +160,6 @@ export default {
 .form-input-email{
   width:400px;
 }
-.mail_button{
-  float:right;
-  margin: -19px 0px 0px;
-}
-.signupImg{
-  float:right;
-  width:650px;
-  height:648px;
-  background-color : lightblue;
-  border-top-right-radius: 38px;
-  border-bottom-right-radius: 38px;
-}
 .submit_bt{
   display: flex;
   justify-content: center;
@@ -196,5 +169,20 @@ export default {
   width:250px;
   height:50px;
   border-radius: 15px;
+}
+.change_img{
+  margin:20px 0px 10px 155px;
+  width:100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.signupImg{
+  float:right;
+  width:650px;
+  height:648px;
+  background-color : lightblue;
+  border-top-right-radius: 38px;
+  border-bottom-right-radius: 38px;
 }
 </style>

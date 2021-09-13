@@ -14,11 +14,18 @@ export default {
 
 <style>
 .mainBox{
-  margin:70 auto;
   width:1300px;
   height:650px;
   border: 1px solid rgb(241, 237, 237);
   border-radius: 38px;
+  background-color: rgb(227,231,234);
+}
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(185, 217, 241);
 }
 .container{
   /* display:flex; 
