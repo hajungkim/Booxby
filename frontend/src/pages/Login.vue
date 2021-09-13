@@ -1,12 +1,11 @@
 <template>
   <div class="login_container">
       <div class="img">
-          <!-- <img src=""> -->
       </div>
       <div class="login">
           <div class="login_form">
               <h2 class="head">Login</h2>
-              <q-input class="form" label="ID" type="email" 
+              <q-input class="login_form_main" label="ID" type="email" 
               v-model="form.id"
               lazy-rules
                 :rules="[
@@ -19,9 +18,9 @@
                   val => val && val.length > 0 || '필수입력항목 입니다.',
                   checkPassWord
                 ]"/>
-              <q-btn class="bt1" flat style="color: rgb(71, 76, 80)" label="비밀번호 찾기" />
-              <q-btn class="bt2" color="primary" label="로그인하기" />
-              <q-btn @click="goSignUp" class="bt3" flat style="color: black;" label="회원가입하기!" />
+              <q-btn class="findBt" flat style="color: rgb(71, 76, 80)" label="비밀번호 찾기" />
+              <q-btn @click="login" class="loginBt" color="primary" label="로그인" />
+              <q-btn @click="goSignUp" class="signBt" flat style="color: black;" label="회원가입하기!" />
           </div>
       </div>
   </div>
@@ -51,7 +50,11 @@ export default {
             const reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/
             return (reg.test(val) || '최소 각 하나의 문자, 숫자, 특수 문자가 포함되어야 합니다.')
         }
-
+        // 로그인
+        function login() {
+            router.push('/hashtag')
+        }
+        // 회원가입 창 이동
         function goSignUp() {
             router.push('/signUp')
         }
@@ -60,6 +63,7 @@ export default {
             form,
             checkId,
             checkPassWord,
+            login,
             goSignUp
         }
     }
@@ -68,26 +72,29 @@ export default {
 
 <style>
 .login_container{
-    width:1600px;
-    height:800px;
+    width:1300px;
+    height:650px;
 }
 .img{
-    width:800px;
-    height:800px;
+    width:650px;
+    height:650px;
     background-color:skyblue;
     float:left;
     border-top-left-radius: 38px;
     border-bottom-left-radius: 38px;
+    /* background-image: url('assets/images/book.jpg');
+    background-size:1200px; */
 }
 .login{
     display:flex;
     justify-content: center;
     align-items: center;
-    width:800px;
-    height:800px;
+    width:650px;
+    height:650px;
     float:right;
     border-top-right-radius: 38px;
     border-bottom-right-radius: 38px;
+    background-color: rgb(241, 237, 237);
 }
 .login_form{
     padding-top:100px;
@@ -99,32 +106,35 @@ export default {
     margin-left:180px;
     font-weight:bold;
 }
-.form{
+.login_form_main{
     width:100%;
     margin-top:40px;
     font-size:25px;
+    font-weight:bold;
 }
-.bt1{
+.findBt{
     width:150px;
     color:rgb(71, 76, 80);
     font-weight:bold;
     font-size:18px;
     float:right;
 }
-.bt2{
+.loginBt{
     border-radius: 15px;
     width:300px;
     height:40px;
-    font-size:18px;
+    font-size:20px;
+    font-weight:bold;
     margin: 20px 100px;
+    box-shadow:black 3px 3px 3px;
 }
-.bt3{
+.signBt{
     border-radius: 15px;
     width:300px;
     height:40px;
-    font-size:18px;
+    font-size:20px;
     margin: 0 100px;
-    margin-top:120px;
+    margin-top:70px;
     font-weight:bold;
 }
 </style>
