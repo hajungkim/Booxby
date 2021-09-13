@@ -1,13 +1,11 @@
-FROM adoptopenjdk:8-jdk-hotspot AS builder
-COPY gradlew .
-COPY gradle gradle
-COPY build.gradle .
-COPY settings.gradle .
-COPY src src
+FROM openjdk:8-jdk-alpine
+
 RUN chmod +x ./gradlew
 RUN ./gradlew build
 
-FROM adoptopenjdk:8-jdk-hotspot
+ARG JAR_FILE=/build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+
 COPY --from=builder build/libs/*.jar app.jar
 
 EXPOSE 7777
