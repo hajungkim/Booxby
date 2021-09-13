@@ -134,7 +134,7 @@
 
         <q-tab-panel class="three_options" name="settings">
             <div class="q-col-gutter-md row items-start">
-              <div class="col-4">
+              <div class="col-4" @click="moveModify">
                 <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
                   <div class="absolute-bottom text-subtitle1 text-center">
                     개인 정보 수정
@@ -165,10 +165,16 @@
 
 <script>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router' 
 export default {
   setup(){
+    const router = useRouter()
+    const moveModify = function(){
+      router.push('/modify')
+    }
     return{
-      tab: ref('zzim')
+      tab: ref('zzim'),
+      moveModify
     }
   }
 }
