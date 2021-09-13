@@ -1,4 +1,4 @@
-package com.ssafy.booxby.domain.User;
+package com.ssafy.booxby.domain.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

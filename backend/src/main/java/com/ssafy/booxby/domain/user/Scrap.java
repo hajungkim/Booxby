@@ -1,4 +1,4 @@
-package com.ssafy.booxby.domain.User;
+package com.ssafy.booxby.domain.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
