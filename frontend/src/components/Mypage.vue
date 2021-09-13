@@ -1,115 +1,165 @@
 <template>
   <div>
     <div class="top_bar">
-      <!-- 로고랑 뒤로가기 버튼 -->
+      <span class="logo">BooxBy</span>
+      <q-icon class="back_btn" size="md" name="arrow_back"></q-icon>
     </div>
     <!-- 유저 정보들 -->
     <div class="user_info_container">
       <img class="user_img" src="../assets/user_default.png">
       <div class="user_info">
-        <p>userkim</p>
-        <div style="width:200px;">
+        <p style="font-size:30px;">userkim</p>
+        <div style="width:200px; font-weight:bold;">
           <p>#갬성 #느낌 #섬세 #방가 #헬로</p>
         </div>
       </div>
       <img class="emotion_chr" src="../assets/user_default.png">
     </div>
 
-    <div class="select_container">
+    <q-card class="card_container" style="width:1000px;">
       <q-tabs
         v-model="tab"
+        dense
+        class="text-grey"
+
         align="justify"
-        narrow-indicator
-        class="q-mb-lg"
       >
-        <q-tab class="text-purple" name="zzim" label="찜 목록" />
-        <q-tab class="text-orange" name="reviews" label="MY 리뷰" />
-        <q-tab class="text-teal" name="settings" label="설정" />
+        <q-tab class="text-red" name="zzim" label="찜 목록" />
+        <q-tab class="text-green" name="reviews" label="MY 리뷰" />
+        <q-tab class="text-blue" name="settings" label="설정" />
       </q-tabs>
 
-      <div class="q-gutter-y-sm">
-        <q-tab-panels
-          v-model="tab"
-          animated
-          transition-prev="fade"
-          transition-next="fade"
-          class="text-black"
-        >
-          <q-tab-panel name="zzim">
+      <q-separator />
+
+      <q-tab-panels v-model="tab" animated>
+
+        <q-tab-panel class="three_options" name="zzim">
             <div class="zzim_container">
+              <img class="zzim_img" src="../assets/sampleImg.jpg" alt="">
+              <img src="../assets/sampleImg.jpg" alt="">
+              <img src="../assets/sampleImg.jpg" alt="">
               <img src="../assets/sampleImg.jpg" alt="">
               <img src="../assets/sampleImg.jpg" alt="">
               <img src="../assets/sampleImg.jpg" alt="">
               <img src="../assets/sampleImg.jpg" alt="">
             </div>
-          </q-tab-panel>
-        </q-tab-panels>
+        </q-tab-panel>
 
-        <q-tab-panels
-          v-model="tab"
-          animated
-          transition-prev="fade"
-          transition-next="fade"
-          class="text-black text-center"
-        >
-          <q-tab-panel name="reviews">
+        <q-tab-panel class="three_options" name="reviews">
             <div class="review_container">
               <div class="review_info">
-                <div style="display:flex;">
-                  <p style="font-size:20px;">올라의 모험</p>
-                  <span style="font-size:15px; margin-top:3px;">★5</span>
+                <div class="title">
+                  <p style="font-size:30px;">올라의 모험</p>
+                  <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
                 </div>
-                <div style="display:flex;">
+                <p style="margin-left:25px;">이 책 정말 재밌어요 주인공의 심경 변화가 이렇게 잘 묘사된 책은 없을 겁니다!</p>
+                <div class="review_categories">
                   <div class="review_category">
-                    <img style="width:20px; height:20px;" src="../assets/user_default.png" alt="">
-                    <span style="margin-left:10px;">dasdas</span>
+                    <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
+                    <div class="word">기발해요</div>
                   </div>
                   <div class="review_category">
-                    <img style="width:20px; height:20px;" src="../assets/user_default.png" alt="">
-                    <span style="margin-left:10px;">dasdas</span>
+                    <img class="review_icon" src="../assets/Thumbs_Up_Emoji.png" alt="">
+                    <span class="word">유용해요</span>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Eyes_Emoji.png" alt="">
+                    <span class="word">잘읽혀요</span>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Heart_Emoji.png" alt="">
+                    <span class="word">추천해요</span>
                   </div>
                 </div>
               </div>
-              <img style="width:90px; height:130px;" src="../assets/sampleImg.jpg" alt="">
+              <img style="width:90px; height:130px; margin-right:20px;" src="../assets/sampleImg.jpg" alt="">
+            </div>
+            <div class="review_container">
+              <div class="review_info">
+                <div class="title">
+                  <p style="font-size:30px;">올라의 모험</p>
+                  <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
+                </div>
+                <p style="margin-left:25px;">이 책 정말 재밌어요 주인공의 심경 변화가 이렇게 잘 묘사된 책은 없을 겁니다!</p>
+                <div class="review_categories">
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
+                    <div class="word">기발해요</div>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Thumbs_Up_Emoji.png" alt="">
+                    <span class="word">유용해요</span>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Eyes_Emoji.png" alt="">
+                    <span class="word">잘읽혀요</span>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Heart_Emoji.png" alt="">
+                    <span class="word">추천해요</span>
+                  </div>
+                </div>
+              </div>
+              <img style="width:90px; height:130px; margin-right:20px;" src="../assets/sampleImg.jpg" alt="">
+            </div>
+            <div class="review_container">
+              <div class="review_info">
+                <div class="title">
+                  <p style="font-size:30px;">올라의 모험</p>
+                  <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
+                </div>
+                <p style="margin-left:25px;">이 책 정말 재밌어요 주인공의 심경 변화가 이렇게 잘 묘사된 책은 없을 겁니다!</p>
+                <div class="review_categories">
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
+                    <div class="word">기발해요</div>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Thumbs_Up_Emoji.png" alt="">
+                    <span class="word">유용해요</span>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Eyes_Emoji.png" alt="">
+                    <span class="word">잘읽혀요</span>
+                  </div>
+                  <div class="review_category">
+                    <img class="review_icon" src="../assets/Heart_Emoji.png" alt="">
+                    <span class="word">추천해요</span>
+                  </div>
+                </div>
+              </div>
+              <img style="width:90px; height:130px; margin-right:20px;" src="../assets/sampleImg.jpg" alt="">
             </div>
           </q-tab-panel>
-        </q-tab-panels>
 
-        <q-tab-panels
-          v-model="tab"
-          animated
-          transition-prev="fade"
-          transition-next="fade"
-          class="bg-teal text-white text-center"
-        >
-          <q-tab-panel name="settings">
+        <q-tab-panel class="three_options" name="settings">
             <div class="q-col-gutter-md row items-start">
               <div class="col-4">
-                <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+                <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
                   <div class="absolute-bottom text-subtitle1 text-center">
-                    Caption
+                    개인 정보 수정
                   </div>
                 </q-img>
               </div>
               <div class="col-4">
-                <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+                <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
                   <div class="absolute-bottom text-subtitle1 text-center">
-                    Caption
+                    Book World cup
                   </div>
                 </q-img>
               </div>
               <div class="col-4">
-                <q-img src="https://cdn.quasar.dev/img/parallax2.jpg">
+                <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
                   <div class="absolute-bottom text-subtitle1 text-center">
-                    Caption
+                    해시태그 재설정 하기
                   </div>
                 </q-img>
               </div>
             </div>
           </q-tab-panel>
-        </q-tab-panels>
-      </div>
-    </div>
+      </q-tab-panels>
+    </q-card>
+
   </div>
 </template>
 
@@ -125,16 +175,32 @@ export default {
 </script>
 
 <style scoped>
+/* 상단바 */
 .top_bar{
   margin-top:20px;
   height:50px;
-  border:1px solid black;
 }
+.logo{
+  font-size:30px;
+  margin-left:50px;
+}
+.back_btn{
+  float:right;
+  margin-right:30px;
+}
+/* 유저 정보창 */
 .user_img{
   width: 120px;
   height:120px;
   border-radius: 50px;
   margin-right:50px;
+}
+.user_info{
+  margin: 10px 0px 0px 20px;
+}
+.user_info_container{
+  display:flex;
+  justify-content: center;
 }
 .emotion_chr{
   width: 100px;
@@ -143,37 +209,80 @@ export default {
   margin-left:100px;
   margin-top:10px;
 }
-.user_info_container{
-  display:flex;
-  justify-content: center;
-  margin-right:100px;
-}
-.user_info{
-  margin: 10px 0px 0px 20px;
-}
-.select_container{
+/* tab 부분 */
+.card_container{
   margin-top:30px;
-  margin-left:200px;
+  margin-left:210px;
   max-width: 900px;
+  background-color: rgb(227,231,234);
 }
+.three_options{
+  height: 350px;
+  overflow:auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  background-color: rgb(227,231,234);
+}
+.three_options::-webkit-scrollbar{
+  display: none;
+}
+/* 찜목록 */
 .zzim_container{
   display: flex;
-  justify-content: space-around;
+  flex-wrap:wrap;
+  width:860px;
+  padding-left: 70px;
+  /* justify-content: space-around; */
+}
+.zzim_container > img {
+  width:160px;
+  height: 200px;
+  margin-right:30px;
+  margin-bottom:20px;
 }
 .review_container{
-  border:1px solid black;
+  box-shadow: 1px 1px 1px 1px gray;
+  margin-bottom:20px;
+  padding-bottom: 10px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  border-radius: 20px;
 }
+/* My 리뷰 */
 .review_info{
   display:flex;
   flex-direction: column;
   justify-content: center;
   align-content: center;
 }
+.title{
+  display:flex;
+  margin-left:20px;
+}
+.review_categories{
+  display:flex;
+  margin-left:25px;
+}
 .review_category{
+  display: flex;
   width:90px;
-  border:1px solid black;
-  border-radius: 10px;
+  height:30px;
+  background-color: rgb(218, 237, 248);
+  border-radius: 20px;
+  margin-right:20px;
+}
+.review_icon{
+  width:20px;
+  height:20px;
+  margin: 5px 0px 0px 3px;
+}
+.word{
+  margin:6px 0px 0px 5px;
+  color:rgb(8, 84, 173);
+  font-weight: bold;
+}
+/* 설정 */
+.img{
+  height: 318px;
 }
 </style>
