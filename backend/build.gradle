@@ -19,6 +19,10 @@ dependencies {
     implementation ('org.springframework.boot:spring-boot-starter-thymeleaf')
     implementation ('org.springframework.session:spring-session-jdbc')
 
+    testImplementation("org.junit.vintage:junit-vintage-engine") {
+        exclude group: "org.hamcrest", module: "hamcrest-core"
+    }
+
     //mysql
     implementation("mysql:mysql-connector-java:8.0.21")
 
