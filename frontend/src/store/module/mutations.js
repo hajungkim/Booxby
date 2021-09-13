@@ -1,2 +1,3 @@
-export function someMutation (/* state */) {
+export function setTextMode (state, textMode) {
+  state.textMode = textMode
 }
