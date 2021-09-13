@@ -1,2 +1,3 @@
-export function someGetter (/* state */) {
+export function getTextMode (state) {
+  return state.textMode
 }
