@@ -5,8 +5,8 @@
       <div class="login">
           <div class="login_form">
               <h2 class="head">Login</h2>
-              <q-input class="login_form_main" label="ID" type="email" 
-              v-model="form.id"
+              <q-input class="login_form_main" label="Email" type="email" 
+              v-model="form.email"
               lazy-rules
                 :rules="[
                 val => !!val || '필수입력항목 입니다.',
@@ -29,16 +29,21 @@
 <script>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 
 export default {
     setup() {
         // 라우터 사용시 필요한 변수
         const router = useRouter()
+        // 스토어 사용시 필요한 변수
+        const store = useStore()
+        // sweetalert 2 사용시 필요한 변수
+        const Swal = require('sweetalert2')
 
         // v-model을 위해 필요한 형태
         const form = reactive({
-            id: '',
+            email: '',
             password: '',
             findpw: '',
         })
@@ -78,7 +83,29 @@ export default {
 
         // 로그인
         function login() {
-            router.push('/hashtag')
+            // 로컬 스토리지에 저장
+            // localStorage.setItem('email', form.email)
+            // localStorage.setItem('password', form.password)
+            console.log('login함수')
+            store.dispatch('module/login', { email: form.email, password: form.password })
+                .then(function (result) {
+                    console.log(result)
+                    const loginUser = {
+                        email: result.data.email,
+                        token: result.data.token
+                    }
+                    store.commit('module/setLoginUser')
+                    localStorage.setItem('loginUser', loginUser)
+                    router.push('/main')
+                })
+                .catch(function(){
+                    Swal.fire({
+                        icon: 'error',
+                        title: '<span style="font-size:25px;">아이디 또는 비밀번호를 확인해주세요</span>',
+                        confirmButtonColor: '#ce1919',
+                        confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                    })
+                })
         }
         // 회원가입 창 이동
         function goSignUp() {
