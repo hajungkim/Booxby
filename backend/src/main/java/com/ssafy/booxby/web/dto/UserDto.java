@@ -36,7 +36,8 @@ public class UserDto {
         private String email;
         private String nickname;
         private String password;
-        private int age;
+        private int emotionScore;
+        private String age;
         private int gender;
         private String hashtag;
     }

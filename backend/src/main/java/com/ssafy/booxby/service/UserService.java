@@ -71,6 +71,7 @@ public class UserService {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickname(request.getNickname())
+                .emotionScore(request.getEmotionScore())
                 .age(request.getAge())
                 .gender(request.getGender())
                 .hashtag(request.getHashtag())
