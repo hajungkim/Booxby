@@ -29,7 +29,7 @@ public class User {
 
     private LocalDateTime createdDate;
 
-    private int age;
+    private String age;
 
     private int gender;
 
@@ -37,10 +37,11 @@ public class User {
 
 
     @Builder
-    public User(String email, String nickname, String password, int age, int gender, String hashtag) {
+    public User(String email, String nickname, String password, int emotionScore, String age, int gender, String hashtag) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.emotionScore = emotionScore;
         this.age = age;
         this.gender = gender;
         this.hashtag = hashtag;
