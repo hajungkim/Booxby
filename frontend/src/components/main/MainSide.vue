@@ -5,7 +5,7 @@
       </div>
       <div class="side_content">
         <div class="side_user">
-          <q-img src="~assets/images/book.jpg" class="user_profile"/>
+          <q-img @click="goMypage" src="~assets/images/book.jpg" class="user_profile"/>
           <div class="user_name">KIMSSAFY</div>
         </div>
         <div class="side_menu">
@@ -69,6 +69,9 @@ export default {
     const showCategory = function () {
       store.commit('module/setCategroyMode', !store.getters['module/getCategoryMode'])
     }
+    const goMypage = function () {
+      router.push('/my')
+    }
     const logout = function() {
       router.push('/')
     }
@@ -76,13 +79,14 @@ export default {
       tmp,
       categoryMode,
       showCategory,
+      goMypage,
       logout
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .main_side{
   width:350px;
   height:650px;

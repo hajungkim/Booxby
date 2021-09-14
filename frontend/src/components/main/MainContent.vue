@@ -65,7 +65,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .main_box{
     /* border:1px solid red; */
     width:900px;
