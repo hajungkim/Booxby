@@ -17,9 +17,12 @@ export default function () {
     hashtag:''
   }
 
+  const user_info = {}
+  
   return {
     textMode,
     categoryMode,
-    loginUser
+    loginUser,
+    user_info
   }
 }

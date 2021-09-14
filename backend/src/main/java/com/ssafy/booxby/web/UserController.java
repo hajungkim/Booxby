@@ -17,14 +17,13 @@ public class UserController {
     @ApiOperation(value = "로그인", notes = "로그인 성공 시 (token, userId) 반환 / 회원정보가 없을 경우 false 반환", response = ControllerResponse.class)
     @PostMapping("/login")
     public ControllerResponse login(@RequestBody UserDto.loginRequest request) {
-        System.out.println("ok");
         ControllerResponse response = null;
         try {
             User loginUser = userService.login(request);
             if (loginUser == null) {
                 response = new ControllerResponse("success", false);
             } else {
-                String token = userService.create(loginUser);
+                String token = userService.createToken(loginUser);
                 UserDto.loginResponse loginResponse = userService.createTokenUserId(token, loginUser.getUserId());
                 response = new ControllerResponse("success", loginResponse);
             }

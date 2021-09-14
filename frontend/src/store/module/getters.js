@@ -9,3 +9,7 @@ export function getCategoryMode (state) {
 export function getLoginUser (state) {
   return state.loginUser
 }
+
+export function getInfo (state) {
+  return state.user_info
+}
