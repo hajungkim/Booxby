@@ -3,5 +3,9 @@ export function setTextMode (state, textMode) {
 }
 
 export function setCategroyMode (state, categoryMode) {
-    state.categoryMode = categoryMode
+  state.categoryMode = categoryMode
+}
+
+export function setInfos (state, info) {
+  state.user_info = info
 }

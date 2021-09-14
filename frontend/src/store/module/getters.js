@@ -3,5 +3,9 @@ export function getTextMode (state) {
 }
 
 export function getCategoryMode (state) {
-    return state.categoryMode
+  return state.categoryMode
+}
+
+export function getInfo (state) {
+  return state.user_info
 }

@@ -17,12 +17,12 @@
               checkEmail
               ]"
             />
-          <div>
+          <!-- <div>
             <q-btn rounded size="xs" class="mail_button" color="primary" label="인증 보내기" />
-          </div>
+          </div> -->
         </div>
 
-        <div class="form-mb">
+        <!-- <div class="form-mb">
           <q-input style="width:400px;" label="인증 번호"
             v-model="form.confirmNum"
             lazy-rules
@@ -30,7 +30,7 @@
               val => !!val || '필수입력항목 입니다.',
             ]"
           />
-        </div>
+        </div> -->
 
         <div class="form-mb">
           <q-input class="input" label="Password" color="teal" v-model="form.password" type="password"
@@ -61,8 +61,8 @@
         </div>
         <!-- 성별 -->
         <div>
-          <q-radio style="margin-right:10px; margin-left:-10px;" keep-color v-model="color" val="cyan" label="남자" color="cyan" />
-          <q-radio keep-color v-model="color" val="red" label="여자" color="red" />
+          <q-radio style="margin-right:10px; margin-left:-10px;" keep-color v-model="color" val=0 label="남자" color="cyan" />
+          <q-radio keep-color v-model="color" val=1 label="여자" color="red" />
         </div>
         <!-- 나이 -->
         <div style="margin-top:-5px;">
@@ -70,7 +70,7 @@
         </div>
         <!-- 버튼 -->
         <div class="submit_bt">
-          <q-btn class="submit" color="primary" label="회원가입하기" />
+          <q-btn @click="setInfos" class="submit" color="primary" label="다음 단계로" />
         </div>
 
       </div>
@@ -84,19 +84,27 @@
 <script>
 import { reactive } from 'vue'
 import { ref } from 'vue'
-// import axios from 'axios'
+import { api } from 'boot/axios'
+import { useRouter } from 'vue-router' 
+import { useStore } from 'vuex'
 export default {
   setup(){
-    // const state = reactive({
-    //   isSend: false,
-    // })
+    const router = useRouter()
+
+    const store = useStore()
+
     const form = reactive({
       email: '',
       confirmNum: 0,
       password: '',
       passwordconfirmation: '',
       nickname: '',
+      male: 0,
+      female: 1,
     })
+    const color = ref(0)
+    
+    const model = ref('나이대를 선택해주세요')
 
     function checkName (val) {
       const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
@@ -124,26 +132,47 @@ export default {
     //     // 제대로된경우
     //   })
     // }
-    // function sendEmail() {
-    //   store.dispatch('module/sendEmail', {
-    //     id: form.email,
-    //   }).then(function (){
-    //     state.isSend = true
-    //   })
-    // }
-
+    function moveHashtag(){
+      router.push('/hashtag')
+    }
+    function setInfos() {
+      console.log('함수인')
+      let info = {
+        email: form.email,
+        password: form.password,
+        nickname: form.nickname,
+        gender: parseInt(color.value),
+        age: model.value,
+      }
+      store.commit('module/setInfos',info)
+      moveHashtag()
+    }
+      // api.get('/user/signup').then((res) =>{
+      //   console.log(res.data)
+      // })
+      // .catch(()=>{
+      //   console.log('에러')
+      // })
+  //     "age": 20,
+  // "email": "ssafy@naver.com",
+  // "gender": 0,
+  // "hashtag": "상냥한",
+  // "nickname": "선쥬르",
+  // "password": "ssafy1234"
     return {
-      model: ref(null),
+      model,
       options: [
         '유아', '초등학생', '청소년', '10대', '20대', '30대', '40대' ,'50대', '60대 이상'
       ],
-      color: ref('cyan'),
+      color,
       // state,
       form,
       checkName,
       checkPassWord,
       checkEmail,
-      checkPassWordConfirmation
+      checkPassWordConfirmation,
+      setInfos,
+      moveHashtag
     }
   }
 }
