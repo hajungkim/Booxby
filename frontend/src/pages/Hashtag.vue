@@ -8,7 +8,7 @@
                     태그를 선택해보세요 !
                 </div>
                 <div class="hashtag_form_main" >
-                    <q-btn v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag" outline color="primary" :label="hashtags.hashtag" />
+                    <q-btn :id="idx" @click="selectHashtag(hashtags,idx)" v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag notselect" :label="hashtags.hashtag"/>
                 </div>
                 <q-btn @click="goWorldcup" class="nextBt" color="primary" label="Next" />
             </div>
@@ -22,6 +22,7 @@ import { useStore } from 'vuex'
 export default {
     setup() {
         const store = useStore()
+        const router = useRouter()
         const hashtag_list = [
             { hashtag:'#공격적', score:177 },
             { hashtag:'#대담한', score:-133 },
@@ -61,15 +62,28 @@ export default {
         ]
         console.log(store.getters['module/getInfo'])
 
-        const router = useRouter()
-
+        function selectHashtag(hashtags,idx){
+            const hashbtn = document.getElementById(idx)
+            if (hashbtn.classList.contains('select')){
+                hashbtn.classList.remove('select')
+                hashbtn.classList.add('notselect')
+                // 선택된해시태그리스트에 빼야함
+            }
+            else {
+                hashbtn.classList.remove('notselect')
+                hashbtn.classList.add('select')
+                // 선택된해시태그리스트에 넣어야함
+            }
+            console.log(hashtags.hashtag,'@@')
+        }
         function goWorldcup() {
             router.push('worldCup')
         }
 
         return {
+            hashtag_list,
             goWorldcup,
-            hashtag_list
+            selectHashtag
         }
     }
 }
@@ -118,6 +132,18 @@ export default {
     margin-bottom: 15px;
     border-radius: 15px;
 }
+
+.select{
+    background-color: #1976d2;
+    color:white;
+}
+
+.notselect{
+    /* border: 1px solid #1976d2; */
+    color:#1976d2;
+    background-color: white;
+}
+
 .nextBt{
     width:250px;
     height:30px;
