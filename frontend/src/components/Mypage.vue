@@ -16,12 +16,10 @@
       <img class="emotion_chr" src="../assets/user_default.png">
     </div>
 
-    <q-card class="card_container" style="width:1000px;">
+    <q-card class="card_container no-shadow" style="width:1000px;">
       <q-tabs
         v-model="tab"
         dense
-        class="text-grey"
-
         align="justify"
       >
         <q-tab class="text-red" name="zzim" label="찜 목록" />
@@ -31,18 +29,44 @@
 
       <q-separator />
 
-      <q-tab-panels v-model="tab" animated>
+      <q-tab-panels v-model="tab" animated style="background-color: rgb(227,231,234);">
 
-        <q-tab-panel class="three_options" name="zzim">
-            <div class="zzim_container">
-              <img class="zzim_img" src="../assets/sampleImg.jpg" alt="">
-              <img src="../assets/sampleImg.jpg" alt="">
-              <img src="../assets/sampleImg.jpg" alt="">
-              <img src="../assets/sampleImg.jpg" alt="">
-              <img src="../assets/sampleImg.jpg" alt="">
-              <img src="../assets/sampleImg.jpg" alt="">
-              <img src="../assets/sampleImg.jpg" alt="">
-            </div>
+        <q-tab-panel class="three_options zzims" name="zzim">
+          <q-card class="my-card no-shadow cardbooks" id="card">
+            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+                Title
+              </div>
+            </q-img>
+          </q-card>
+          <!-- <q-card class="my-card no-shadow cardbooks" id="card">
+            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+                Title
+              </div>
+            </q-img>
+          </q-card>
+          <q-card class="my-card no-shadow cardbooks" id="card">
+            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+                Title
+              </div>
+            </q-img>
+          </q-card>
+          <q-card class="my-card no-shadow cardbooks" id="card">
+            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+                Title
+              </div>
+            </q-img>
+          </q-card>
+          <q-card class="my-card no-shadow cardbooks" id="card">
+            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+                Title
+              </div>
+            </q-img>
+          </q-card> -->
         </q-tab-panel>
 
         <q-tab-panel class="three_options" name="reviews">
@@ -133,30 +157,30 @@
           </q-tab-panel>
 
         <q-tab-panel class="three_options" name="settings">
-            <div class="q-col-gutter-md row items-start">
-              <div class="col-4" @click="moveModify">
-                <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-                  <div class="absolute-bottom text-subtitle1 text-center">
-                    개인 정보 수정
-                  </div>
-                </q-img>
-              </div>
-              <div class="col-4">
-                <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-                  <div class="absolute-bottom text-subtitle1 text-center">
-                    Book World cup
-                  </div>
-                </q-img>
-              </div>
-              <div class="col-4">
-                <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-                  <div class="absolute-bottom text-subtitle1 text-center">
-                    해시태그 재설정 하기
-                  </div>
-                </q-img>
-              </div>
+          <div class="q-col-gutter-md row items-start">
+            <div class="col-4" @click="moveModify">
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+                <div class="absolute-bottom text-subtitle1 text-center">
+                  개인 정보 수정
+                </div>
+              </q-img>
             </div>
-          </q-tab-panel>
+            <div class="col-4">
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+                <div class="absolute-bottom text-subtitle1 text-center">
+                  Book World cup
+                </div>
+              </q-img>
+            </div>
+            <div class="col-4">
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+                <div class="absolute-bottom text-subtitle1 text-center">
+                  해시태그 재설정 하기
+                </div>
+              </q-img>
+            </div>
+          </div>
+        </q-tab-panel>
       </q-tab-panels>
     </q-card>
 
@@ -164,17 +188,31 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 export default {
   setup(){
+    const store = useStore()
+    const textmode = computed(() => store.getters['module/getTextMode'])
+    onMounted(()=>{
+      const card = document.getElementById('card')
+      card.addEventListener('mouseover',function(){
+        console.log(card,'@@@')
+        store.commit('module/setTextMode',true)
+      }, true)
+      card.addEventListener('mouseout',function(){
+        store.commit('module/setTextMode',false)
+      }, true)
+    })
     const router = useRouter()
     const moveModify = function(){
       router.push('/modify')
     }
     return{
       tab: ref('zzim'),
-      moveModify
+      moveModify,
+      textmode
     }
   }
 }
@@ -227,25 +265,28 @@ export default {
   overflow:auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  background-color: rgb(227,231,234);
 }
 .three_options::-webkit-scrollbar{
   display: none;
 }
 /* 찜목록 */
-.zzim_container{
-  display: flex;
-  flex-wrap:wrap;
+.zzims{
+  display:flex;
+  flex-wrap: wrap;
   width:860px;
-  padding-left: 70px;
-  /* justify-content: space-around; */
+  margin-left:40px;
+  padding-left:50px;
 }
-.zzim_container > img {
+.zzim_img{
   width:160px;
   height: 200px;
-  margin-right:30px;
-  margin-bottom:20px;
 }
+.cardbooks{
+  margin-right:30px;
+  margin-top:20px;
+  height:200px;
+}
+/* My 리뷰 */
 .review_container{
   box-shadow: 1px 1px 1px 1px gray;
   margin-bottom:20px;
@@ -254,7 +295,6 @@ export default {
   justify-content: space-between;
   border-radius: 20px;
 }
-/* My 리뷰 */
 .review_info{
   display:flex;
   flex-direction: column;

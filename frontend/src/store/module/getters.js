@@ -1,5 +1,5 @@
 export function getTextMode (state) {
-    return state.textMode
+  return state.textMode
 }
 
 export function getCategoryMode (state) {

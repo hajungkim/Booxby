@@ -24,6 +24,7 @@
 
         <div class="form-mb">
           <q-input style="width:400px;" label="인증 번호"
+            v-model="form.confirmNum"
             lazy-rules
               :rules="[
               val => !!val || '필수입력항목 입니다.',
@@ -54,7 +55,7 @@
             v-model="form.nickname"
             lazy-rules
               :rules="[
-                val => val && val.length > 2 || '두글자 이상 입력 바랍니다.',
+                val => val && val.length >= 2 || '두글자 이상 입력 바랍니다.',
                 checkName
               ]"/>
         </div>
@@ -91,6 +92,7 @@ export default {
     // })
     const form = reactive({
       email: '',
+      confirmNum: 0,
       password: '',
       passwordconfirmation: '',
       nickname: '',
