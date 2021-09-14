@@ -6,8 +6,8 @@ import com.ssafy.booxby.web.dto.UserDto;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.Map;
 
@@ -66,17 +66,12 @@ public class UserService {
     }
 
     @Transactional
-    public User getUserInfo(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
-    }
-
-    @Transactional
-    public void createUser(UserDto.signupRequest request) {
+    public void saveUser(UserDto.signupRequest request) {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickname(request.getNickname())
+                .emotionScore(request.getEmotionScore())
                 .age(request.getAge())
                 .gender(request.getGender())
                 .hashtag(request.getHashtag())
@@ -84,4 +79,21 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional(readOnly = true)
+    public User findUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
+    }
+
+    @Transactional
+    public void updateUser(Long userId, UserDto.updateRequest request) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
+        user.updateUser(request);
+    }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
 }
