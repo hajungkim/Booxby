@@ -6,7 +6,6 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class loginRequest {
         private String email;
         private String password;
@@ -27,20 +26,27 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class tokenResponse {
         private String token;
     }
 
     @Getter
     @NoArgsConstructor
-    @AllArgsConstructor
     public static class signupRequest {
         private String email;
         private String nickname;
         private String password;
         private int age;
         private int gender;
+        private String hashtag;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class updateRequest {
+        private String nickname;
+        private String password;
+        private String profilePath;
         private String hashtag;
     }
 }
