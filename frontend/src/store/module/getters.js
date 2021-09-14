@@ -5,3 +5,7 @@ export function getTextMode (state) {
 export function getCategoryMode (state) {
     return state.categoryMode
 }
+
+export function getLoginUser (state) {
+  return state.loginUser
+}
