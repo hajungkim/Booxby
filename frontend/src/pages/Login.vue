@@ -1,6 +1,6 @@
 <template>
   <div class="login_container">
-      <div class="img">
+      <div class="login_img">
       </div>
       <div class="login">
           <div class="login_form">
@@ -75,7 +75,7 @@ export default {
     width:1300px;
     height:650px;
 }
-.img{
+.login_img{
     width:650px;
     height:650px;
     background-color:skyblue;
