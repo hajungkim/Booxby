@@ -20,8 +20,6 @@
       <q-tabs
         v-model="tab"
         dense
-        class="text-grey"
-
         align="justify"
       >
         <q-tab class="text-red" name="zzim" label="찜 목록" />
@@ -200,6 +198,7 @@ export default {
     onMounted(()=>{
       const card = document.getElementById('card')
       card.addEventListener('mouseover',function(){
+        console.log(card,'@@@')
         store.commit('module/setTextMode',true)
       }, true)
       card.addEventListener('mouseout',function(){
