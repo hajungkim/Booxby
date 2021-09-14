@@ -1,5 +1,6 @@
 package com.ssafy.booxby.domain.user;
 
+import com.ssafy.booxby.web.dto.UserDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -44,6 +45,13 @@ public class User {
         this.gender = gender;
         this.hashtag = hashtag;
         this.createdDate = LocalDateTime.now();
+    }
+
+    public void updateUser(UserDto.updateRequest request) {
+        this.nickname = request.getNickname();
+        this.password = request.getPassword();
+        this.profilePath = request.getProfilePath();
+        this.hashtag = request.getHashtag();
     }
 
 }
