@@ -44,6 +44,12 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor
+    public static class checkEmailRequest {
+        private String email;
+    }
+
+    @Getter
+    @NoArgsConstructor
     public static class updateRequest {
         private String nickname;
         private String password;
