@@ -16,7 +16,6 @@ export default {
 .mainBox{
   width:1300px;
   height:650px;
-  border: 1px solid rgb(241, 237, 237);
   border-radius: 38px;
   background-color: rgb(227,231,234);
 }

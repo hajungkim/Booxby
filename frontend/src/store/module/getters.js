@@ -3,7 +3,11 @@ export function getTextMode (state) {
 }
 
 export function getCategoryMode (state) {
-  return state.categoryMode
+    return state.categoryMode
+}
+
+export function getLoginUser (state) {
+  return state.loginUser
 }
 
 export function getInfo (state) {
