@@ -2,10 +2,12 @@
     <div class="hashtag_container">
         <div class="hashtag">
             <div class="hashtag_form">
-                <q-img src="~assets/images/problem.png" class="character"/>
-                <div class="hashtag_text">
-                    나를 설명할 수 있는<br>
-                    태그를 선택해보세요 !
+                <div>
+                    <q-img src="~assets/images/problem.png" class="character"/>
+                    <div class="hashtag_text">
+                        나를 설명할 수 있는<br>
+                        태그를 선택해보세요 !
+                    </div>
                 </div>
                 <div class="hashtag_form_main" >
                     <q-btn :id="idx" @click="selectHashtag(hashtags,idx)" v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag notselect" :label="hashtags.hashtag"/>
@@ -111,6 +113,8 @@ export default {
 .hashtag_form{
     width:1000px;
     height:600px;
+    display:flex;
+    flex-direction: column;
 }
 .character{
     margin-left:75px;
@@ -154,7 +158,6 @@ export default {
     font-size:20px;
     font-weight:bold;
     border-radius: 25px;
-    margin-top:40px;
-    margin-left:360px;
+    margin:auto;
 }
 </style>

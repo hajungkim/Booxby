@@ -5,18 +5,15 @@
       </div>
       <div class="detail_content">
         <div class="q-pa-md" style="max-width: 900px;">
-            <q-card class="no-shadow">
+            <q-card class="no-shadow" style="border-radius:30px;">
                 <q-tabs
                     v-model="tab"
                     dense
-                    class="text-grey"
-                    active-color="primary"
-                    indicator-color="primary"
                     align="justify"
                 >
-                    <q-tab name="view" style="color:black;" label="상세설명" />
-                    <q-tab name="review" style="color:black;" label="리뷰" />
-                    <q-tab name="author" style="color:black;" label="작가의 다른 책" />
+                    <q-tab name="view" class="text-red" label="상세설명" />
+                    <q-tab name="review" class="text-green" label="리뷰" />
+                    <q-tab name="author" class="text-blue" label="작가의 다른 책" />
                 </q-tabs>
 
             <q-separator />
@@ -47,32 +44,77 @@
                         <div class="review_head">책리뷰 (1)
                             <q-btn @click="writeMode = true" style="float:right; margin-right:25px; font-weight:bold; border-radius:15px;" color="primary" label="리뷰쓰기" />
                         </div>
-                        <q-dialog v-model="writeMode" persistent>
-                            <q-card>
+                        <!-- 리뷰 모달 -->
+                        <q-dialog v-model="writeMode">
+                            <q-card style="background: #E3E7EA">
                                 <q-card-section class="row items-center">
-                                    <div style="width:400px;"></div>
+                                    <div class="review_modal">
+                                        <div class="modal_name">
+                                            모던웹을 위한 HTML+CSS
+                                        </div>
+                                        <div class="modal_score">
+                                            <span style="font-weight:bold;">장점 </span>- 이 책에 대한 별점을 남겨주세요
+                                            <q-rating
+                                            style="margin-left:5px; margin-top:10px;"
+                                            v-model="review_score"
+                                            max="5"
+                                            size="2em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            />
+                                        </div>
+                                        <div class="modal_tag">
+                                            <span style="font-weight:bold;">태그 </span>- 이 책을 읽었을 때의 느낌을 남겨주세요
+                                            <div class="write_categories">
+                                                <div class="write_category">
+                                                    <img class="write_icon" src="../../assets/Surprised_Emoji.png">
+                                                    <span class="write_word">기발해요</span>
+                                                </div>
+                                                <div class="write_category">
+                                                    <img class="write_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                                    <span class="write_word">유용해요</span>
+                                                </div>
+                                                <div class="write_category">
+                                                    <img class="write_icon" src="../../assets/Eyes_Emoji.png">
+                                                    <span class="write_word">잘읽혀요</span>
+                                                </div>
+                                                <div class="write_category">
+                                                    <img class="write_icon" src="../../assets/Heart_Emoji.png">
+                                                    <span class="write_word">추천해요</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal_write">
+                                            <span style="font-weight:bold;">리뷰 </span>- 이 책의 감상평을 간단히 적어주세요
+                                            <div style="max-width: 350px; margin-left:5px; margin-top:10px;">
+                                                <q-input
+                                                class="textarea"
+                                                filled
+                                                type="textarea"
+                                                rows="5"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </q-card-section>
-
-                                <q-card-actions align="center">
-                                <q-btn label="취소" color="primary" v-close-popup />
-                                <q-btn label="등록" color="primary"/>
+                                <q-card-actions>
+                                    <div style="display:inline-block; margin:0 auto;">
+                                        <q-btn class="modal_btn" label="취소" color="primary" v-close-popup />
+                                        <q-btn class="modal_btn" label="등록" color="primary"/>
+                                    </div>
                                 </q-card-actions>
                             </q-card>
                         </q-dialog>
                         <div class="review_list">
-                            <div class='review_item'>
-                                <div class="review_left">
-                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
-                                    <div class="review_name">
-                                        김싸피
-                                    </div>
-                                </div>
-                                <div class="review_right">
-                                    <div class="review_score">
+                            <div class="review_state">
+                                <div class="state_left">
+                                    <div>
                                         <q-rating
-                                            v-model="review_score"
+                                            v-model="score_5"
                                             max="5"
-                                            size="2em"
+                                            size="1.8em"
                                             color="green-5"
                                             icon="star_border"
                                             icon-selected="star"
@@ -80,10 +122,73 @@
                                             readonly
                                         />
                                     </div>
-                                    <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                    <div>
+                                        <q-rating
+                                            v-model="score_4"
+                                            max="5"
+                                            size="1.8em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            readonly
+                                        />
+                                    </div>
+                                    <div>
+                                        <q-rating
+                                            v-model="score_3"
+                                            max="5"
+                                            size="1.8em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            readonly
+                                        />
+                                    </div>
+                                    <div>
+                                        <q-rating
+                                            v-model="score_2"
+                                            max="5"
+                                            size="1.8em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            readonly
+                                        />
+                                    </div>
+                                    <div>
+                                        <q-rating
+                                            v-model="score_1"
+                                            max="5"
+                                            size="1.8em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            readonly
+                                        />
+                                    </div>
+                                </div>
+                                <div class="state_right">
+                                    <div class="state_categories">
+                                        <div class="state_category">
+                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
+                                            <span class="review_word">기발해요</span>
+                                        </div>
+                                        <div class="state_category">
+                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                            <span class="review_word">유용해요</span>
+                                        </div>
+                                        <div class="state_category">
+                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
+                                            <span class="review_word">잘읽혀요</span>
+                                        </div>
+                                        <div class="state_category">
+                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
+                                            <span class="review_word">추천해요</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -112,32 +217,23 @@
                                         이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
                                         이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
                                     </div>
-                                </div>
-                            </div>
-                            <div class='review_item'>
-                                <div class="review_left">
-                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
-                                    <div class="review_name">
-                                        김싸피
-                                    </div>
-                                </div>
-                                <div class="review_right">
-                                    <div class="review_score">
-                                        <q-rating
-                                            v-model="review_score"
-                                            max="5"
-                                            size="2em"
-                                            color="green-5"
-                                            icon="star_border"
-                                            icon-selected="star"
-                                            icon-half="star_half"
-                                            readonly
-                                        />
-                                    </div>
-                                    <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                    <div class="review_categories">
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
+                                            <span class="review_word">기발해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                            <span class="review_word">유용해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
+                                            <span class="review_word">잘읽혀요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
+                                            <span class="review_word">추천해요</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -165,6 +261,114 @@
                                         이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
                                         이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
                                         이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                    </div>
+                                    <div class="review_categories">
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
+                                            <span class="review_word">기발해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                            <span class="review_word">유용해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
+                                            <span class="review_word">잘읽혀요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
+                                            <span class="review_word">추천해요</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='review_item'>
+                                <div class="review_left">
+                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
+                                    <div class="review_name">
+                                        김싸피
+                                    </div>
+                                </div>
+                                <div class="review_right">
+                                    <div class="review_score">
+                                        <q-rating
+                                            v-model="review_score"
+                                            max="5"
+                                            size="2em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            readonly
+                                        />
+                                    </div>
+                                    <div class="review_text">
+                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
+                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
+                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                    </div>
+                                    <div class="review_categories">
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
+                                            <span class="review_word">기발해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                            <span class="review_word">유용해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
+                                            <span class="review_word">잘읽혀요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
+                                            <span class="review_word">추천해요</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='review_item'>
+                                <div class="review_left">
+                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
+                                    <div class="review_name">
+                                        김싸피
+                                    </div>
+                                </div>
+                                <div class="review_right">
+                                    <div class="review_score">
+                                        <q-rating
+                                            v-model="review_score"
+                                            max="5"
+                                            size="2em"
+                                            color="green-5"
+                                            icon="star_border"
+                                            icon-selected="star"
+                                            icon-half="star_half"
+                                            readonly
+                                        />
+                                    </div>
+                                    <div class="review_text">
+                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
+                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
+                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                    </div>
+                                    <div class="review_categories">
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
+                                            <span class="review_word">기발해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                            <span class="review_word">유용해요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
+                                            <span class="review_word">잘읽혀요</span>
+                                        </div>
+                                        <div class="review_category">
+                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
+                                            <span class="review_word">추천해요</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -211,13 +415,18 @@ export default {
             tab: ref('review'),
             writeMode: ref(false),
             review_score,
+            score_5: ref(5),
+            score_4: ref(4),
+            score_3: ref(3),
+            score_2: ref(2),
+            score_1: ref(1),
             back
         }
     }
 }
 </script>
 
-<style>
+<style scoped>
 .detail_box{
     /* border:1px solid red; */
     width:900px;
@@ -285,8 +494,117 @@ export default {
     font-weight:bold;
     font-size:25px;
 }
-.review_list{
+.review_modal{
+    width:400px;
+    height:350px;
+    padding:15px;
+}
+.modal_name{
+    color:rgb(60, 118, 204);
+    font-weight:bold;
+    font-size:20px;
+}
+.modal_tag{
     margin-top:15px;
+    padding-left:5px;
+}
+.modal_score{
+    margin-top:15px;
+    padding-left:5px;
+}
+.write_categories{
+    margin-left:5px;
+    margin-top:10px;
+    display:flex;
+}
+.write_category{
+  display: flex;
+  width:90px;
+  height:30px;
+  background-color: rgb(187, 221, 241);
+  border-radius: 20px;
+  margin-right:4px;
+}
+.write_icon{
+  width:20px;
+  height:20px;
+  margin: 5px 0px 0px 3px;
+}
+.write_word{
+  margin:6px 0px 0px 2px;
+  color:rgb(8, 84, 173);
+  font-weight: bold;
+}
+.review_categories{
+    margin-left:5px;
+    margin-top:5px;
+    position:absolute;
+    top:108px;
+    display:flex;
+}
+.review_category{
+  display: flex;
+  width:90px;
+  height:30px;
+  background-color: rgb(187, 221, 241);
+  border-radius: 20px;
+  margin-right:5px;
+}
+.review_icon{
+  width:20px;
+  height:20px;
+  margin: 5px 0px 0px 3px;
+}
+.review_word{
+  margin:6px 0px 0px 2px;
+  color:rgb(8, 84, 173);
+  font-weight: bold;
+}
+.modal_write{
+    margin-top:15px;
+    padding-left:5px;
+}
+.modal_btn{
+    width:120px;
+    font-weight:bold;
+    font-size:15px;
+    border-radius: 15px;
+    margin:0 20px;
+    margin-bottom:8px;
+}
+.review_list{
+    margin-top:5px;
+}
+.state_left{
+    width:33%;
+    height:150px;
+    display: inline-block;
+    vertical-align: top;
+    padding-left: 10px;
+    padding-top: 10px;
+}   
+.state_right{
+    width:67%;
+    height:150px;
+    display:inline-block;
+    vertical-align: top;
+    position:relative;
+}
+.state_categories{
+    margin-left:5px;
+    margin-top:5px;
+    position:absolute;
+    top:100px;
+    left:20px;
+    display:flex;
+}
+.state_category{
+  display: flex;
+  width:90px;
+  height:30px;
+  background-color: rgb(187, 221, 241);
+  border-radius: 20px;
+  margin-right:20px;
 }
 .review_item{
     border:1px solid grey;
@@ -294,6 +612,8 @@ export default {
     margin-bottom: 15px;
     margin-right:25px;
     border-radius: 15px;
+    position:relative;
+    box-shadow: 2px 2px 2px;
 }
 .review_left{
     width:20%;

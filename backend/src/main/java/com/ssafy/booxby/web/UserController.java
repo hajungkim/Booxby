@@ -17,14 +17,13 @@ public class UserController {
     @ApiOperation(value = "로그인", notes = "로그인 성공 시 (token, userId) 반환 / 회원정보가 없을 경우 false 반환", response = ControllerResponse.class)
     @PostMapping("/login")
     public ControllerResponse login(@RequestBody UserDto.loginRequest request) {
-        System.out.println("ok");
         ControllerResponse response = null;
         try {
             User loginUser = userService.login(request);
             if (loginUser == null) {
                 response = new ControllerResponse("success", false);
             } else {
-                String token = userService.create(loginUser);
+                String token = userService.createToken(loginUser);
                 UserDto.loginResponse loginResponse = userService.createTokenUserId(token, loginUser.getUserId());
                 response = new ControllerResponse("success", loginResponse);
             }
@@ -41,6 +40,23 @@ public class UserController {
         try {
             userService.saveUser(request);
             response = new ControllerResponse("success", "회원가입 성공");
+        } catch (Exception e) {
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "이메일 중복 확인", notes = "이메일 사용가능하면 true, 중복이면 false", response = ControllerResponse.class)
+    @PostMapping("/check")
+    public ControllerResponse checkEmail(@RequestBody UserDto.checkEmailRequest request) {
+        ControllerResponse response = null;
+        try {
+            User user = userService.findEmailUser(request);
+            if (user == null) {
+                response = new ControllerResponse("success", true);
+            } else {
+                response = new ControllerResponse("success", false);
+            }
         } catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
         }

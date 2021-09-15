@@ -33,39 +33,24 @@
 </template>
 
 <script>
-import { computed } from 'vue'
-import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 export default {
-  setup () {
-    const store = useStore()
-    const router = useRouter()
+    setup () {
+        const router = useRouter()
 
-    const categoryMode = computed(() => store.getters['module/getCategoryMode'])
-    const tmp = true
+        const goDetail = function() {
+            router.push('/detail')
+        }
 
-    const showCategory = function () {
-      store.commit('module/setCategroyMode', !store.getters['module/getCategoryMode'])
+        return {
+            goDetail
+        }
     }
-    const logout = function() {
-      router.push('/')
-    }
-    const goDetail = function() {
-      router.push('/detail')
-    }
-    return {
-      tmp,
-      categoryMode,
-      showCategory,
-      logout,
-      goDetail
-    }
-  }
 }
 </script>
 
-<style>
+<style scoped>
 .main_box{
     /* border:1px solid red; */
     width:900px;

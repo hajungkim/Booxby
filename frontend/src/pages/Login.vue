@@ -1,18 +1,18 @@
 <template>
   <div class="login_container">
-      <div class="img">
+      <div class="login_img">
       </div>
       <div class="login">
           <div class="login_form">
               <h2 class="head">Login</h2>
-              <q-input class="login_form_main" label="ID" type="email" 
-              v-model="form.id"
+              <q-input v-on:keyup.enter="login" class="login_form_main" label="Email" type="email" 
+              v-model="form.email"
               lazy-rules
                 :rules="[
                 val => !!val || '필수입력항목 입니다.',
                 checkId
                 ]"/>
-              <q-input type="password" class="form" label="PASSWORD" v-model="form.password"
+              <q-input v-on:keyup.enter="login" type="password" class="form" label="PASSWORD" v-model="form.password"
               lazy-rules
                 :rules="[
                   val => val && val.length > 0 || '필수입력항목 입니다.',
@@ -29,16 +29,21 @@
 <script>
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
 
 export default {
     setup() {
         // 라우터 사용시 필요한 변수
         const router = useRouter()
+        // 스토어 사용시 필요한 변수
+        const store = useStore()
+        // sweetalert 2 사용시 필요한 변수
+        const Swal = require('sweetalert2')
 
         // v-model을 위해 필요한 형태
         const form = reactive({
-            id: '',
+            email: '',
             password: '',
             findpw: '',
         })
@@ -78,7 +83,48 @@ export default {
 
         // 로그인
         function login() {
-            router.push('/hashtag')
+            store.dispatch('module/login', { email: form.email, password: form.password })
+                .then(function (result) {
+                    // 로그인 성공
+                    if(result.data.data) {
+                        // 로컬 스토리지 저장
+                        const userId = result.data.data.userId
+                        const token = result.data.data.token
+                        localStorage.setItem('userId', userId)
+                        localStorage.setItem('token', token)
+                        
+                        // 회원정보 가져오기
+                        store.dispatch('module/requestInfo', userId)
+                            .then(function (result) {
+                                const data = result.data.data
+                                const loginUser = {
+                                    userId: userId,
+                                    email: data.email,
+                                    nickname: data.nickname,
+                                    gender: data.gender,
+                                    age: data.age,
+                                    score: data.emotionScore,
+                                    profile: data.profilePath,
+                                    hashtag: data.hashtag,
+                                    token: token
+                                }
+                                // store에 저장
+                                store.commit('module/setLoginUser', loginUser)
+                                router.push('/main')
+                            })
+                    }
+                    // 로그인 실패
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<span style="font-size:25px;">아이디 또는 비밀번호를 확인해주세요</span>',
+                            confirmButtonColor: '#ce1919',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    }
+                })
+                .catch(function(){
+                })
         }
         // 회원가입 창 이동
         function goSignUp() {
@@ -102,7 +148,7 @@ export default {
     width:1300px;
     height:650px;
 }
-.img{
+.login_img{
     width:650px;
     height:650px;
     background-color:skyblue;
