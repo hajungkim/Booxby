@@ -5,14 +5,14 @@
       <div class="login">
           <div class="login_form">
               <h2 class="head">Login</h2>
-              <q-input class="login_form_main" label="Email" type="email" 
+              <q-input v-on:keyup.enter="login" class="login_form_main" label="Email" type="email" 
               v-model="form.email"
               lazy-rules
                 :rules="[
                 val => !!val || '필수입력항목 입니다.',
                 checkId
                 ]"/>
-              <q-input type="password" class="form" label="PASSWORD" v-model="form.password"
+              <q-input v-on:keyup.enter="login" type="password" class="form" label="PASSWORD" v-model="form.password"
               lazy-rules
                 :rules="[
                   val => val && val.length > 0 || '필수입력항목 입니다.',
@@ -83,28 +83,47 @@ export default {
 
         // 로그인
         function login() {
-            // 로컬 스토리지에 저장
-            // localStorage.setItem('email', form.email)
-            // localStorage.setItem('password', form.password)
-            console.log('login함수')
             store.dispatch('module/login', { email: form.email, password: form.password })
                 .then(function (result) {
-                    console.log(result)
-                    const loginUser = {
-                        email: result.data.email,
-                        token: result.data.token
+                    // 로그인 성공
+                    if(result.data.data) {
+                        // 로컬 스토리지 저장
+                        const userId = result.data.data.userId
+                        const token = result.data.data.token
+                        localStorage.setItem('userId', userId)
+                        localStorage.setItem('token', token)
+                        
+                        // 회원정보 가져오기
+                        store.dispatch('module/requestInfo', userId)
+                            .then(function (result) {
+                                const data = result.data.data
+                                const loginUser = {
+                                    userId: userId,
+                                    email: data.email,
+                                    nickname: data.nickname,
+                                    gender: data.gender,
+                                    age: data.age,
+                                    score: data.emotionScore,
+                                    profile: data.profilePath,
+                                    hashtag: data.hashtag,
+                                    token: token
+                                }
+                                // store에 저장
+                                store.commit('module/setLoginUser', loginUser)
+                                router.push('/main')
+                            })
                     }
-                    store.commit('module/setLoginUser')
-                    localStorage.setItem('loginUser', loginUser)
-                    router.push('/main')
+                    // 로그인 실패
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<span style="font-size:25px;">아이디 또는 비밀번호를 확인해주세요</span>',
+                            confirmButtonColor: '#ce1919',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    }
                 })
                 .catch(function(){
-                    Swal.fire({
-                        icon: 'error',
-                        title: '<span style="font-size:25px;">아이디 또는 비밀번호를 확인해주세요</span>',
-                        confirmButtonColor: '#ce1919',
-                        confirmButtonText: '<span style="font-size:18px;">확인</span>'
-                    })
                 })
         }
         // 회원가입 창 이동

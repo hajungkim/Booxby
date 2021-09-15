@@ -2,11 +2,11 @@ export function setTextMode (state, textMode) {
   state.textMode = textMode
 }
 
-export function setCategroyMode (state, categoryMode) {
+export function setCategoryMode (state, categoryMode) {
     state.categoryMode = categoryMode
 }
 
-export function setLoginUser (state, categloginUseroryMode) {
+export function setLoginUser (state, loginUser) {
   state.loginUser = loginUser
 }
 

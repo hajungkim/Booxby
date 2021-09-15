@@ -7,14 +7,15 @@ export default function () {
 
   // 로그인 유저 정보
   const loginUser = {
+    userId:'',
     email: '',
-    password: '',
     nickname: '',
     gender: '',
     age:'',
     score:'',
     profile:'',
-    hashtag:''
+    hashtag:'',
+    token:''
   }
 
   const user_info = {}
