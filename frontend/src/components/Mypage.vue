@@ -34,44 +34,44 @@
         <q-tab-panel class="three_options zzims" name="zzim">
           <q-card class="my-card no-shadow cardbooks" id="card">
             <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
-                Title
-              </div>
-            </q-img>
-          </q-card>
-          <!-- <q-card class="my-card no-shadow cardbooks" id="card">
-            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+              <div class="absolute-bottom text-subtitle2 text-center">
                 Title
               </div>
             </q-img>
           </q-card>
           <q-card class="my-card no-shadow cardbooks" id="card">
             <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+              <div class="absolute-bottom text-subtitle2 text-center">
                 Title
               </div>
             </q-img>
           </q-card>
           <q-card class="my-card no-shadow cardbooks" id="card">
             <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+              <div class="absolute-bottom text-subtitle2 text-center">
                 Title
               </div>
             </q-img>
           </q-card>
           <q-card class="my-card no-shadow cardbooks" id="card">
             <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center" v-if="textmode">
+              <div class="absolute-bottom text-subtitle2 text-center">
                 Title
               </div>
             </q-img>
-          </q-card> -->
+          </q-card>
+          <q-card class="my-card no-shadow cardbooks" id="card">
+            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <div class="absolute-bottom text-subtitle2 text-center">
+                Title
+              </div>
+            </q-img>
+          </q-card>
         </q-tab-panel>
 
         <q-tab-panel class="three_options" name="reviews">
             <div class="review_container">
-              <div class="review_info">
+              <div class="review_info" @click="moveDetail">
                 <div class="title">
                   <p style="font-size:30px;">올라의 모험</p>
                   <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
@@ -188,31 +188,22 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from 'vue'
-import { useStore } from 'vuex'
+import { ref } from 'vue'
+// import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 export default {
   setup(){
-    const store = useStore()
-    const textmode = computed(() => store.getters['module/getTextMode'])
-    onMounted(()=>{
-      const card = document.getElementById('card')
-      card.addEventListener('mouseover',function(){
-        console.log(card,'@@@')
-        store.commit('module/setTextMode',true)
-      }, true)
-      card.addEventListener('mouseout',function(){
-        store.commit('module/setTextMode',false)
-      }, true)
-    })
     const router = useRouter()
     const moveModify = function(){
       router.push('/modify')
     }
+    function moveDetail(){
+      router.push('detail')
+    }
     return{
       tab: ref('zzim'),
       moveModify,
-      textmode
+      moveDetail
     }
   }
 }
@@ -285,6 +276,7 @@ export default {
   margin-right:30px;
   margin-top:20px;
   height:200px;
+  cursor: pointer;
 }
 /* My 리뷰 */
 .review_container{
@@ -294,6 +286,7 @@ export default {
   display: flex;
   justify-content: space-between;
   border-radius: 20px;
+  cursor: pointer;
 }
 .review_info{
   display:flex;
