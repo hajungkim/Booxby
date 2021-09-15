@@ -1,10 +1,14 @@
 export default function () {
   const textMode = false
   const categoryMode = false
-  const user_info = {}
+
+  // SignUp
+  let user_info = {}
+  const hash_tags = []
   return {
     textMode,
     categoryMode,
-    user_info
+    user_info,
+    hash_tags
   }
 }

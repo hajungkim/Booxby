@@ -60,23 +60,27 @@ export default {
             { hashtag:'#주도적인', score:236 },
             { hashtag:'#까다로운', score:-20 },
         ]
-        console.log(store.getters['module/getInfo'])
-
+        let select_hashtag = []
+        let emoji_score = 0
         function selectHashtag(hashtags,idx){
             const hashbtn = document.getElementById(idx)
             if (hashbtn.classList.contains('select')){
                 hashbtn.classList.remove('select')
                 hashbtn.classList.add('notselect')
-                // 선택된해시태그리스트에 빼야함
+                var index = select_hashtag.indexOf(hashtags.hashtag)
+                select_hashtag.splice(index,1)
+                emoji_score = emoji_score - hashtags.score
             }
             else {
                 hashbtn.classList.remove('notselect')
                 hashbtn.classList.add('select')
-                // 선택된해시태그리스트에 넣어야함
+                select_hashtag.push(hashtags.hashtag)
+                emoji_score = emoji_score + hashtags.score
             }
-            console.log(hashtags.hashtag,'@@')
         }
         function goWorldcup() {
+            store.commit('module/setHashtags',select_hashtag)
+            store.commit('module/setEmojiscore',emoji_score)
             router.push('worldCup')
         }
 

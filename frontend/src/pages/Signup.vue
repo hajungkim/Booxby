@@ -17,22 +17,12 @@
               checkEmail
               ]"
             />
-          <!-- <div>
-            <q-btn rounded size="xs" class="mail_button" color="primary" label="인증 보내기" />
-          </div> -->
+          <div>
+            <q-btn rounded size="xs" class="mail_button" color="primary" label="중복 확인" />
+          </div>
         </div>
 
-        <!-- <div class="form-mb">
-          <q-input style="width:400px;" label="인증 번호"
-            v-model="form.confirmNum"
-            lazy-rules
-              :rules="[
-              val => !!val || '필수입력항목 입니다.',
-            ]"
-          />
-        </div> -->
-
-        <div class="form-mb">
+        <div class="form-mb" style="margin-top:2px;">
           <q-input class="input" label="Password" color="teal" v-model="form.password" type="password"
             lazy-rules
               :rules="[
@@ -60,12 +50,12 @@
               ]"/>
         </div>
         <!-- 성별 -->
-        <div>
+        <div style="margin-top:5px;">
           <q-radio style="margin-right:10px; margin-left:-10px;" keep-color v-model="color" val=0 label="남자" color="cyan" />
           <q-radio keep-color v-model="color" val=1 label="여자" color="red" />
         </div>
         <!-- 나이 -->
-        <div style="margin-top:-5px;">
+        <div style="margin-top:10px;">
            <q-select v-model="model" :options="options" label="연령대" />
         </div>
         <!-- 버튼 -->
@@ -84,8 +74,7 @@
 <script>
 import { reactive } from 'vue'
 import { ref } from 'vue'
-import { api } from 'boot/axios'
-import { useRouter } from 'vue-router' 
+import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default {
   setup(){
@@ -136,29 +125,16 @@ export default {
       router.push('/hashtag')
     }
     function setInfos() {
-      console.log('함수인')
       let info = {
-        email: form.email,
-        password: form.password,
-        nickname: form.nickname,
-        gender: parseInt(color.value),
         age: model.value,
+        email: form.email,
+        gender: parseInt(color.value),
+        nickname: form.nickname,
+        password: form.password,
       }
       store.commit('module/setInfos',info)
       moveHashtag()
     }
-      // api.get('/user/signup').then((res) =>{
-      //   console.log(res.data)
-      // })
-      // .catch(()=>{
-      //   console.log('에러')
-      // })
-  //     "age": 20,
-  // "email": "ssafy@naver.com",
-  // "gender": 0,
-  // "hashtag": "상냥한",
-  // "nickname": "선쥬르",
-  // "password": "ssafy1234"
     return {
       model,
       options: [
@@ -195,6 +171,7 @@ export default {
 .text-group{
   display: flex;
   justify-content: center;
+  margin-top:30px;
 }
 .form-group{
   width:400px;
@@ -205,6 +182,7 @@ export default {
 }
 .form-input-email{
   width:400px;
+  margin-top:20px;
 }
 .mail_button{
   float:right;
@@ -221,7 +199,7 @@ export default {
 .submit_bt{
   display: flex;
   justify-content: center;
-  margin-top:20px;
+  margin-top:30px;
 }
 .submit{
   width:250px;
