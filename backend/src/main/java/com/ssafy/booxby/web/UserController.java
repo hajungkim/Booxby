@@ -46,6 +46,23 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value = "이메일 중복 확인", notes = "이메일 사용가능하면 true, 중복이면 false", response = ControllerResponse.class)
+    @PostMapping("/check")
+    public ControllerResponse checkEmail(@RequestBody UserDto.checkEmailRequest request) {
+        ControllerResponse response = null;
+        try {
+            User user = userService.findEmailUser(request);
+            if (user == null) {
+                response = new ControllerResponse("success", true);
+            } else {
+                response = new ControllerResponse("success", false);
+            }
+        } catch (Exception e) {
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @ApiOperation(value = "id로 유저정보 가져오기", notes = "존재하는 유저면 정보 반환", response = ControllerResponse.class)
     @GetMapping("/{id}")
     public ControllerResponse findUser(@PathVariable("id") Long userId) {
