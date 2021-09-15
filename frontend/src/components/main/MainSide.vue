@@ -6,7 +6,7 @@
       <div class="side_content">
         <div class="side_user">
           <q-img @click="goMypage" src="~assets/images/book.jpg" class="user_profile"/>
-          <div class="user_name">KIMSSAFY</div>
+          <div class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">
           <div class="side_list">
@@ -28,19 +28,19 @@
           </div>
           <div class="side_category row" v-show="categoryMode">
             <div class="col-4">
-              <q-checkbox v-model="tmp" />아동
-              <q-checkbox v-model="tmp" />문학
-              <q-checkbox v-model="tmp" />취미
+              <q-checkbox v-model="category1" />아동
+              <q-checkbox v-model="category2" />문학
+              <q-checkbox v-model="category3" />취미
             </div>
             <div class="col-4">
-              <q-checkbox v-model="tmp" />청소년
-              <q-checkbox v-model="tmp" />학문
-              <q-checkbox v-model="tmp" />오락
+              <q-checkbox v-model="category4" />청소년
+              <q-checkbox v-model="category5" />학문
+              <q-checkbox v-model="category6" />오락
             </div>
             <div class="col-4">
-              <q-checkbox v-model="tmp" />가정
-              <q-checkbox v-model="tmp" />교육
-              <q-checkbox v-model="tmp" />기타
+              <q-checkbox v-model="category7" />가정
+              <q-checkbox v-model="category8" />교육
+              <q-checkbox v-model="category9" />기타
             </div>
           </div>
           <div @click="logout" id="logout">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -62,22 +62,47 @@ export default {
   setup () {
     const store = useStore()
     const router = useRouter()
-
+    
+    const loginUser = computed(() => store.getters['module/getLoginUser'])
     const categoryMode = computed(() => store.getters['module/getCategoryMode'])
-    const tmp = true
+    const category1 = ref(false)
+    const category2 = ref(false)
+    const category3 = ref(false)
+    const category4 = ref(false)
+    const category5 = ref(false)
+    const category6 = ref(false)
+    const category7 = ref(false)
+    const category8 = ref(false)
+    const category9 = ref(false) 
 
     const showCategory = function () {
-      store.commit('module/setCategroyMode', !store.getters['module/getCategoryMode'])
+      store.commit('module/setCategoryMode', !store.getters['module/getCategoryMode'])
     }
     const goMypage = function () {
       router.push('/my')
     }
     const logout = function() {
+      localStorage.removeItem('userId')
+      localStorage.removeItem('token')
+      store.commit('module/setLoginUser', { } )
+      console.log(store.getters['module/getLoginUser'])
       router.push('/')
     }
+    onMounted(() => {
+      store.commit('module/setCategoryMode', false)
+    })
     return {
-      tmp,
+      loginUser,
       categoryMode,
+      category1,
+      category2,
+      category3,
+      category4,
+      category5,
+      category6,
+      category7,
+      category8,
+      category9,
       showCategory,
       goMypage,
       logout
