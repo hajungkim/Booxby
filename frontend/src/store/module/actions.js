@@ -1,8 +1,8 @@
-// import $axios from 'axios'
+import $axios from 'axios'
 
 const baseUrl = 'http://localhost:8080'
 
-export function saveInfo ({state}, info) {
-  console.log(info,'@@')
-  console.log(state)
+export function signup ({}, info) {
+  const url = baseUrl + '/user/signup'
+  return $axios.post(url,info)
 }
