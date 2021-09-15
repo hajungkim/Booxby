@@ -78,6 +78,11 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @Transactional
+    public User findEmailUser(UserDto.checkEmailRequest request) {
+        return userRepository.findByEmail(request.getEmail());
+    }
+
     @Transactional(readOnly = true)
     public User findUser(Long userId) {
         return userRepository.findById(userId)
