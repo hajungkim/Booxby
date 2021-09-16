@@ -1,7 +1,7 @@
 package com.ssafy.booxby.service;
 
-import com.ssafy.booxby.domain.user.Scrap;
-import com.ssafy.booxby.domain.user.ScrapRepository;
+import com.ssafy.booxby.domain.scrap.Scrap;
+import com.ssafy.booxby.domain.scrap.ScrapRepository;
 import com.ssafy.booxby.web.dto.ScrapDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
