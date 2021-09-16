@@ -34,7 +34,7 @@ export default {
         hashtags_list.forEach(e => {
             hashtag = hashtag + e
         });
-        console.log(hashtag,'hashtag')
+
         function signUp(){
             store.dispatch('module/signup',{
                 age: infos.age,
