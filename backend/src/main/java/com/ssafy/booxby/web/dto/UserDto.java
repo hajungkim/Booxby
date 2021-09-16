@@ -41,6 +41,7 @@ public class UserDto {
         private String hashtag;
         private int worldcupScore;
         private int hashScore;
+        private String profilePath;
     }
 
     @Getter
