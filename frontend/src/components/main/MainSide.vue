@@ -5,7 +5,7 @@
       </div>
       <div class="side_content">
         <div class="side_user">
-          <q-img @click="goMypage" src="~assets/images/book.jpg" class="user_profile"/>
+          <q-img @click="goMypage" :src="loginUser.profile" class="user_profile"/>
           <div class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
@@ -62,47 +62,31 @@ export default {
   setup () {
     const store = useStore()
     const router = useRouter()
-    
+
     const loginUser = computed(() => store.getters['module/getLoginUser'])
     const categoryMode = computed(() => store.getters['module/getCategoryMode'])
-    const category1 = ref(false)
-    const category2 = ref(false)
-    const category3 = ref(false)
-    const category4 = ref(false)
-    const category5 = ref(false)
-    const category6 = ref(false)
-    const category7 = ref(false)
-    const category8 = ref(false)
-    const category9 = ref(false) 
 
     const showCategory = function () {
       store.commit('module/setCategoryMode', !store.getters['module/getCategoryMode'])
     }
-    const goMypage = function () {
+    const goMypage = function() {
       router.push('/my')
     }
     const logout = function() {
-      localStorage.removeItem('userId')
-      localStorage.removeItem('token')
-      store.commit('module/setLoginUser', { } )
-      console.log(store.getters['module/getLoginUser'])
       router.push('/')
     }
-    onMounted(() => {
-      store.commit('module/setCategoryMode', false)
-    })
     return {
+      category1: ref(false),
+      category2: ref(false),
+      category3: ref(false),
+      category4: ref(false),
+      category5: ref(false),
+      category6: ref(false),
+      category7: ref(false),
+      category8: ref(false),
+      category9: ref(false),
       loginUser,
       categoryMode,
-      category1,
-      category2,
-      category3,
-      category4,
-      category5,
-      category6,
-      category7,
-      category8,
-      category9,
       showCategory,
       goMypage,
       logout
@@ -111,7 +95,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .main_side{
   width:350px;
   height:650px;
