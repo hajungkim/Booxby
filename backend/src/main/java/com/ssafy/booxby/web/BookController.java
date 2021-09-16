@@ -74,7 +74,20 @@ public class BookController {
         return response;
     }
 
+    @DeleteMapping
+    public ControllerResponse deleteReview(@RequestBody BookDto.reviewDeleteRequest request){
+        ControllerResponse response = null;
 
+        try{
+            bookService.deleteReview(request);
+
+            response = new ControllerResponse("success", "리뷰삭제성공");
+        }catch (Exception e) {
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+
+        return response;
+    }
 
 
 }
