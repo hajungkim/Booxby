@@ -1,5 +1,6 @@
-package com.ssafy.booxby.domain.user;
+package com.ssafy.booxby.domain.scrap;
 
+import com.ssafy.booxby.domain.scrap.Scrap;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
