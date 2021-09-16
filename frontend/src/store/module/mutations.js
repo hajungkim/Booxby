@@ -11,7 +11,6 @@ export function setLoginUser (state, loginUser) {
 }
 
 export function setInfos (state, info) {
-  console.log('뮤테이션', info)
   state.user_info = info
 }
 

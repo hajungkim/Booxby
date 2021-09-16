@@ -158,8 +158,8 @@
 
         <q-tab-panel class="three_options" name="settings">
           <div class="q-col-gutter-md row items-start">
-            <div class="col-4" @click="moveModify">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+            <div class="col-4">
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveModify">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   개인 정보 수정
                 </div>
@@ -172,8 +172,8 @@
                 </div>
               </q-img>
             </div>
-            <div class="col-4" @click="moveHash">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+            <div class="col-4" >
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveHash">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   해시태그 재설정 하기
                 </div>
@@ -188,7 +188,7 @@
 </template>
 
 <script>
-import { ref, computed, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 
@@ -197,30 +197,17 @@ export default {
     const store = useStore()
     const router = useRouter()
 
-    // const loginUser = computed(() => store.getters['module/getLoginUser'])
-    const textmode = computed(() => store.getters['module/getTextMode'])
+    const loginUser = store.getters['module/getLoginUser']
     
     const back = function() {
         router.push('/main')
     }
-
-    onMounted(()=>{
-      const card = document.getElementById('card')
-      card.addEventListener('mouseover',function(){
-        console.log(card,'@@@')
-        store.commit('module/setTextMode',true)
-      }, true)
-      card.addEventListener('mouseout',function(){
-        store.commit('module/setTextMode',false)
-      }, true)
-    })
+    
     const userId = localStorage.getItem('userId')
     let hashtags = []
 
-    const loginUser = store.getters['module/getLoginUser']
     const arr = loginUser.hashtag.split('#')
     hashtags = arr.splice(1,arr.length)
-    console.log(hashtags,'@@')
 
     const moveModify = function(){
       router.push('/modify')
