@@ -80,7 +80,8 @@ export default {
             const reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{6,}$/
             return (reg.test(val) || '최소 각 하나의 문자, 숫자, 특수 문자가 포함되어야 합니다.')
         }
-
+        // 로컬스토리지 삭제
+        localStorage.clear()
         // 로그인
         function login() {
             store.dispatch('module/login', { email: form.email, password: form.password })

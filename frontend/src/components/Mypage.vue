@@ -8,9 +8,9 @@
     <div class="user_info_container">
       <img class="user_img" src="../assets/user_default.png">
       <div class="user_info">
-        <p style="font-size:30px;">userkim</p>
-        <div style="width:200px; font-weight:bold;">
-          <p>#갬성 #느낌 #섬세 #방가 #헬로</p>
+        <p style="font-size:30px;">{{loginUser.nickname}}</p>
+        <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
+          <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
         </div>
       </div>
       <img class="emotion_chr" src="../assets/user_default.png">
@@ -172,7 +172,7 @@
                 </div>
               </q-img>
             </div>
-            <div class="col-4">
+            <div class="col-4" @click="moveHash">
               <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
                 <div class="absolute-bottom text-subtitle1 text-center">
                   해시태그 재설정 하기
@@ -188,21 +188,37 @@
 </template>
 
 <script>
-import { ref } from 'vue'
-// import { useStore } from 'vuex'
+import { computed, ref } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 export default {
   setup(){
     const router = useRouter()
+    const store = useStore()
+    const userId = localStorage.getItem('userId')
+    let hashtags = []
+
+    const loginUser = store.getters['module/getLoginUser']
+    const arr = loginUser.hashtag.split('#')
+    hashtags = arr.splice(1,arr.length)
+    console.log(hashtags,'@@')
+
     const moveModify = function(){
       router.push('/modify')
     }
     function moveDetail(){
       router.push('detail')
     }
+    function moveHash(){
+      router.push('hashtag')
+    }
     return{
       tab: ref('zzim'),
+      userId,
+      loginUser,
+      hashtags,
       moveModify,
+      moveHash,
       moveDetail
     }
   }
@@ -243,6 +259,9 @@ export default {
   border-radius: 50px;
   margin-left:100px;
   margin-top:10px;
+}
+.hashtag{
+  display: flex;
 }
 /* tab 부분 */
 .card_container{
@@ -323,5 +342,6 @@ export default {
 /* 설정 */
 .img{
   height: 318px;
+  cursor: pointer;
 }
 </style>

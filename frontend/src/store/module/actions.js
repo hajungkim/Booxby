@@ -1,7 +1,7 @@
 import $axios from 'axios'
 
 // 기본 url
-const baseUrl = 'http://localhost:8080'
+const baseUrl = 'http://localhost:7777/api'
 
 // 회원가입 axios
 export function signup ({}, info) {

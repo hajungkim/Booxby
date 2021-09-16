@@ -12,7 +12,8 @@
                 <div class="hashtag_form_main" >
                     <q-btn :id="idx" @click="selectHashtag(hashtags,idx)" v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag notselect" :label="hashtags.hashtag"/>
                 </div>
-                <q-btn @click="goWorldcup" class="nextBt" color="primary" label="Next" />
+                <q-btn @click="goWorldcup" class="nextBt" color="primary" label="Next" v-if="hashflag"/>
+                <q-btn @click="gomy" class="nextBt" color="primary" label="변경하기" v-else/>
             </div>
         </div>
     </div>
@@ -23,6 +24,7 @@ import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 export default {
     setup() {
+        let hashflag = true
         const store = useStore()
         const router = useRouter()
         const hashtag_list = [
@@ -63,7 +65,11 @@ export default {
             { hashtag:'#까다로운', score:-20 },
         ]
         let select_hashtag = []
-        let emoji_score = 0
+        let hashscore = 0
+
+        if (localStorage.getItem('userId') != null){
+            hashflag = false
+        }
         function selectHashtag(hashtags,idx){
             const hashbtn = document.getElementById(idx)
             if (hashbtn.classList.contains('select')){
@@ -71,23 +77,30 @@ export default {
                 hashbtn.classList.add('notselect')
                 var index = select_hashtag.indexOf(hashtags.hashtag)
                 select_hashtag.splice(index,1)
-                emoji_score = emoji_score - hashtags.score
+                hashscore = hashscore - hashtags.score
             }
             else {
                 hashbtn.classList.remove('notselect')
                 hashbtn.classList.add('select')
                 select_hashtag.push(hashtags.hashtag)
-                emoji_score = emoji_score + hashtags.score
+                hashscore = hashscore + hashtags.score
             }
         }
         function goWorldcup() {
             store.commit('module/setHashtags',select_hashtag)
-            store.commit('module/setEmojiscore',emoji_score)
+            store.commit('module/setHashscore',hashscore)
             router.push('worldCup')
+        }
+        function goMy() {
+            store.commit('module/setHashtags',select_hashtag)
+            store.commit('module/setHashscore',hashscore)
+            router.push('my')
         }
         return {
             hashtag_list,
+            hashflag,
             goWorldcup,
+            goMy,
             selectHashtag
         }
     }
