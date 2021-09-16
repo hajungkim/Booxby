@@ -13,7 +13,7 @@
                     <q-btn :id="idx" @click="selectHashtag(hashtags,idx)" v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag notselect" :label="hashtags.hashtag"/>
                 </div>
                 <q-btn @click="goWorldcup" class="nextBt" color="primary" label="Next" v-if="hashflag"/>
-                <q-btn @click="gomy" class="nextBt" color="primary" label="변경하기" v-else/>
+                <q-btn @click="goMy" class="nextBt" color="primary" label="변경하기" v-else/>
             </div>
         </div>
     </div>

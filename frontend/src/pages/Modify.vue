@@ -49,7 +49,7 @@
             v-model="form.nickname"
             lazy-rules
               :rules="[
-                val => val && val.length > 2 || '두글자 이상 입력 바랍니다.',
+                val => val && val.length >= 2 || '두글자 이상 입력 바랍니다.',
                 checkName
               ]"/>
         </div>
@@ -126,7 +126,7 @@ export default {
       const loginUser = store.getters['module/getLoginUser']
       store.dispatch('module/modifyInfo', {hashtag: loginUser.hashtag, nickname: form.nickname, password: form.password, profilePath: form.profile })
         .then(function () {
-            Swal.fire({
+          Swal.fire({
                 icon: 'success',
                 title: '<span style="font-size:25px;">성공적으로 수정되었습니다.</span>',
                 confirmButtonColor: '#skyblue',
