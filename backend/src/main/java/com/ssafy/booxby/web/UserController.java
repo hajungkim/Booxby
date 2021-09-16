@@ -77,13 +77,26 @@ public class UserController {
         return response;
     }
 
-    @ApiOperation(value = "유저 정보 수정", notes = "일단 닉네임,패스워드,프로필,해시태그 해놓음", response = ControllerResponse.class)
+    @ApiOperation(value = "유저 정보 수정", notes = "일단 닉네임,패스워드,프로필 해놓음", response = ControllerResponse.class)
     @PutMapping("/user/{id}")
     public ControllerResponse updateUser(@PathVariable("id") Long userId, @RequestBody UserDto.updateUserRequest request) {
         ControllerResponse response = null;
         try {
             userService.updateUser(userId, request);
             response = new ControllerResponse("success", "회원 수정 성공");
+        } catch (Exception e) {
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
+    @ApiOperation(value = "유저 해시태그 수정", notes = "", response = ControllerResponse.class)
+    @PutMapping("/user/hash/{id}")
+    public ControllerResponse updateHashtag(@PathVariable("id") Long userId, @RequestParam String hashtag) {
+        ControllerResponse response = null;
+        try {
+            userService.updateHashtag(userId, hashtag);
+            response = new ControllerResponse("success", "해시태그 수정 성공");
         } catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
         }
