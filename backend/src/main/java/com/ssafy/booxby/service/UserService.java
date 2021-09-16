@@ -20,6 +20,9 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    /*
+    로그인 토큰 부분
+     */
     //로그인 성공 시 사용자 정보 기반으로 JWTToken 생성하여 반환
     public String createToken(User user) {
         JwtBuilder jwtBuilder = Jwts.builder();
@@ -52,6 +55,9 @@ public class UserService {
         return claims.getBody();
     }
 
+    /*
+    유저 부분
+     */
     @Transactional
     public User login(UserDto.loginRequest request) {
         return userRepository.findByEmailAndPassword(request.getEmail(), request.getPassword());
@@ -70,15 +76,17 @@ public class UserService {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickname(request.getNickname())
-                .emotionScore(request.getEmotionScore())
                 .age(request.getAge())
                 .gender(request.getGender())
                 .hashtag(request.getHashtag())
+                .worldcupScore(request.getWorldcupScore())
+                .hashScore(request.getHashScore())
+                .profilePath(request.getProfilePath())
                 .build();
         userRepository.save(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User findEmailUser(UserDto.checkEmailRequest request) {
         return userRepository.findByEmail(request.getEmail());
     }
@@ -90,7 +98,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long userId, UserDto.updateRequest request) {
+    public void updateUser(Long userId, UserDto.updateUserRequest request) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
         user.updateUser(request);
@@ -100,4 +108,5 @@ public class UserService {
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
+
 }

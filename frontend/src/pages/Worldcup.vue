@@ -23,12 +23,10 @@
 <script>
 import { onMounted, computed } from 'vue'
 import { useStore } from 'vuex'
-import { api } from 'boot/axios'
 export default {
     setup() {
-        // store 사용을 위한 변수 선언
         const store = useStore()
-        const textMode = computed(() => store.getters['module/getTextMode'])    // 설명 박스
+        const textMode = computed(() => store.getters['module/getTextMode'])
         const infos = store.getters['module/getInfo']
         const hashtags_list = (store.getters['module/getHashtags'])
         let hashtag = ''
@@ -62,7 +60,6 @@ export default {
                 store.commit('module/setTextMode', false)
             }, true)
         })
-
         return {
             textMode,
             signUp
@@ -71,7 +68,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .worldcup_container{
     width:1300px;
     height:650px;

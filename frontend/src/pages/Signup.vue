@@ -98,18 +98,36 @@ export default {
       passwordconfirmation: false,
       nickname: false,
     }
-
     const color = ref(0)
-    
     const model = ref('나이대를 선택해주세요')
 
-    function checkName (val) {
-      const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
-      if (reg.test(val)==true) valid.nickname = true
-      else valid.nickname = false
-      return (reg.test(val)||'한글만 입력가능합니다.')
+    function checkEmail (val) {
+      const reg = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+      if (reg.test(val)==true) valid.email = true
+      else valid.email = false
+      return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
     }
-    // 비밀번호 유효성 체크
+    function duplicateEmail() {
+      store.dispatch('module/checkEmail', { email: form.email })
+      .then((res) => {
+        if (res.data.data==true){
+          Swal.fire({
+              icon: 'success',
+              title: '<span style="font-size:25px;">사용 가능한 이메일 입니다.</span>',
+              confirmButtonColor: '#ce1919',
+              confirmButtonText: '<span style="font-size:18px;">확인</span>'
+          })
+        }
+        else{
+          Swal.fire({
+              icon: 'error',
+              title: '<span style="font-size:25px;">중복된 이메일 입니다.</span>',
+              confirmButtonColor: '#ce1919',
+              confirmButtonText: '<span style="font-size:18px;">확인</span>'
+          })
+        }
+      })
+    }
     function checkPassWord (val) {
       const reg = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
       if (reg.test(val)==true) valid.password = true
@@ -156,7 +174,12 @@ export default {
         .catch(() => {
         })
     }
-
+    function checkName (val) {
+      const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
+      if (reg.test(val)==true) valid.nickname = true
+      else valid.nickname = false
+      return (reg.test(val)||'한글만 입력가능합니다.')
+    }
     function moveHashtag(){
       router.push('/hashtag')
     }
