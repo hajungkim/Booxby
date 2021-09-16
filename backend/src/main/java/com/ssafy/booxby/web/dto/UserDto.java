@@ -50,10 +50,11 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor
-    public static class updateRequest {
+    public static class updateUserRequest {
         private String nickname;
         private String password;
         private String profilePath;
         private String hashtag;
     }
+
 }
