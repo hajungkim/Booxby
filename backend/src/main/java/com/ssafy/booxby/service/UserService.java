@@ -1,6 +1,6 @@
 package com.ssafy.booxby.service;
 
-import com.ssafy.booxby.domain.user.ScrapRepository;
+import com.ssafy.booxby.domain.scrap.ScrapRepository;
 import com.ssafy.booxby.domain.user.User;
 import com.ssafy.booxby.domain.user.UserRepository;
 import com.ssafy.booxby.web.dto.UserDto;
