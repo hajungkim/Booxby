@@ -34,7 +34,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입 성공 시 '회원가입 성공' 반환", response = ControllerResponse.class)
-    @PostMapping("/signup")
+    @PostMapping("/signup") 
     public ControllerResponse signup(@RequestBody UserDto.signupRequest request) {
         ControllerResponse response = null;
         try {

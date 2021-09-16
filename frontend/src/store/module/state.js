@@ -6,9 +6,8 @@ export default function () {
   const categoryMode = false
 
   // SignUp
-  let user_info = {}
+  const user_info = {}
   const hash_tags = []
-
 
   // 로그인 유저 정보
   const loginUser = {
