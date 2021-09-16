@@ -4,7 +4,14 @@ const routes = [
     path: '/',
     component: () => import('layouts/CommonBox.vue'),
     children: [
-      { path: '', component: () => import('pages/Signup.vue') }
+      { path: '', component: () => import('pages/Login.vue') },
+      { path: 'hashtag', component: () => import('pages/Hashtag.vue')},
+      { path: 'worldCup', component: () => import('pages/Worldcup.vue')},
+      { path: 'main', component: () => import('pages/Main.vue')},
+      { path: 'detail', component: () => import('pages/Detail.vue')},
+      { path: 'signup', component: () => import('pages/Signup.vue') },
+      { path: 'modify', component: () => import('pages/Modify.vue') },
+      { path: 'my', component: () => import('components/Mypage.vue') }
     ]
   },
 
