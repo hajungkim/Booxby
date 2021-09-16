@@ -48,7 +48,7 @@ public class User {
         this.createdDate = LocalDateTime.now();
     }
 
-    public void updateUser(UserDto.updateRequest request) {
+    public void updateUser(UserDto.updateUserRequest request) {
         this.nickname = request.getNickname();
         this.password = request.getPassword();
         this.profilePath = request.getProfilePath();
