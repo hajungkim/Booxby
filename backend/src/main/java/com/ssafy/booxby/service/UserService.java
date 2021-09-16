@@ -81,6 +81,7 @@ public class UserService {
                 .hashtag(request.getHashtag())
                 .worldcupScore(request.getWorldcupScore())
                 .hashScore(request.getHashScore())
+                .profilePath(request.getProfilePath())
                 .build();
         userRepository.save(user);
     }
