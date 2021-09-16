@@ -18,7 +18,6 @@ export function setInfos (state, info) {
 export function setHashtags (state, hashtags) {
   state.hash_tags = hashtags
 }
-
-export function setEmojiscore (state, score) {
-  state.user_info.emotionScore = score
+export function setHashscore (state, score) {
+  state.user_info.hashScore = score
 }
