@@ -1,5 +1,6 @@
 package com.ssafy.booxby.domain.user;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,5 +23,12 @@ public class Scrap {
 
     private Long bookId;
 
-    private LocalDateTime scrap_date;
+    private LocalDateTime createdDate;
+
+    @Builder
+    public Scrap(Long userId, Long bookId) {
+        this.userId = userId;
+        this.bookId = bookId;
+        this.createdDate = LocalDateTime.now();
+    }
 }
