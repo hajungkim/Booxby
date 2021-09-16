@@ -195,8 +195,9 @@ import { useRouter } from 'vue-router'
 export default {
   setup(){
     const store = useStore()
+    const router = useRouter()
 
-    const loginUser = computed(() => store.getters['module/getLoginUser'])
+    // const loginUser = computed(() => store.getters['module/getLoginUser'])
     const textmode = computed(() => store.getters['module/getTextMode'])
     
     const back = function() {
@@ -213,8 +214,6 @@ export default {
         store.commit('module/setTextMode',false)
       }, true)
     })
-    const router = useRouter()
-    const store = useStore()
     const userId = localStorage.getItem('userId')
     let hashtags = []
 
