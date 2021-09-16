@@ -2,7 +2,6 @@ package com.ssafy.booxby.web;
 
 import com.ssafy.booxby.domain.user.User;
 import com.ssafy.booxby.service.UserService;
-import com.ssafy.booxby.web.dto.ScrapDto;
 import com.ssafy.booxby.web.dto.UserDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;

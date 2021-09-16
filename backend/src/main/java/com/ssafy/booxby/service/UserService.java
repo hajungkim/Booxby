@@ -1,6 +1,5 @@
 package com.ssafy.booxby.service;
 
-import com.ssafy.booxby.domain.scrap.ScrapRepository;
 import com.ssafy.booxby.domain.user.User;
 import com.ssafy.booxby.domain.user.UserRepository;
 import com.ssafy.booxby.web.dto.UserDto;
@@ -20,7 +19,6 @@ public class UserService {
     private final Long expireMin = 30L;
 
     private final UserRepository userRepository;
-    private final ScrapRepository scrapRepository;
 
     /*
     로그인 토큰 부분
@@ -78,10 +76,11 @@ public class UserService {
                 .email(request.getEmail())
                 .password(request.getPassword())
                 .nickname(request.getNickname())
-                .emotionScore(request.getEmotionScore())
                 .age(request.getAge())
                 .gender(request.getGender())
                 .hashtag(request.getHashtag())
+                .worldcupScore(request.getWorldcupScore())
+                .hashScore(request.getHashScore())
                 .build();
         userRepository.save(user);
     }
