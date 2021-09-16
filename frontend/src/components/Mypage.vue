@@ -188,9 +188,10 @@
 </template>
 
 <script>
-import { computed, ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
+
 export default {
   setup(){
     const store = useStore()
