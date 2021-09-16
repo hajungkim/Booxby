@@ -26,7 +26,7 @@
           <q-input class="input" label="Password" color="teal" v-model="form.password" type="password"
             lazy-rules
               :rules="[
-                val => val && val.length > 8 || '8자리 이상 입력해주세요.',
+                val => val && val.length >= 8 || '8자리 이상 입력해주세요.',
                 checkPassWord
               ]"/>
         </div>
@@ -81,6 +81,7 @@ export default {
     const router = useRouter()
     const store = useStore()
     const Swal = require('sweetalert2')
+
     const form = reactive({
       email: '',
       password: '',
@@ -89,6 +90,8 @@ export default {
       male: 0,
       female: 1,
     })
+
+    // 빈칸체크용 변수
     let valid = {
       email: false,
       password: false,
@@ -140,6 +143,37 @@ export default {
         valid.passwordconfirmation = true
       }
     }
+    // 이메일 유효성 체크
+    function checkEmail (val) {
+      const reg = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+      if (reg.test(val)==true) valid.email = true
+      else valid.email = false
+      return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
+    }
+    
+    function duplicateEmail() {
+      store.dispatch('module/checkEmail', { email: form.email })
+        .then((res) => {
+          if (res.data.data==true){
+            Swal.fire({
+                icon: 'success',
+                title: '<span style="font-size:25px;">사용 가능한 이메일 입니다.</span>',
+                confirmButtonColor: '#skyblue',
+                confirmButtonText: '<span style="font-size:18px;">확인</span>'
+            })
+          }
+          else{
+            Swal.fire({
+                icon: 'error',
+                title: '<span style="font-size:25px;">중복된 이메일 입니다.</span>',
+                confirmButtonColor: '#ce1919',
+                confirmButtonText: '<span style="font-size:18px;">확인</span>'
+            })
+          }
+        })
+        .catch(() => {
+        })
+    }
     function checkName (val) {
       const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
       if (reg.test(val)==true) valid.nickname = true
@@ -149,6 +183,7 @@ export default {
     function moveHashtag(){
       router.push('/hashtag')
     }
+
     function setInfos() {
       if (valid.email == false || valid.password == false || valid.passwordconfirmation == false || valid.nickname == false
         || model.value == '나이대를 선택해주세요' || typeof(color.value) == 'number'){
@@ -160,15 +195,24 @@ export default {
         })
         return
       }
-      let info = {
+      const info = {
         age: model.value,
         email: form.email,
         gender: parseInt(color.value),
         nickname: form.nickname,
         password: form.password,
+        profilePath: 'https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg'
       }
-      store.commit('module/setInfos',info)
-      moveHashtag()
+      console.log(info)
+      store.commit('module/setInfos', info)
+      console.log(store.getters['module/getInfos'])
+      store.dispatch('module/signup', info)
+        .then(function(result) {
+            console.log('회원가입성공',result)
+            moveHashtag()
+        }).catch(function(err) {
+            console.log('에러발생', err)
+        })
     }
     return {
       model,

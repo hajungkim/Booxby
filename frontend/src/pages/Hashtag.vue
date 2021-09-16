@@ -134,6 +134,7 @@ export default {
 }
 .tag{
     font-weight:bold;
+    border:1px solid #1976D2;
     font-size:20px;
     margin-left:15px;
     margin-bottom: 15px;

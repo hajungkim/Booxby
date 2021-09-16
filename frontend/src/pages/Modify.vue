@@ -1,21 +1,24 @@
 <template>
   <div class="modify_container">
     <div class="modify_wrap">
-    <q-icon class="back_btn" size="md" name="arrow_back" @click="moveMy"></q-icon>
+      <div class="modify_top">
+        <q-icon class="back_btn" size="md" name="arrow_back" @click="moveMy"></q-icon>
+      </div>
       <div class="text-group">
         <h4 class="m-0">개인 정보 수정</h4>
       </div>
       <div class="form-group">
         
-        <img class="change_img" src="../assets/user_default.png" alt="">
+        <img class="change_img" :src="form.profile" alt="">
 
-        <div class="form-input-email">
+        <div class="form-mb">
           <q-input
               class="input"
               label="Email"
               type="email"
               v-model="form.email"
               lazy-rules
+              disable
               :rules="[
               val => !!val || '필수입력항목 입니다.',
               checkEmail
@@ -27,13 +30,13 @@
           <q-input class="input" label="Password" color="teal" v-model="form.password" type="password"
             lazy-rules
               :rules="[
-                val => val && val.length > 8 || '8자리 이상 입력해주세요.',
+                val => val && val.length >= 8 || '8자리 이상 입력해주세요.',
                 checkPassWord
               ]"/>
         </div>
 
         <div class="form-mb">
-          <q-input label="Confirm Password" type="password" v-model="form.passwordconfirmation"
+          <q-input class="input" label="Confirm Password" type="password" v-model="form.passwordconfirmation"
             lazy-rules
               :rules="[
                 val => val && val.length > 0 || '필수입력항목 입니다.',
@@ -42,7 +45,7 @@
         </div>
 
         <div>
-          <q-input label="닉네임"
+          <q-input class="input" label="NickName"
             v-model="form.nickname"
             lazy-rules
               :rules="[
@@ -52,7 +55,7 @@
         </div>
         <!-- 버튼 -->
         <div class="submit_bt">
-          <q-btn class="submit" color="primary" label="정보수정하기" />
+          <q-btn @click="modify" class="submit" color="primary" label="정보수정하기" />
         </div>
 
       </div>
@@ -64,21 +67,22 @@
 </template>
 
 <script>
-import { reactive } from 'vue'
-import { ref } from 'vue'
+import { reactive, onMounted } from 'vue'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 // import axios from 'axios'
 export default {
   setup(){
     const router = useRouter()
-    const moveMy = function(){
-      router.push('/my')
-    }
+    const store = useStore()
+
+
     const form = reactive({
       email: '',
       password: '',
       passwordconfirmation: '',
       nickname: '',
+      profile: '',
     })
 
     function checkName (val) {
@@ -100,30 +104,39 @@ export default {
       const reg = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
       return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
     }
-    // function checkCertification (val) {
-    //   store.dispatch('module/authcheck', {
-    //     inputNum: val,
-    //   }).then(function (){
-    //     // 제대로된경우
-    //   })
-    // }
-    // function sendEmail() {
-    //   store.dispatch('module/sendEmail', {
-    //     id: form.email,
-    //   }).then(function (){
-    //     state.isSend = true
-    //   })
-    // }
+
+    onMounted(() => {
+      // 초기값 셋팅
+      const loginUser = store.getters['module/getLoginUser']
+      form.email = loginUser.email
+      form.password = loginUser.password
+      form.passwordconfirmation = loginUser.password
+      form.nickname = loginUser.nickname
+      form.profile = loginUser.profile
+    })
+
+    // 뒤로가기
+    const moveMy = function(){
+      router.push('/my')
+    }
+
+    // 회원정보 수정
+    const modify = function () {
+      const loginUser = store.getters['module/getLoginUser']
+      store.dispatch('module/modifyInfo', {hashtag: loginUser.hashtag, nickname: form.nickname, password: form.password, profilePath: form.profile })
+        .then(function (result) {
+          console.log('result', result)
+        })
+    }
 
     return {
-      model: ref(null),
-      color: ref('cyan'),
       form,
       checkName,
       checkPassWord,
       checkEmail,
       checkPassWordConfirmation,
-      moveMy
+      moveMy,
+      modify
     }
   }
 }
@@ -131,9 +144,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../css/app.scss";
-.back_btn{
-  margin-right:550px;
-}
 .modify_container{
   display:flex;
 }
@@ -146,6 +156,14 @@ export default {
   align-items: center;
   margin-top:40px;
 }
+.back_btn{
+  cursor: pointer;
+}
+.modify_top{
+  position:relative;
+  top:-25px;
+  left:-290px;
+}
 .text-group{
   display: flex;
   justify-content: center;
@@ -157,8 +175,8 @@ export default {
 .form-mb{
    margin-top:-5px;
 }
-.form-input-email{
-  width:400px;
+.input{
+  font-size:25px;
 }
 .submit_bt{
   display: flex;
@@ -169,6 +187,8 @@ export default {
   width:250px;
   height:50px;
   border-radius: 15px;
+  font-weight:bold;
+  font-size:18px;
 }
 .change_img{
   margin:20px 0px 10px 155px;
@@ -176,7 +196,6 @@ export default {
   height: 100px;
   border-radius: 50%;
 }
-
 .signupImg{
   float:right;
   width:650px;

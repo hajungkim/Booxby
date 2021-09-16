@@ -100,6 +100,7 @@ export default {
                                 const loginUser = {
                                     userId: userId,
                                     email: data.email,
+                                    password: data.password,
                                     nickname: data.nickname,
                                     gender: data.gender,
                                     age: data.age,
