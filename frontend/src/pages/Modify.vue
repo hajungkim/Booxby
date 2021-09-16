@@ -76,6 +76,7 @@ export default {
     const router = useRouter()
     const store = useStore()
 
+    const Swal = require('sweetalert2')
 
     const form = reactive({
       email: '',
@@ -124,8 +125,26 @@ export default {
     const modify = function () {
       const loginUser = store.getters['module/getLoginUser']
       store.dispatch('module/modifyInfo', {hashtag: loginUser.hashtag, nickname: form.nickname, password: form.password, profilePath: form.profile })
-        .then(function (result) {
-          console.log('result', result)
+        .then(function () {
+            Swal.fire({
+                icon: 'success',
+                title: '<span style="font-size:25px;">성공적으로 수정되었습니다.</span>',
+                confirmButtonColor: '#skyblue',
+                confirmButtonText: '<span style="font-size:18px;">확인</span>'
+            })
+            const tmp = {
+              userId: loginUser.userId,
+              email: loginUser.email,
+              nickname: form.nickname,
+              gender: loginUser.gender,
+              age: loginUser.age,
+              score: loginUser.score,
+              profile: form.profile,
+              hashtag: loginUser.hashtag,
+              token: loginUser.token
+            }
+            console.log('tmp', tmp)
+            store.commit('module/setLoginUser', tmp)
         })
     }
 
