@@ -1,6 +1,8 @@
 <template>
-  <div class="mainBox">
-    <router-view />
+  <div class="container">
+    <div class="mainBox">
+      <router-view />
+    </div>
   </div>
 </template>
 
@@ -12,10 +14,27 @@ export default {
 
 <style>
 .mainBox{
-  margin:100px auto;
-  width:2000px;
-  height:1000px;
-  border: 1px solid black;
+  width:1300px;
+  height:650px;
   border-radius: 38px;
+  background-color: rgb(227,231,234);
+}
+.container{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(185, 217, 241);
+}
+.container{
+  /* display:flex; 
+  height: 100vh;  */
+  display: flex;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  /* flex-direction: column; */
+  justify-content: center;
+  align-items: center;
 }
 </style>
