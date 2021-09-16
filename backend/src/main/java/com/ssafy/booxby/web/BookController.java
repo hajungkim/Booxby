@@ -63,14 +63,14 @@ public class BookController {
         return response;
     }
 
-    @ApiOperation(value = "리뷰 등록", notes = "리뷰등록 성공 시 '리뷰등록성공' 반환", response = ControllerResponse.class)
+    @ApiOperation(value = "리뷰 등록", notes = "리뷰등록 성공 시 '리뷰 등록 성공' 반환", response = ControllerResponse.class)
     @PostMapping("/review")
     public ControllerResponse saveReview(@RequestBody BookDto.reviewSaveRequest request){
         ControllerResponse response = null;
 
         try{
             bookService.saveReview(request);
-            response = new ControllerResponse("success", "리뷰등록성공");
+            response = new ControllerResponse("success", "리뷰 등록 성공");
         }catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
         }
@@ -78,14 +78,14 @@ public class BookController {
         return response;
     }
 
-    @ApiOperation(value = "리뷰 삭제", notes = "성공 시 '리뷰삭제성공' 반환", response = ControllerResponse.class)
+    @ApiOperation(value = "리뷰 삭제", notes = "성공 시 '리뷰 삭제 성공' 반환", response = ControllerResponse.class)
     @DeleteMapping
     public ControllerResponse deleteReview(@RequestBody BookDto.reviewDeleteRequest request){
         ControllerResponse response = null;
 
         try{
             bookService.deleteReview(request);
-            response = new ControllerResponse("success", "리뷰삭제성공");
+            response = new ControllerResponse("success", "리뷰 삭제 성공");
         }catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
         }
