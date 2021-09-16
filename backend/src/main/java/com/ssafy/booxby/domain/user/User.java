@@ -23,8 +23,6 @@ public class User {
 
     private String password;
 
-    private int emotionScore;
-
     private String profilePath;
 
     private LocalDateTime createdDate;
@@ -35,17 +33,22 @@ public class User {
 
     private String hashtag;
 
+    private int worldcupScore;
+
+    private int hashScore;
+
 
     @Builder
-    public User(String email, String nickname, String password, int emotionScore, String age, int gender, String hashtag) {
+    public User(String email, String nickname, String password, String age, int gender, String hashtag, int worldcupScore, int hashScore) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
-        this.emotionScore = emotionScore;
         this.age = age;
         this.gender = gender;
         this.hashtag = hashtag;
         this.createdDate = LocalDateTime.now();
+        this.worldcupScore = worldcupScore;
+        this.hashScore = hashScore;
     }
 
     public void updateUser(UserDto.updateUserRequest request) {
