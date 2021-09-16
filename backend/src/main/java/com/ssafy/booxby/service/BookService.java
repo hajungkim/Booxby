@@ -69,4 +69,9 @@ public class BookService {
         reviewCount.deleteReviewCount(review);
         reviewRepository.deleteByReviewId(request.getReviewId());
     }
+
+    @Transactional
+    public List<Review> findReviewByUserId(Long userId) {
+        return reviewRepository.findByUserIdOrderByCreatedDateDesc(userId);
+    }
 }
