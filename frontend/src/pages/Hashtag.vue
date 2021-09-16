@@ -85,7 +85,6 @@ export default {
             store.commit('module/setEmojiscore',emoji_score)
             router.push('worldCup')
         }
-
         return {
             hashtag_list,
             goWorldcup,
@@ -95,7 +94,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .hashtag_container{
     width:1300px;
     height:650px;
