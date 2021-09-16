@@ -26,7 +26,7 @@
           <q-input class="input" label="Password" color="teal" v-model="form.password" type="password"
             lazy-rules
               :rules="[
-                val => val && val.length > 8 || '8자리 이상 입력해주세요.',
+                val => val && val.length >= 8 || '8자리 이상 입력해주세요.',
                 checkPassWord
               ]"/>
         </div>
@@ -81,6 +81,7 @@ export default {
     const router = useRouter()
     const store = useStore()
     const Swal = require('sweetalert2')
+
     const form = reactive({
       email: '',
       password: '',
@@ -90,6 +91,7 @@ export default {
       female: 1,
     })
 
+    // 빈칸체크용 변수
     let valid = {
       email: false,
       password: false,
@@ -138,7 +140,7 @@ export default {
             Swal.fire({
                 icon: 'success',
                 title: '<span style="font-size:25px;">사용 가능한 이메일 입니다.</span>',
-                confirmButtonColor: '#ce1919',
+                confirmButtonColor: '#skyblue',
                 confirmButtonText: '<span style="font-size:18px;">확인</span>'
             })
           }
@@ -155,14 +157,11 @@ export default {
         })
     }
 
-
     function moveHashtag(){
       router.push('/hashtag')
     }
+
     function setInfos() {
-      console.log(model.value)
-      console.log(typeof(color.value))
-      console.log(valid,'@@')
       if (valid.email == false || valid.password == false || valid.passwordconfirmation == false || valid.nickname == false
         || model.value == '나이대를 선택해주세요' || typeof(color.value) == 'number'){
         Swal.fire({
@@ -173,15 +172,24 @@ export default {
         })
         return
       }
-      let info = {
+      const info = {
         age: model.value,
         email: form.email,
         gender: parseInt(color.value),
         nickname: form.nickname,
         password: form.password,
+        profilePath: 'https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg'
       }
-      store.commit('module/setInfos',info)
-      moveHashtag()
+      console.log(info)
+      store.commit('module/setInfos', info)
+      console.log(store.getters['module/getInfos'])
+      store.dispatch('module/signup', info)
+        .then(function(result) {
+            console.log('회원가입성공',result)
+            moveHashtag()
+        }).catch(function(err) {
+            console.log('에러발생', err)
+        })
     }
     return {
       model,
