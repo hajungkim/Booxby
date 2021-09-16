@@ -27,10 +27,9 @@ export default {
     setup() {
         const store = useStore()
         const textMode = computed(() => store.getters['module/getTextMode'])
-        const infos = store.getters['module/getInfo']
+        const infos = store.getters['module/getInfos']
         const hashtags_list = (store.getters['module/getHashtags'])
         let hashtag = ''
-        console.log(infos,'infos')
         hashtags_list.forEach(e => {
             hashtag = hashtag + e
         });
@@ -52,7 +51,6 @@ export default {
         }
         onMounted(() => {
             const card = document.getElementById('card')
-            console.log(card)
             card.addEventListener('mouseover', function () {
                 store.commit('module/setTextMode', true)
             }, true)

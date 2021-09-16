@@ -203,16 +203,8 @@ export default {
         password: form.password,
         profilePath: 'https://isobarscience.com/wp-content/uploads/2020/09/default-profile-picture1.jpg'
       }
-      console.log(info)
       store.commit('module/setInfos', info)
-      console.log(store.getters['module/getInfos'])
-      store.dispatch('module/signup', info)
-        .then(function(result) {
-            console.log('회원가입성공',result)
-            moveHashtag()
-        }).catch(function(err) {
-            console.log('에러발생', err)
-        })
+      moveHashtag()
     }
     return {
       model,
