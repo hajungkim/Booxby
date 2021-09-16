@@ -61,4 +61,12 @@ public class BookService {
         }
 
     }
+
+    @Transactional
+    public void deleteReview(BookDto.reviewDeleteRequest request) {
+        Review review = reviewRepository.getById(request.getReviewId());
+        ReviewCount reviewCount = reviewCountRepository.getById(request.getBookId());
+        reviewCount.deleteReviewCount(review);
+        reviewRepository.deleteByReviewId(request.getReviewId());
+    }
 }

@@ -61,4 +61,11 @@ public class BookDto {
         private boolean reviewRead;
     }
 
+    @Data
+    @NoArgsConstructor
+    public static class reviewDeleteRequest{
+        private Long userId;
+        private Long reviewId;
+        private Long bookId;
+    }
 }

@@ -47,4 +47,11 @@ public class ReviewCount {
         this.reviewUsefulCnt += (reviewCount.isReviewUseful()? 1:0);
         this.reviewReadCnt += (reviewCount.isReviewRead()? 1:0);
     }
+
+    public void deleteReviewCount(Review review) {
+        this.reviewLikeCnt-=(review.isReviewLike()?1:0);
+        this.reviewIdeaCnt-=(review.isReviewIdea()?1:0);
+        this.reviewUsefulCnt-=(review.isReviewUseful()?1:0);
+        this.reviewReadCnt-=(review.isReviewRead()?1:0);
+    }
 }
