@@ -1,6 +1,6 @@
 package com.ssafy.booxby.web.dto;
 
-import com.ssafy.booxby.domain.Book.Book;
+import com.ssafy.booxby.domain.book.Book;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,8 +9,7 @@ public class BookDto {
 
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
-    public static class DetailResponseDto {
+    public static class detailResponseDto {
         private Long bookId;
         private String title;
         private String author;
@@ -21,13 +20,12 @@ public class BookDto {
         private int emotionScore;
         private int color;
 
-        public DetailResponseDto(Book book){
+        public detailResponseDto(Book book){
             this.bookId=book.getBookId();
             this.title=book.getTitle();
             this.author=book.getAuthor();
             this.description=book.getDescription();
             this.publisher=book.getPublisher();
-            this.pubDate=book.getPubDate();
             this.imgUrl=book.getImgUrl();
             this.emotionScore=book.getEmotionScore();
             this.color=book.getColor();
@@ -36,14 +34,13 @@ public class BookDto {
 
     @Data
     @NoArgsConstructor
-    @AllArgsConstructor
-    public static class AuthorResponseDto{
+    public static class authorResponseDto{
         private Long bookId;
         private String title;
         private String publisher;
         private String imgUrl;
 
-        public AuthorResponseDto(Book book){
+        public authorResponseDto(Book book){
             this.bookId=book.getBookId();
             this.title=book.getTitle();
             this.publisher=book.getPublisher();
@@ -51,5 +48,17 @@ public class BookDto {
         }
     }
 
+    @Data
+    @NoArgsConstructor
+    public static class reviewSaveRequest{
+        private Long bookId;
+        private Long userId;
+        private int reviewScore;
+        private String reviewContent;
+        private boolean reviewLike;
+        private boolean reviewIdea;
+        private boolean reviewUseful;
+        private boolean reviewRead;
+    }
 
 }
