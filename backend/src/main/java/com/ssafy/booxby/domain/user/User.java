@@ -56,7 +56,9 @@ public class User {
         this.nickname = request.getNickname();
         this.password = request.getPassword();
         this.profilePath = request.getProfilePath();
-        this.hashtag = request.getHashtag();
     }
 
+    public void updateHashtag(String hashtag) {
+        this.hashtag = hashtag;
+    }
 }
