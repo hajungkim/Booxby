@@ -1,4 +1,4 @@
-package com.ssafy.booxby.domain.user;
+package com.ssafy.booxby.domain.scrap;
 
 import lombok.Builder;
 import lombok.Getter;
