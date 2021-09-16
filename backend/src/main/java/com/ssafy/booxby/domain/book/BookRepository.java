@@ -1,4 +1,4 @@
-package com.ssafy.booxby.domain.Book;
+package com.ssafy.booxby.domain.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
