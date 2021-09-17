@@ -10,7 +10,7 @@ export function getLoginUser (state) {
   return state.loginUser
 }
 
-export function getInfo (state) {
+export function getInfos (state) {
   return state.user_info
 }
 
