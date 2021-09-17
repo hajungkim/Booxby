@@ -1,4 +1,4 @@
-package com.ssafy.booxby.domain.Book;
+package com.ssafy.booxby.domain.book;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,9 +25,6 @@ public class Book {
     @Column(length = 50)
     private String publisher;
 
-    @Column
-    private int pubDate;
-
     @Column(length = 100)
     private String imgUrl;
 
@@ -38,26 +35,8 @@ public class Book {
     private int color;
 
     @Column
-    private int isbn13;
+    private int isbn;
 
     @Column
     private int rank;
-
-    @Column(length = 100)
-    private String age;
-
-    @Column(length = 10)
-    private String gender;
-
-    @Column
-    private int reviewLike;
-
-    @Column
-    private int reviewIdea;
-
-    @Column
-    private int reviewUseful;
-
-    @Column
-    private int reviewRead;
 }
