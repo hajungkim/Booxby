@@ -188,11 +188,7 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import { ref, computed, onMounted } from 'vue'
-=======
 import { ref } from 'vue'
->>>>>>> FE/feature/test
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 
