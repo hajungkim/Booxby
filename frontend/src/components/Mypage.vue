@@ -220,7 +220,6 @@ export default {
     return{
       tab: ref('zzim'),
       loginUser,
-      textmode,
       userId,
       hashtags,
       moveModify,
