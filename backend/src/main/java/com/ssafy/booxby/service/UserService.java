@@ -105,6 +105,13 @@ public class UserService {
     }
 
     @Transactional
+    public void updateHashtag(Long userId, String hashtag) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("유저 정보가 없습니다."));
+        user.updateHashtag(hashtag);
+    }
+
+    @Transactional
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
