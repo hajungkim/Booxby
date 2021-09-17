@@ -74,4 +74,8 @@ public class BookService {
     public List<Review> findReviewByUserId(Long userId) {
         return reviewRepository.findByUserIdOrderByCreatedDateDesc(userId);
     }
+
+    public List<Review> findReviewByBookId(Long bookId) {
+        return reviewRepository.findByBookIdOrderByCreatedDateDesc(bookId);
+    }
 }

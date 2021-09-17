@@ -8,4 +8,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     void deleteByReviewId(Long reviewId);
 
     List<Review> findByUserIdOrderByCreatedDateDesc(Long userId);
+
+    List<Review> findByBookIdOrderByCreatedDateDesc(Long bookId);
 }
