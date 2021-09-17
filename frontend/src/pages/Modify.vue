@@ -86,8 +86,6 @@ export default {
       profile: '',
     })
 
-    const Swal = require('sweetalert2')
-
     function checkName (val) {
       const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
       return (reg.test(val)||'한글만 입력가능합니다.')
@@ -128,11 +126,7 @@ export default {
       const loginUser = store.getters['module/getLoginUser']
       store.dispatch('module/modifyInfo', {hashtag: loginUser.hashtag, nickname: form.nickname, password: form.password, profilePath: form.profile })
         .then(function () {
-<<<<<<< HEAD
-            Swal.fire({
-=======
           Swal.fire({
->>>>>>> FE/feature/test
                 icon: 'success',
                 title: '<span style="font-size:25px;">성공적으로 수정되었습니다.</span>',
                 confirmButtonColor: '#skyblue',
