@@ -56,7 +56,6 @@ public class UserDto {
         private String nickname;
         private String password;
         private String profilePath;
-        private String hashtag;
     }
 
 }
