@@ -86,8 +86,6 @@ export default {
       profile: '',
     })
 
-    const Swal = require('sweetalert2')
-
     function checkName (val) {
       const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
       return (reg.test(val)||'한글만 입력가능합니다.')
