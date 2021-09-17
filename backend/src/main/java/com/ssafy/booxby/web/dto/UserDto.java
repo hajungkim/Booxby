@@ -36,10 +36,12 @@ public class UserDto {
         private String email;
         private String nickname;
         private String password;
-        private int emotionScore;
         private String age;
         private int gender;
         private String hashtag;
+        private int worldcupScore;
+        private int hashScore;
+        private String profilePath;
     }
 
     @Getter
@@ -50,10 +52,10 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor
-    public static class updateRequest {
+    public static class updateUserRequest {
         private String nickname;
         private String password;
         private String profilePath;
-        private String hashtag;
     }
+
 }

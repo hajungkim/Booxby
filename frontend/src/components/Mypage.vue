@@ -1,16 +1,16 @@
 <template>
   <div>
     <div class="top_bar">
-      <span class="logo">BooxBy</span>
-      <q-icon class="back_btn" size="md" name="arrow_back"></q-icon>
+      <span class="logo">Booxby</span>
+      <q-btn class="back_btn" @click="back" round color="primary" icon="undo" />
     </div>
     <!-- 유저 정보들 -->
     <div class="user_info_container">
-      <img class="user_img" src="../assets/user_default.png">
+      <img class="user_img" :src="loginUser.profile">
       <div class="user_info">
-        <p style="font-size:30px;">userkim</p>
-        <div style="width:200px; font-weight:bold;">
-          <p>#갬성 #느낌 #섬세 #방가 #헬로</p>
+        <p style="font-size:30px;">{{loginUser.nickname}}</p>
+        <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
+          <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
         </div>
       </div>
       <img class="emotion_chr" src="../assets/user_default.png">
@@ -158,23 +158,23 @@
 
         <q-tab-panel class="three_options" name="settings">
           <div class="q-col-gutter-md row items-start">
-            <div class="col-4" @click="moveModify">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-                <div class="absolute-bottom text-subtitle1 text-center">
+            <div class="col-4">
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveModify">
+                <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   개인 정보 수정
                 </div>
               </q-img>
             </div>
             <div class="col-4">
               <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-                <div class="absolute-bottom text-subtitle1 text-center">
+                <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   Book World cup
                 </div>
               </q-img>
             </div>
-            <div class="col-4">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-                <div class="absolute-bottom text-subtitle1 text-center">
+            <div class="col-4" >
+              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveHash">
+                <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   해시태그 재설정 하기
                 </div>
               </q-img>
@@ -189,20 +189,42 @@
 
 <script>
 import { ref } from 'vue'
-// import { useStore } from 'vuex'
+import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
+
 export default {
   setup(){
+    const store = useStore()
+
+    const loginUser = store.getters['module/getLoginUser']
+    
+    const back = function() {
+        router.push('/main')
+    }
     const router = useRouter()
+    const userId = localStorage.getItem('userId')
+    let hashtags = []
+
+    const arr = loginUser.hashtag.split('#')
+    hashtags = arr.splice(1,arr.length)
+
     const moveModify = function(){
       router.push('/modify')
     }
     function moveDetail(){
       router.push('detail')
     }
+    function moveHash(){
+      router.push('hashtag')
+    }
     return{
       tab: ref('zzim'),
+      loginUser,
+      userId,
+      hashtags,
       moveModify,
+      back,
+      moveHash,
       moveDetail
     }
   }
@@ -216,18 +238,24 @@ export default {
   height:50px;
 }
 .logo{
-  font-size:30px;
-  margin-left:50px;
+  font-size:50px;
+  font-weight:bold;
+  position:relative;
+  top:-5px;
 }
 .back_btn{
   float:right;
-  margin-right:30px;
+  margin-top:5px;
+  margin-right:25px;
+  height:54px;
+  width:54px;
+  font-size:18px;
 }
 /* 유저 정보창 */
 .user_img{
   width: 120px;
   height:120px;
-  border-radius: 50px;
+  border-radius: 70px;
   margin-right:50px;
 }
 .user_info{
@@ -243,6 +271,9 @@ export default {
   border-radius: 50px;
   margin-left:100px;
   margin-top:10px;
+}
+.hashtag{
+  display: flex;
 }
 /* tab 부분 */
 .card_container{
@@ -323,5 +354,6 @@ export default {
 /* 설정 */
 .img{
   height: 318px;
+  cursor: pointer;
 }
 </style>

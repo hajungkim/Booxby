@@ -7,15 +7,16 @@ import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/user")
+@RequestMapping
 public class UserController {
 
     private final UserService userService;
 
     @ApiOperation(value = "로그인", notes = "로그인 성공 시 (token, userId) 반환 / 회원정보가 없을 경우 false 반환", response = ControllerResponse.class)
-    @PostMapping("/login")
+    @PostMapping("/user/login")
     public ControllerResponse login(@RequestBody UserDto.loginRequest request) {
         ControllerResponse response = null;
         try {
@@ -34,7 +35,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "회원가입", notes = "회원가입 성공 시 '회원가입 성공' 반환", response = ControllerResponse.class)
-    @PostMapping("/signup")
+    @PostMapping("/user/signup")
     public ControllerResponse signup(@RequestBody UserDto.signupRequest request) {
         ControllerResponse response = null;
         try {
@@ -47,7 +48,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "이메일 중복 확인", notes = "이메일 사용가능하면 true, 중복이면 false", response = ControllerResponse.class)
-    @PostMapping("/check")
+    @PostMapping("/user/check")
     public ControllerResponse checkEmail(@RequestBody UserDto.checkEmailRequest request) {
         ControllerResponse response = null;
         try {
@@ -64,7 +65,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "id로 유저정보 가져오기", notes = "존재하는 유저면 정보 반환", response = ControllerResponse.class)
-    @GetMapping("/{id}")
+    @GetMapping("/user/{id}")
     public ControllerResponse findUser(@PathVariable("id") Long userId) {
         ControllerResponse response = null;
         try {
@@ -76,9 +77,9 @@ public class UserController {
         return response;
     }
 
-    @ApiOperation(value = "유저 정보 수정", notes = "일단 닉네임,패스워드,프로필,해시태그 해놓음", response = ControllerResponse.class)
-    @PutMapping("/{id}")
-    public ControllerResponse updateUser(@PathVariable("id") Long userId, @RequestBody UserDto.updateRequest request) {
+    @ApiOperation(value = "유저 정보 수정", notes = "일단 닉네임,패스워드,프로필 해놓음", response = ControllerResponse.class)
+    @PutMapping("/user/{id}")
+    public ControllerResponse updateUser(@PathVariable("id") Long userId, @RequestBody UserDto.updateUserRequest request) {
         ControllerResponse response = null;
         try {
             userService.updateUser(userId, request);
@@ -89,13 +90,26 @@ public class UserController {
         return response;
     }
 
+    @ApiOperation(value = "유저 해시태그 수정", notes = "", response = ControllerResponse.class)
+    @PutMapping("/user/hash/{id}")
+    public ControllerResponse updateHashtag(@PathVariable("id") Long userId, @RequestParam String hashtag) {
+        ControllerResponse response = null;
+        try {
+            userService.updateHashtag(userId, hashtag);
+            response = new ControllerResponse("success", "해시태그 수정 성공");
+        } catch (Exception e) {
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+        return response;
+    }
+
     @ApiOperation(value = "유저 정보 삭제", notes = "", response = ControllerResponse.class)
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/user/{id}")
     public ControllerResponse deleteUser(@PathVariable("id") Long userId) {
         ControllerResponse response = null;
         try {
             userService.deleteUser(userId);
-            response = new ControllerResponse("success", "회원 수정 성공");
+            response = new ControllerResponse("success", "회원 삭제 성공");
         } catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
         }
