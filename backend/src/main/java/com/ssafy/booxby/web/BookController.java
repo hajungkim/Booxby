@@ -119,18 +119,36 @@ public class BookController {
         return response;
     }
 
-    @GetMapping("/review/{bookId}")
-    public ControllerResponse findAllReviews(@PathVariable Long bookId){
+    @GetMapping("/review/{bookId}/{category}")
+    public ControllerResponse findAllReviews(@PathVariable Long bookId, @PathVariable String category){
         ControllerResponse response = null;
 
         try{
-            List<Review> reviewList = bookService.findReviewByBookId(bookId);
+            List<Review> reviewList = new ArrayList<>();
+            switch (category){
+                case "oldest":
+                    reviewList = bookService.findOldReviewByBookId(bookId);
+                    break;
+                case "newest":
+                    reviewList = bookService.findReviewByBookId(bookId);
+                    break;
+                case "highscore":
+                    reviewList = bookService.findHighReviewByBookId(bookId);
+                    break;
+                case "lowscore" :
+                    reviewList = bookService.findLowReviewByBookId(bookId);
+                    break;
+                default:
+                    reviewList = bookService.findReviewByBookId(bookId);
+                    break;
+            }
+
             List<BookDto.reviewAllResponse> list = new ArrayList<>();
 
             for(Review review : reviewList){
-                //BookDto.reviewAllResponse reviewAllResponse = new BookDto.reviewAllResponse(review);
-                //User user = userService.findUserByUserId(review.getUserId());
-                //list.add(reviewAllResponse, user.getNickname());
+                User user = userService.findUserByUserId(review.getUserId());
+                BookDto.reviewAllResponse reviewAllResponse = new BookDto.reviewAllResponse(review, user.getNickname());
+                list.add(reviewAllResponse);
             }
 
             response = new ControllerResponse("success", list);
