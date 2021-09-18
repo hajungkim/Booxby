@@ -55,7 +55,7 @@ public class UserDto {
     public static class updateUserRequest {
         private String nickname;
         private String password;
-        private String profilePath;
+        private String hashtag;
     }
 
 }
