@@ -117,6 +117,7 @@ public class BookDto {
             this.reviewIdea = review.isReviewIdea();
             this.reviewUseful = review.isReviewUseful();
             this.reviewRead = review.isReviewRead();
+            this.userId = review.getUserId();
             this.nickname = nickname;
         }
     }
