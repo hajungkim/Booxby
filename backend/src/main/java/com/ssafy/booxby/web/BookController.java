@@ -119,6 +119,8 @@ public class BookController {
         return response;
     }
 
+    @ApiOperation(value = "책 카테고리별(평점순, 등록순) 리뷰 조회", notes = "오래된 순-oldest / 최신순-newest(default) / 평점 높은 순-highscore / 평점 낮은 순-lowscore" +
+            "성공 시 리뷰 리스트 반환", response = ControllerResponse.class)
     @GetMapping("/review/{bookId}/{category}")
     public ControllerResponse findAllReviews(@PathVariable Long bookId, @PathVariable String category){
         ControllerResponse response = null;
