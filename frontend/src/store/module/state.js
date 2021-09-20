@@ -13,6 +13,7 @@ export default function () {
   const loginUser = {
     userId:'',
     email: '',
+    password: '',
     nickname: '',
     gender: '',
     age:'',
