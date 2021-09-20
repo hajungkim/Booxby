@@ -66,13 +66,12 @@ export default {
         ]
         let select_hashtag = []
         let hashscore = 0
-
+        const loginUser = store.getters['module/getLoginUser']
         if (localStorage.getItem('userId') != null){
             hashflag = false
         }
         function selectHashtag(hashtags,idx){
             const hashbtn = document.getElementById(idx)
-            console.log(hashtags,'hash')
             if (hashbtn.classList.contains('select')){
                 hashbtn.classList.remove('select')
                 hashbtn.classList.add('notselect')
@@ -98,12 +97,12 @@ export default {
                 hashString = hashString + e
             })
             store.commit('module/setHashtags',select_hashtag,hashString)
-            store.dispatch('module/modifyHash', hashString)
+            store.dispatch('module/modifyInfo', {hashtag : hashString, nickname : loginUser.nickname, password: loginUser.password })
             .then((res)=>{
                 console.log(res)
             })
             .catch((err)=>{
-                console.log(err,'@@')
+                console.log(err)
             })
             store.commit('module/setHashscore',hashscore)
             router.push('my')

@@ -86,7 +86,6 @@ export default {
         function login() {
             store.dispatch('module/login', { email: form.email, password: form.password })
                 .then(function (result) {
-                    console.log('로그인성공',result.data)
                     // 로그인 성공
                     if(result.data.data) {
                         // 로컬 스토리지 저장
