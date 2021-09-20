@@ -35,3 +35,9 @@ export function modifyInfo ({state}, user) {
   const url = baseUrl + '/user/' + state.loginUser.userId
   return $axios.put(url, user)
 }
+// 해시태그 수정
+export function modifyHash ({state}, hashtag) {
+  console.log('modifyHash',hashtag)
+  const url = baseUrl + '/user/hash/' + state.loginUser.userId
+  return $axios.put(url, {hashtag : hashtag})
+}

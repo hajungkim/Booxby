@@ -92,7 +92,7 @@ public class UserController {
 
     @ApiOperation(value = "유저 해시태그 수정", notes = "", response = ControllerResponse.class)
     @PutMapping("/user/hash/{id}")
-    public ControllerResponse updateHashtag(@PathVariable("id") Long userId, @RequestParam String hashtag) {
+    public ControllerResponse updateHashtag(@PathVariable("id") Long userId, @RequestBody String hashtag) {
         ControllerResponse response = null;
         try {
             userService.updateHashtag(userId, hashtag);
