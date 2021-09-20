@@ -72,6 +72,7 @@ export default {
         }
         function selectHashtag(hashtags,idx){
             const hashbtn = document.getElementById(idx)
+            console.log(hashtags,'hash')
             if (hashbtn.classList.contains('select')){
                 hashbtn.classList.remove('select')
                 hashbtn.classList.add('notselect')
@@ -92,7 +93,18 @@ export default {
             router.push('worldCup')
         }
         function goMy() {
-            store.commit('module/setHashtags',select_hashtag)
+            let hashString = ''
+            select_hashtag.forEach(e=>{
+                hashString = hashString + e
+            })
+            store.commit('module/setHashtags',select_hashtag,hashString)
+            store.dispatch('module/modifyHash', hashString)
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err,'@@')
+            })
             store.commit('module/setHashscore',hashscore)
             router.push('my')
         }

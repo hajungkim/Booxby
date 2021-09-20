@@ -197,7 +197,7 @@ export default {
     const store = useStore()
 
     const loginUser = store.getters['module/getLoginUser']
-    
+    console.log(loginUser.hashtag,'@@')
     const back = function() {
         router.push('/main')
     }
@@ -205,8 +205,8 @@ export default {
     const userId = localStorage.getItem('userId')
     let hashtags = []
 
-    const arr = loginUser.hashtag.split('#')
-    hashtags = arr.splice(1,arr.length)
+    // const arr = loginUser.hashtag.split('#')
+    // hashtags = arr.splice(1,arr.length)
 
     const moveModify = function(){
       router.push('/modify')

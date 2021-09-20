@@ -14,7 +14,8 @@ export function setInfos (state, info) {
   state.user_info = info
 }
 
-export function setHashtags (state, hashtags) {
+export function setHashtags (state, hashtags,hashString) {
+  state.loginUser.hashtag = hashString
   state.hash_tags = hashtags
 }
 export function setHashscore (state, score) {
