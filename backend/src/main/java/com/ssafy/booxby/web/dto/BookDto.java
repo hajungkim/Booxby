@@ -95,4 +95,30 @@ public class BookDto {
             this.imgUrl=imgUrl;
         }
     }
+
+    @Data
+    @NoArgsConstructor
+    public static class reviewAllResponse{
+        private Long reviewId;
+        private String reviewContent;
+        private int reviewScore;
+        private boolean reviewLike;
+        private boolean reviewIdea;
+        private boolean reviewUseful;
+        private boolean reviewRead;
+
+        private Long userId;
+        private String nickname;
+
+        public reviewAllResponse(Review review, String nickname){
+            this.reviewId = review.getReviewId();
+            this.reviewScore = review.getReviewScore();
+            this.reviewLike = review.isReviewLike();
+            this.reviewIdea = review.isReviewIdea();
+            this.reviewUseful = review.isReviewUseful();
+            this.reviewRead = review.isReviewRead();
+            this.userId = review.getUserId();
+            this.nickname = nickname;
+        }
+    }
 }
