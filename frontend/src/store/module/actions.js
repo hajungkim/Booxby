@@ -42,3 +42,9 @@ export function requestzzim ({}, userId) {
   const url = baseUrl + '/scrap/' + userId
   return $axios.put(url)
 }
+
+// 테스트용
+export function test ({}) {
+  const url = 'http://192.168.35.9/hi'
+  return $axios.get(url)
+}

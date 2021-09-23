@@ -7,44 +7,58 @@
       <div class="main_content">
           <div class="main_content_view">
               <div class="main_content_left">
-                <div class="book_name">모던웹을 위한 HTML+CSS 바이블</div>
-                <div class="book_author">김싸피</div>
+                <div class="book_name">{{selectBook.title}}</div>
+                <div class="book_author">{{selectBook.author}}</div>
                 <q-btn @click="goDetail" class="book_detail_btn" color="primary" label="자세히 보기" />
               </div>
               <div class="main_content_right">
                   <div class="main_circle">
                   </div>
-                  <q-img src="~assets/images/html.jpg" class="main_book"/>
+                  <q-img :src="selectBook.img_url" class="main_book"/>
               </div>
           </div>
           <div class="main_content_list">
-              <q-icon class="list_btn" style="font-size: 2.8em; color: grey; margin-right:20px;" name="navigate_before"/>
-              <q-img src="~assets/images/html.jpg" class="list_book"/>
-              <q-img src="~assets/images/html.jpg" class="list_book"/>
-              <q-img src="~assets/images/html.jpg" class="list_book"/>
-              <q-img src="~assets/images/html.jpg" class="list_book_choice"/>
-              <q-img src="~assets/images/html.jpg" class="list_book"/>
-              <q-img src="~assets/images/html.jpg" class="list_book"/>
-              <q-img src="~assets/images/html.jpg" class="list_book"/>
-              <q-icon class="list_btn" style="font-size: 2.8em; color: grey;" name="navigate_next"/>
+              <!-- <q-icon class="list_btn" style="font-size: 2.8em; color: grey; margin-right:20px;" name="navigate_before"/> -->
+              <q-img v-for="(book, index) in bookList" :src="book.img_url" :key="index" @click="select(index)" class="list_book" />
+              <!-- <q-icon class="list_btn" style="font-size: 2.8em; color: grey;" name="navigate_next"/> -->
           </div>
       </div>
   </div>
 </template>
 
 <script>
+import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
     setup () {
+        const store = useStore()
         const router = useRouter()
+
+        const bookList = computed(() => store.getters['module/getBookList'])
+        const selectBook = computed(() => store.getters['module/getSelectBook'])
 
         const goDetail = function() {
             router.push('/detail')
         }
+        const select = function(index) {
+            const list = store.getters['module/getBookList']
+            store.commit('module/setSelectBook', list[index])
+        }
+        onMounted(() => {
+            store.dispatch('module/test')
+                .then(function (result) {
+                    store.commit('module/setBookList', result.data)
+                    store.commit('module/setSelectBook', result.data[0])
+                })
+        })
 
         return {
-            goDetail
+            bookList,
+            selectBook,
+            goDetail,
+            select
         }
     }
 }
@@ -91,10 +105,12 @@ export default {
     display:inline-block;
 }
 .book_name{
+    width:420px;
     font-size:25px;
     font-weight:bold;
 }
 .book_author{
+    width:420px;
     font-size:17px;
     margin-left:10px;
 }
@@ -133,24 +149,30 @@ export default {
     top:5px;
     left:110px;
     width:200px;
+    height:280px;
     animation: wiggle 1.5s infinite;
 }
 .main_content_list{
     /* border:3px solid pink; */
+    padding-top:25px;
+    padding-left:20px;
     height:32%;
     width:100%;
     margin:0 auto;
 }
 .list_book{
-    width:90px;
+    width:105px;
+    height:135px;
     margin-right:20px;
+    cursor:pointer;
     /* animation: wiggle 1s infinite; */
 }
-.list_book_choice{
+/*.list_book:nth-child(5){
     width:120px;
+    height:170px;
     margin-right:20px;
-    /* animation: wiggle 1s infinite; */
-}
+     animation: wiggle 1s infinite; 
+}*/
 .list_btn{
     cursor: pointer;
 }

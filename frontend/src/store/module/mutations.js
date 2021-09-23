@@ -21,3 +21,11 @@ export function setHashtags (state, hashtags,hashString) {
 export function setHashscore (state, score) {
   state.user_info.hashScore = score
 }
+
+export function setBookList (state, bookList) {
+  state.bookList = bookList
+}
+
+export function setSelectBook (state, selectBook) {
+  state.selectBook = selectBook
+}
