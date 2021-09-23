@@ -40,7 +40,7 @@ export function modifyInfo ({state}, user) {
 export function requestzzim ({}, userId) {
   console.log('requestzzim')
   const url = baseUrl + '/scrap/' + userId
-  return $axios.put(url)
+  return $axios.get(url)
 }
 
 // 테스트용
