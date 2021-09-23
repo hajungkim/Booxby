@@ -15,7 +15,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class SwaggerConfig {
 
     // swagger 접속 URL
-    // localhost:8080/swagger-ui.html
+    // localhost:7777/api/swagger-ui.html
 
     @Bean
     public Docket postsApi() {

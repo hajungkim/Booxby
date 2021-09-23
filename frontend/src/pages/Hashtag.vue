@@ -66,7 +66,7 @@ export default {
         ]
         let select_hashtag = []
         let hashscore = 0
-
+        const loginUser = store.getters['module/getLoginUser']
         if (localStorage.getItem('userId') != null){
             hashflag = false
         }
@@ -92,7 +92,18 @@ export default {
             router.push('worldCup')
         }
         function goMy() {
-            store.commit('module/setHashtags',select_hashtag)
+            let hashString = ''
+            select_hashtag.forEach(e=>{
+                hashString = hashString + e
+            })
+            store.commit('module/setHashtags',select_hashtag,hashString)
+            store.dispatch('module/modifyInfo', {hashtag : hashString, nickname : loginUser.nickname, password: loginUser.password })
+            .then((res)=>{
+                console.log(res)
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
             store.commit('module/setHashscore',hashscore)
             router.push('my')
         }
