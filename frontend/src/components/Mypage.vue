@@ -199,6 +199,7 @@ export default {
 
     const loginUser = store.getters['module/getLoginUser']
     const hashtags = store.getters['module/getHashtags']
+    const zzim_books = []
     const back = function() {
         router.push('/main')
     }
@@ -215,17 +216,20 @@ export default {
     function moveHash(){
       router.push('hashtag')
     }
-    // store.dispatch('module/requestzzim',loginUser.userId)
-    // .then((res) =>{
-    //   console.log(res,'찜목록가져오기')
-    // })
-    // .catch((err) =>{
-    //   console.log(err)
-    // })
+    store.dispatch('module/requestzzim',loginUser.userId)
+    .then((res) =>{
+      console.log(res,'찜목록가져오기')
+      zzim_books = res.data.data
+    })
+    .catch((err) =>{
+      console.log(err)
+      console.log('@@@@@@@@@@@@@')
+    })
     return{
       tab: ref('zzim'),
       loginUser,
       hashtags,
+      zzim_books,
       moveModify,
       back,
       moveHash,
