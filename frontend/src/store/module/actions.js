@@ -35,3 +35,10 @@ export function modifyInfo ({state}, user) {
   const url = baseUrl + '/user/' + state.loginUser.userId
   return $axios.put(url, user)
 }
+
+// 찜 정보 가져오기
+export function requestzzim ({}, userId) {
+  console.log('requestzzim')
+  const url = baseUrl + '/scrap/' + userId
+  return $axios.put(url)
+}

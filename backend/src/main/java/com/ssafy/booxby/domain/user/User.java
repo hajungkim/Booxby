@@ -55,10 +55,6 @@ public class User {
     public void updateUser(UserDto.updateUserRequest request) {
         this.nickname = request.getNickname();
         this.password = request.getPassword();
-        this.profilePath = request.getProfilePath();
-    }
-
-    public void updateHashtag(String hashtag) {
-        this.hashtag = hashtag;
+        this.hashtag = request.getHashtag();
     }
 }

@@ -10,7 +10,7 @@
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
         <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
-          <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
+          <div v-for="(word,idx) in hashtags" :key="idx">{{ word }} </div>
         </div>
       </div>
       <img class="emotion_chr" src="../assets/user_default.png">
@@ -198,13 +198,10 @@ export default {
     const router = useRouter()
 
     const loginUser = store.getters['module/getLoginUser']
-    
+    const hashtags = store.getters['module/getHashtags']
     const back = function() {
         router.push('/main')
     }
-    
-    const userId = localStorage.getItem('userId')
-    let hashtags = []
 
     const arr = loginUser.hashtag.split('#')
     hashtags = arr.splice(1,arr.length)
@@ -218,10 +215,16 @@ export default {
     function moveHash(){
       router.push('hashtag')
     }
+    // store.dispatch('module/requestzzim',loginUser.userId)
+    // .then((res) =>{
+    //   console.log(res,'찜목록가져오기')
+    // })
+    // .catch((err) =>{
+    //   console.log(err)
+    // })
     return{
       tab: ref('zzim'),
       loginUser,
-      userId,
       hashtags,
       moveModify,
       back,
