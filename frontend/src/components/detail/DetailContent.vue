@@ -412,7 +412,7 @@ export default {
             router.push('/main')
         }
         return {
-            tab: ref('review'),
+            tab: ref('view'),
             writeMode: ref(false),
             review_score,
             score_5: ref(5),
