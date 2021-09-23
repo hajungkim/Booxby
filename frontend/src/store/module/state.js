@@ -23,11 +23,19 @@ export default function () {
     token:''
   }
   
+  // 책 리스트
+  const bookList = []
+
+  // 선택된 책
+  const selectBook = {}
+
   return {
     textMode,
     categoryMode,
     loginUser,
     user_info,
-    hash_tags
+    hash_tags,
+    bookList,
+    selectBook
   }
 }

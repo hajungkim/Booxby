@@ -8,20 +8,32 @@
                 <q-icon class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
             </div>
             <div class="detail_name">
-                모던웹을 위한 HTML+CSS
+                {{selectBook.title}}
             </div>
             <div class="detail_author">
-                작가이름 / 출판사
+                {{selectBook.author}}
             </div>
             <div class="detail_book">
-                <q-img src="~assets/images/html.jpg"/>
+                <q-img :src="selectBook.img_url" class="detail_img" />
             </div>
       </div>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
+  setup() {
+    const store = useStore()
+
+    const selectBook = computed(() => store.getters['module/getSelectBook'])
+
+    return {
+      selectBook
+    }
+  }
 }
 </script>
 
@@ -65,9 +77,13 @@ export default {
     font-size:16px;
 }
 .detail_book{
-    border:1px solid grey;
     margin: 0 auto;
-    margin-top:5px;
+    margin-top:25px;
     width:250px;
+    height:320px;
+}
+.detail_img{
+    width:250px;
+    height:320px;
 }
 </style>

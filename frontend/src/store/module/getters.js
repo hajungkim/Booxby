@@ -17,3 +17,11 @@ export function getInfos (state) {
 export function getHashtags (state) {
   return state.hash_tags
 }
+
+export function getBookList (state) {
+  return state.bookList
+}
+
+export function getSelectBook(state) {
+  return state.selectBook
+}
