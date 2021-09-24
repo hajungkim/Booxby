@@ -32,7 +32,7 @@
       <q-tab-panels v-model="tab" animated style="background-color: rgb(227,231,234);">
 
         <q-tab-panel class="three_options zzims" name="zzim">
-          <q-card class="my-card no-shadow cardbooks" id="card">
+          <q-card @click="zzimDetail" class="my-card no-shadow cardbooks" id="card">
             <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
               <div class="absolute-bottom text-subtitle2 text-center">
                 Title
@@ -223,11 +223,20 @@ export default {
       console.log(err)
       console.log('@@@@@@@@@@@@@')
     })
+    function zzimDetail(){
+      const isbn = '9788901052922'
+      store.dispatch('module/test2',isbn)
+      .then((res) =>{
+        console.log(res.data[0],'isbn 책정보')
+        console.log(res.data[0].isbn13,'isbn13')
+      })
+    }
     return{
       tab: ref('zzim'),
       loginUser,
       hashtags,
       zzim_books,
+      zzimDetail,
       moveModify,
       back,
       moveHash,
