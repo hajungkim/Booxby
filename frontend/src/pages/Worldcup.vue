@@ -29,11 +29,11 @@ export default {
         const textMode = computed(() => store.getters['module/getTextMode'])
         const infos = store.getters['module/getInfos']
         const hashtags_list = (store.getters['module/getHashtags'])
+        let oxbooks = []
         let hashtag = ''
         hashtags_list.forEach(e => {
             hashtag = hashtag + e
         });
-
         function signUp(){
             store.dispatch('module/signup',{
                 age: infos.age,
@@ -57,6 +57,13 @@ export default {
             card.addEventListener('mouseout', function () {
                 store.commit('module/setTextMode', false)
             }, true)
+            store.dispatch('module/oxbooks')
+            .then(function (res) {
+                oxbooks = res.data
+                oxbooks.forEach(e => {
+                    console.log('title',e.title,'img',e.img_url,'des',e.description)
+                });
+            })
         })
         return {
             textMode,
