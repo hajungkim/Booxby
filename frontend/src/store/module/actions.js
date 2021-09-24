@@ -49,9 +49,14 @@ export function test ({}) {
   return $axios.get(url)
 }
 
-// 테스트용
-export function test2 ({},isbn) {
+// isbn 정보반환
+export function getisbnInfo ({},isbn) {
   const url = basePythonUrl + '/isbn/' + isbn
-  console.log(url,'url')
+  return $axios.get(url)
+}
+
+// oxbooks 랜덤
+export function oxbooks () {
+  const url = basePythonUrl + '/oxbooks'
   return $axios.get(url)
 }
