@@ -24,10 +24,7 @@
                         <div class="view_head">
                             <div style="font-weight:bold; font-size:25px;">책 소개</div>
                             <div class="detail_view_introduce">
-                                이 책은 싸피에서 준 HTML + CSS 책이다. 이 책은 싸피에서 준 HTML + CSS 책이다.
-                                이 책은 싸피에서 준 HTML + CSS 책이다. 이 책은 싸피에서 준 HTML + CSS 책이다.
-                                이 책은 싸피에서 준 HTML + CSS 책이다. 이 책은 싸피에서 준 HTML + CSS 책이다.
-                                이 책은 싸피에서 준 HTML + CSS 책이다. 이 책은 싸피에서 준 HTML + CSS 책이다.   
+                                {{selectBook.description}} 
                             </div>
                         </div>  
                         <div class="view_bot">
@@ -399,21 +396,25 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 
 export default {
     setup () {
+        const store = useStore()
         const router = useRouter()
-
+        
+        const selectBook = computed(() => store.getters['module/getSelectBook'])
         const review_score = ref(4)
 
         const back = function() {
             router.push('/main')
         }
         return {
-            tab: ref('review'),
+            tab: ref('view'),
             writeMode: ref(false),
+            selectBook,
             review_score,
             score_5: ref(5),
             score_4: ref(4),

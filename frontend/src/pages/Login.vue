@@ -139,7 +139,7 @@ export default {
             checkId,
             checkPassWord,
             login,
-            goSignUp,
+            goSignUp
         }
     }
 }

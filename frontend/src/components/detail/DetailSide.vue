@@ -5,23 +5,47 @@
       </div>
       <div class="side_content">
             <div>
-                <q-icon class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
+                <q-icon v-if="zzim" @click="zzimOff" class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
+                <q-icon v-if="!zzim" @click="zzimOn" class="bookmark" style="font-size: 3.7em; color: black;" name="bookmark_border"/>
             </div>
             <div class="detail_name">
-                모던웹을 위한 HTML+CSS
+                {{selectBook.title}}
             </div>
             <div class="detail_author">
-                작가이름 / 출판사
+                {{selectBook.author}}
             </div>
             <div class="detail_book">
-                <q-img src="~assets/images/html.jpg"/>
+                <q-img :src="selectBook.img_url" class="detail_img" />
             </div>
       </div>
   </div>
 </template>
 
 <script>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+
 export default {
+  setup() {
+    const store = useStore()
+
+    const selectBook = computed(() => store.getters['module/getSelectBook'])
+    const zzim = computed(() => store.getters['module/getZzim'])
+
+    const zzimOn = function () {
+      store.commit('module/setZzim', true)
+    }
+    const zzimOff = function () {
+      store.commit('module/setZzim', false)
+    }
+
+    return {
+      selectBook,
+      zzim,
+      zzimOn,
+      zzimOff
+    }
+  }
 }
 </script>
 
@@ -49,6 +73,7 @@ export default {
 }
 .bookmark{
   margin-left:30px;
+  cursor:pointer;
 }
 .detail_name{
     font-size:20px;
@@ -65,9 +90,13 @@ export default {
     font-size:16px;
 }
 .detail_book{
-    border:1px solid grey;
     margin: 0 auto;
-    margin-top:5px;
+    margin-top:25px;
     width:250px;
+    height:320px;
+}
+.detail_img{
+    width:250px;
+    height:320px;
 }
 </style>

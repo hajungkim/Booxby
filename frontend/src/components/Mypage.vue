@@ -195,13 +195,15 @@ import { useRouter } from 'vue-router'
 export default {
   setup(){
     const store = useStore()
+    const router = useRouter()
+
     const loginUser = store.getters['module/getLoginUser']
     const hashtags = store.getters['module/getHashtags']
     const zzim_books = []
+    
     const back = function() {
         router.push('/main')
     }
-    const router = useRouter()
 
     const moveModify = function(){
       router.push('/modify')
