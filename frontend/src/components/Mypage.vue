@@ -200,12 +200,10 @@ export default {
     const loginUser = store.getters['module/getLoginUser']
     const hashtags = store.getters['module/getHashtags']
     const zzim_books = []
+    
     const back = function() {
         router.push('/main')
     }
-
-    const arr = loginUser.hashtag.split('#')
-    hashtags = arr.splice(1,arr.length)
 
     const moveModify = function(){
       router.push('/modify')

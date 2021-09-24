@@ -38,6 +38,7 @@ export default {
 
         const bookList = computed(() => store.getters['module/getBookList'])
         const selectBook = computed(() => store.getters['module/getSelectBook'])
+        const zzimList = computed(() => store.getters['module/getZzimList'])
 
         const goDetail = function() {
             router.push('/detail')
@@ -49,8 +50,14 @@ export default {
         onMounted(() => {
             store.dispatch('module/test')
                 .then(function (result) {
+                    console.log(result.data)
                     store.commit('module/setBookList', result.data)
                     store.commit('module/setSelectBook', result.data[0])
+                })
+            const userId = localStorage.getItem('userId')
+            store.dispatch('module/requestzzim', userId)
+                .then(function (result) {
+                    console.log(result.data)
                 })
         })
 
@@ -58,7 +65,8 @@ export default {
             bookList,
             selectBook,
             goDetail,
-            select
+            select,
+            zzimList
         }
     }
 }

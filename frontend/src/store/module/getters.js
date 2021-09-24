@@ -25,3 +25,11 @@ export function getBookList (state) {
 export function getSelectBook(state) {
   return state.selectBook
 }
+
+export function getZzimList(state) {
+  return state.zzimList
+}
+
+export function getZzim(state) {
+  return state.zzim
+}
