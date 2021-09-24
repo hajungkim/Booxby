@@ -1,13 +1,12 @@
-package com.ssafy.booxby.domain.book;
+package com.ssafy.booxby.domain.review;
 
 
-import com.ssafy.booxby.web.dto.BookDto;
+import com.ssafy.booxby.web.dto.ReviewDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Getter
 @NoArgsConstructor
@@ -18,7 +17,7 @@ public class ReviewCount {
     private Long reviewCountId;
 
     @Column
-    private Long bookId;
+    private String isbn;
 
     @Column
     private int reviewLikeCnt;
@@ -33,15 +32,15 @@ public class ReviewCount {
     private int reviewReadCnt;
 
     @Builder
-    public ReviewCount(Long bookId, boolean reviewLikeCnt, boolean reviewIdeaCnt, boolean reviewUsefulCnt, boolean reviewReadCnt){
-        this.bookId=bookId;
+    public ReviewCount(String isbn, boolean reviewLikeCnt, boolean reviewIdeaCnt, boolean reviewUsefulCnt, boolean reviewReadCnt){
+        this.isbn=isbn;
         this.reviewLikeCnt = (reviewLikeCnt?1:0);
         this.reviewIdeaCnt=(reviewIdeaCnt?1:0);
         this.reviewUsefulCnt = (reviewUsefulCnt?1:0);
         this.reviewReadCnt = (reviewReadCnt?1:0);
     }
 
-    public void updateReview(BookDto.reviewSaveRequest reviewCount) {
+    public void updateReview(ReviewDto.reviewSaveRequest reviewCount) {
         this.reviewLikeCnt += (reviewCount.isReviewLike()? 1:0);
         this.reviewIdeaCnt += (reviewCount.isReviewIdea()? 1:0);
         this.reviewUsefulCnt += (reviewCount.isReviewUseful()? 1:0);
