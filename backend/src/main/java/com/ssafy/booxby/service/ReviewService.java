@@ -21,6 +21,7 @@ public class ReviewService {
         Review review = Review.builder()
                 .isbn(request.getIsbn())
                 .userId(request.getUserId())
+                .reviewContent(request.getReviewContent())
                 .reviewScore(request.getReviewScore())
                 .reviewLike(request.isReviewLike())
                 .reviewIdea(request.isReviewIdea())
