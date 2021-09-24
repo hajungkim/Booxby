@@ -1,14 +1,16 @@
-from flask import Flask  # 서버 구현을 위한 Flask 객체 import
+from flask import Flask, request  # 서버 구현을 위한 Flask 객체 import
 from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
 from flask import make_response
-from flask_cors import CORS
+# from flask_cors import CORS
 import json
 import csv
 
 import pandas as pd
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import linear_kernel
 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
-CORS(app,resources={r"/*": {"origins": "*"}})
+# CORS(app,resources={r"/*": {"origins": "*"}})
 api = Api(app)  # Flask 객체에 Api 객체 등록
 app.config['JSON_AS_ASCII'] = False
 
@@ -108,6 +110,43 @@ class OXbooks(Resource):
             df1 = pd.concat([df1,temp_df])
 
         return toJson(df1)
+
+@api.route('/data/scrap-recommend')
+class scrapRecommend(Resource):
+    def post(self):
+        """찜하기 목록에 따른 추천 리스트"""
+        isbn_list = request.json.get('isbn_list')
+        print(isbn_list)
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949').reset_index(drop=True)
+        df['description'] = df['description'].fillna('')
+
+        tfidf = TfidfVectorizer(stop_words=None)
+        tfidf_matrix = tfidf.fit_transform(df['description'])
+        print(tfidf_matrix.shape)
+
+        cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+
+        indices = pd.Series(df.index, index=df['isbn13']).drop_duplicates()
+        booxby_indices = []
+
+        for isbn in isbn_list:
+            # 선택한 책의 인덱스 받아오기
+            idx = indices[isbn]
+            # 모든 책에 대해 해당 책과의 유사도 구하기
+            sim_scores = list(enumerate(cosine_sim[idx]))
+            # 유사도에 따라 책들을 정렬
+            sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+            # 가장 유사한 책 받아오기
+            sim_scores = sim_scores[1:5]
+            # 가장 유사한 책의 인덱스 받아오기
+            for sim in sim_scores:
+                if sim[1] > 0.8:    # 같은 책 패스
+                    continue
+                booxby_indices.append(sim[0])
+
+        booxby_indices = list(set(booxby_indices))
+        # 가장 유사한 책 리턴
+        return toJson(df.iloc[booxby_indices])
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
