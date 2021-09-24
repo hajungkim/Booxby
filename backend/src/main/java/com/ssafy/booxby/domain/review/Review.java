@@ -1,4 +1,4 @@
-package com.ssafy.booxby.domain.book;
+package com.ssafy.booxby.domain.review;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -14,9 +14,6 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
-
-    @Column
-    private Long bookId;
 
     @Column
     private Long userId;
@@ -42,12 +39,20 @@ public class Review {
     @Column
     private boolean reviewRead;
 
+    @Column
+    private String isbn;
+
+    @Column
+    private String title;
+
+    @Column
+    private String imgUrl;
 
     @Builder
-    public Review(Long bookId, Long userId, int reviewScore, String reviewContent,
-                  boolean reviewLike, boolean reviewIdea, boolean reviewUseful, boolean reviewRead){
+    public Review(String isbn, Long userId, int reviewScore, String reviewContent,
+                  boolean reviewLike, boolean reviewIdea, boolean reviewUseful, boolean reviewRead, String title, String imgUrl){
 
-        this.bookId=bookId;
+        this.isbn=isbn;
         this.userId=userId;
         this.reviewScore=reviewScore;
         this.reviewContent=reviewContent;
@@ -56,6 +61,9 @@ public class Review {
         this.reviewUseful=reviewUseful;
         this.reviewRead=reviewRead;
         this.createdDate=LocalDateTime.now();
+
+        this.title=title;
+        this.imgUrl=imgUrl;
     }
 
 }

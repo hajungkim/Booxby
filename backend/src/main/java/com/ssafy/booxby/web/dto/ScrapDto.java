@@ -1,5 +1,6 @@
 package com.ssafy.booxby.web.dto;
 
+import com.ssafy.booxby.domain.scrap.Scrap;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -9,6 +10,18 @@ public class ScrapDto {
     @NoArgsConstructor
     public static class saveScrapRequest {
         private Long userId;
-        private Long bookId;
+        private String isbn;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class scrapResponse {
+        private String isbn;
+        private String imgUrl;
+
+        public scrapResponse(Scrap scrap){
+            this.isbn=scrap.getIsbn();
+            this.imgUrl=scrap.getImgUrl();
+        }
     }
 }

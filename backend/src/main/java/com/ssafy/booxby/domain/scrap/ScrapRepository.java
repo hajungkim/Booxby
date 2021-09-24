@@ -9,5 +9,5 @@ public interface ScrapRepository extends JpaRepository<Scrap, Long> {
 
     List<Scrap> findByUserId(Long userId);
 
-    void deleteByUserIdAndBookId(Long userId, Long bookId);
+    void deleteByUserIdAndIsbn(Long userId, String isbn);
 }
