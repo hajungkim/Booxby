@@ -36,7 +36,7 @@ public class ScrapService {
     }
 
     @Transactional
-    public void deleteScrap(ScrapDto.saveScrapRequest request) {
-        scrapRepository.deleteByUserIdAndIsbn(request.getUserId(), request.getIsbn());
+    public void deleteScrap(Long userId, String isbn) {
+        scrapRepository.deleteByUserIdAndIsbn(userId, isbn);
     }
 }
