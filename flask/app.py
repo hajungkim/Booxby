@@ -8,7 +8,7 @@ import csv
 import pandas as pd
 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
-CORS(app)
+CORS(app,resources={r"/*": {"origins": "*"}})
 api = Api(app)  # Flask 객체에 Api 객체 등록
 app.config['JSON_AS_ASCII'] = False
 
@@ -34,7 +34,7 @@ class HelloWorld(Resource):
         return res
 
 
-@api.route('/MyRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/MyRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class userEmotionRecommend(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         user_number = 5
@@ -60,7 +60,7 @@ class userEmotionRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/EmojiRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/EmojiRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class randomEmotion(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
@@ -72,7 +72,7 @@ class randomEmotion(Resource):
 
         return toJson(df1)
 
-@api.route('/agegender')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/agegender')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class ageGenderRecommend(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
@@ -82,7 +82,7 @@ class ageGenderRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/category')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/category')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class categoryRecommend(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         category = '아동' # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
@@ -91,5 +91,23 @@ class categoryRecommend(Resource):
 
         return toJson(df1)
 
+@api.route('/data/isbn/<isbn>')
+class getIsbn(Resource):
+    def get(self,isbn):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        df1 = df[(df['isbn13'] == int(isbn))]
+        return toJson(df1)
+
+@api.route('/data/oxbooks')
+class OXbooks(Resource):
+    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        df1 = df[df['color'] == 1].sample(n=1)
+        for i in range(2,8):
+            temp_df = df[df['color'] == i].sample(n=1)    
+            df1 = pd.concat([df1,temp_df])
+
+        return toJson(df1)
+
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=80)
+    app.run(debug=True, host='0.0.0.0', port=5000)

@@ -76,7 +76,15 @@ module.exports = configure(function (ctx) {
     devServer: {
       https: false,
       port: 8086,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        '/data':{
+          target:'http://localhost:5000/data',
+          pathRewrite:{'^/data':''},
+          changeOrigin:true,
+          secure:false
+        }
+      }
     },
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
