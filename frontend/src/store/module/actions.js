@@ -61,14 +61,16 @@ export function oxbooks () {
   return $axios.get(url)
 }
 
+// 찜 하기
 export function zzimOn ({}, zzim) {
-  console.log('찜',zzim)
+  console.log('찜', zzim)
   const url = baseUrl + '/scrap'
   return $axios.post(url, zzim)
 }
 
+// 찜 취소
 export function zzimOff ({}, zzim) {
-  console.log('취소',zzim)
+  console.log('취소', zzim)
   const url = baseUrl + '/scrap'
   return $axios.delete(url, zzim)
 }
