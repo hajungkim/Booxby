@@ -41,6 +41,16 @@ export default {
         const zzimList = computed(() => store.getters['module/getZzimList'])
 
         const goDetail = function() {
+            const userId = localStorage.getItem('userId')
+            store.dispatch('module/requestzzim', userId)
+                .then(function (result) {
+                    for(let i = 0; i < result.data.data.length; i++) {
+                        if(selectBook.value.isbn13 == result.data.data[i].isbn) {
+                            store.commit('module/setZzim', true)
+                            break
+                        }
+                    }
+                })
             router.push('/detail')
         }
         const select = function(index) {
@@ -57,7 +67,7 @@ export default {
             const userId = localStorage.getItem('userId')
             store.dispatch('module/requestzzim', userId)
                 .then(function (result) {
-                    console.log(result.data)
+                    store.commit('module/setZzimList', result.data)
                 })
         })
 
