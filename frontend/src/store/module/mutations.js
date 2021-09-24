@@ -29,3 +29,11 @@ export function setBookList (state, bookList) {
 export function setSelectBook (state, selectBook) {
   state.selectBook = selectBook
 }
+
+export function setZzimList (state, zzimList) {
+  state.zzimList = zzimList
+}
+
+export function setZzim (state, zzim) {
+  state.zzim = zzim
+}

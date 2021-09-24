@@ -29,6 +29,9 @@ export default function () {
   // 선택된 책
   const selectBook = {}
 
+  const zzimList = []
+  const zzim = false
+
   return {
     textMode,
     categoryMode,
@@ -36,6 +39,8 @@ export default function () {
     user_info,
     hash_tags,
     bookList,
-    selectBook
+    selectBook,
+    zzimList,
+    zzim
   }
 }

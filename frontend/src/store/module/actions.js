@@ -45,6 +45,6 @@ export function requestzzim ({}, userId) {
 
 // 테스트용
 export function test ({}) {
-  const url = 'http://192.168.35.9/hi'
+  const url = 'http://192.168.35.9/MyRecommend'
   return $axios.get(url)
 }

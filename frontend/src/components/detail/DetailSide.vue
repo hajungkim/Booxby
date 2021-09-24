@@ -5,7 +5,8 @@
       </div>
       <div class="side_content">
             <div>
-                <q-icon class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
+                <q-icon v-if="zzim" @click="zzimOff" class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
+                <q-icon v-if="!zzim" @click="zzimOn" class="bookmark" style="font-size: 3.7em; color: black;" name="bookmark_border"/>
             </div>
             <div class="detail_name">
                 {{selectBook.title}}
@@ -29,9 +30,20 @@ export default {
     const store = useStore()
 
     const selectBook = computed(() => store.getters['module/getSelectBook'])
+    const zzim = computed(() => store.getters['module/getZzim'])
+
+    const zzimOn = function () {
+      store.commit('module/setZzim', true)
+    }
+    const zzimOff = function () {
+      store.commit('module/setZzim', false)
+    }
 
     return {
-      selectBook
+      selectBook,
+      zzim,
+      zzimOn,
+      zzimOff
     }
   }
 }
@@ -61,6 +73,7 @@ export default {
 }
 .bookmark{
   margin-left:30px;
+  cursor:pointer;
 }
 .detail_name{
     font-size:20px;
