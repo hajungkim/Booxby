@@ -2,7 +2,7 @@ import $axios from 'axios'
 
 // 기본 url
 const baseUrl = 'http://localhost:7777/api'
-
+const basePythonUrl = 'http://localhost:5000/data'
 // 회원가입 axios
 export function signup ({}, info) {
   console.log('signup', info)
@@ -45,7 +45,14 @@ export function requestzzim ({}, userId) {
 
 // 테스트용
 export function test ({}) {
-  const url = 'http://192.168.35.9/MyRecommend'
+  const url = basePythonUrl + '/MyRecommend'
+  return $axios.get(url)
+}
+
+// 테스트용
+export function test2 ({},isbn) {
+  const url = basePythonUrl + '/isbn/' + isbn
+  console.log(url,'url')
   return $axios.get(url)
 }
 
