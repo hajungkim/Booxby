@@ -72,6 +72,7 @@ public class ReviewDto {
         public reviewAllResponse(Review review, String nickname){
             this.reviewId = review.getReviewId();
             this.reviewScore = review.getReviewScore();
+            this.reviewContent=review.getReviewContent();
             this.reviewLike = review.isReviewLike();
             this.reviewIdea = review.isReviewIdea();
             this.reviewUseful = review.isReviewUseful();
