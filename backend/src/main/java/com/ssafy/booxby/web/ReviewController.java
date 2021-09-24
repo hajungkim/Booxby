@@ -16,7 +16,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/book")
-public class BookController {
+public class ReviewController {
 
     private final ReviewService bookService;
     private final UserService userService;
@@ -51,7 +51,7 @@ public class BookController {
         return response;
     }
 
-    @ApiOperation(value = "유저가 작성한 리뷰 조회", notes = "성공 시 리뷰 리스트 반환", response = ControllerResponse.class)
+    @ApiOperation(value = "유저가 작성한 리뷰 조회", notes = "성공 시 리뷰 리스트 반환 / 리뷰가 없으면 false 반환", response = ControllerResponse.class)
     @GetMapping("/review/my/{userId}")
     public ControllerResponse findMyReview(@PathVariable Long userId){
         ControllerResponse response = null;
@@ -63,8 +63,12 @@ public class BookController {
             for(Review review:reviewList){
                 ReviewDto.reviewResponse reviewResponse = new ReviewDto.reviewResponse(review);
                 list.add(reviewResponse);
-                response = new ControllerResponse("success", list);
             }
+
+            if(list.isEmpty())
+                response = new ControllerResponse("success", false);
+            else
+                response = new ControllerResponse("success", list);
 
         }catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
@@ -74,7 +78,7 @@ public class BookController {
     }
 
     @ApiOperation(value = "책 카테고리별(평점순, 등록순) 리뷰 조회", notes = "오래된 순-oldest / 최신순-newest(default) / 평점 높은 순-highscore / 평점 낮은 순-lowscore" +
-            "성공 시 리뷰 리스트 반환", response = ControllerResponse.class)
+            "성공 시 리뷰 리스트 반환 / 리뷰가 없을 경우 false 반환", response = ControllerResponse.class)
     @GetMapping("/review/{isbn}/{category}")
     public ControllerResponse findAllReviews(@PathVariable String isbn, @PathVariable String category){
         ControllerResponse response = null;
@@ -107,7 +111,10 @@ public class BookController {
                 list.add(reviewAllResponse);
             }
 
-            response = new ControllerResponse("success", list);
+            if(list.isEmpty())
+                response = new ControllerResponse("success", false);
+            else
+                response = new ControllerResponse("success", list);
 
         }catch (Exception e){
             response = new ControllerResponse("fail", e.getMessage());
