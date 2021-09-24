@@ -65,19 +65,35 @@
                                         <div class="modal_tag">
                                             <span style="font-weight:bold;">태그 </span>- 이 책을 읽었을 때의 느낌을 남겨주세요
                                             <div class="write_categories">
-                                                <div class="write_category">
+                                                <div v-if="!form.tag1" @click="tag1" class="write_category">
                                                     <img class="write_icon" src="../../assets/Surprised_Emoji.png">
                                                     <span class="write_word">기발해요</span>
                                                 </div>
-                                                <div class="write_category">
+                                                <div v-if="form.tag1" @click="tag1" class="write_category2">
+                                                    <img class="write_icon" src="../../assets/Surprised_Emoji.png">
+                                                    <span class="write_word">기발해요</span>
+                                                </div>
+                                                <div v-if="!form.tag2" @click="tag2" class="write_category">
                                                     <img class="write_icon" src="../../assets/Thumbs_Up_Emoji.png">
                                                     <span class="write_word">유용해요</span>
                                                 </div>
-                                                <div class="write_category">
+                                                <div v-if="form.tag2" @click="tag2" class="write_category2">
+                                                    <img class="write_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                                    <span class="write_word">유용해요</span>
+                                                </div>
+                                                <div v-if="!form.tag3" @click="tag3" class="write_category">
                                                     <img class="write_icon" src="../../assets/Eyes_Emoji.png">
                                                     <span class="write_word">잘읽혀요</span>
                                                 </div>
-                                                <div class="write_category">
+                                                <div v-if="form.tag3" @click="tag3" class="write_category2">
+                                                    <img class="write_icon" src="../../assets/Eyes_Emoji.png">
+                                                    <span class="write_word">잘읽혀요</span>
+                                                </div>
+                                                <div v-if="!form.tag4" @click="tag4" class="write_category">
+                                                    <img class="write_icon" src="../../assets/Heart_Emoji.png">
+                                                    <span class="write_word">추천해요</span>
+                                                </div>
+                                                <div v-if="form.tag4" @click="tag4" class="write_category2">
                                                     <img class="write_icon" src="../../assets/Heart_Emoji.png">
                                                     <span class="write_word">추천해요</span>
                                                 </div>
@@ -87,6 +103,7 @@
                                             <span style="font-weight:bold;">리뷰 </span>- 이 책의 감상평을 간단히 적어주세요
                                             <div style="max-width: 350px; margin-left:5px; margin-top:10px;">
                                                 <q-input
+                                                v-model="form.text"
                                                 class="textarea"
                                                 filled
                                                 type="textarea"
@@ -98,8 +115,8 @@
                                 </q-card-section>
                                 <q-card-actions>
                                     <div style="display:inline-block; margin:0 auto;">
-                                        <q-btn class="modal_btn" label="취소" color="primary" v-close-popup />
-                                        <q-btn class="modal_btn" label="등록" color="primary"/>
+                                        <q-btn @click="downReview" class="modal_btn" label="취소" color="primary" v-close-popup />
+                                        <q-btn @click="review" class="modal_btn" label="등록" color="primary"/>
                                     </div>
                                 </q-card-actions>
                             </q-card>
@@ -396,7 +413,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -407,14 +424,72 @@ export default {
         
         const selectBook = computed(() => store.getters['module/getSelectBook'])
         const review_score = ref(4)
+        const writeMode = ref(false)
+
+        const form = reactive({
+            text: '',
+            tag1: false,
+            tag2: false,
+            tag3: false,
+            tag4: false
+        })
 
         const back = function() {
             store.commit('module/setZzim', false)
             router.push('/main')
         }
+        
+        const downReview = function() {
+            form.text = ''
+            form.tag1 = false
+            form.tag2 = false
+            form.tag3 = false
+            form.tag4 = false
+            review_score.value = 4
+        }
+
+        const review = function() {
+            const userId = localStorage.getItem('userId')
+            const review = {
+                imgUrl: "null",
+                isbn: selectBook.value.isbn13,
+                reviewContent: form.text,
+                reviewIdea: form.tag1,
+                reviewLike: form.tag2,
+                reviewRead: form.tag3,
+                reviewScore: review_score.value,
+                reviewUseful: form.tag4,
+                title: selectBook.value.title,
+                userId: userId
+            }
+            store.dispatch('module/writeReview', review)
+                .then(function (result) {
+                    console.log(result)
+                })
+            form.text = ''
+            form.tag1 = false
+            form.tag2 = false
+            form.tag3 = false
+            form.tag4 = false
+            review_score.value = 4
+            writeMode.value = false
+        }
+
+        const tag1 = function() {
+            form.tag1 = !form.tag1
+        }
+        const tag2 = function() {
+            form.tag2 = !form.tag2
+        }
+        const tag3 = function() {
+            form.tag3 = !form.tag3
+        }
+        const tag4 = function() {
+            form.tag4 = !form.tag4
+        }
         return {
             tab: ref('view'),
-            writeMode: ref(false),
+            writeMode,
             selectBook,
             review_score,
             score_5: ref(5),
@@ -422,7 +497,14 @@ export default {
             score_3: ref(3),
             score_2: ref(2),
             score_1: ref(1),
-            back
+            back,
+            form,
+            review,
+            tag1,
+            tag2,
+            tag3,
+            tag4,
+            downReview
         }
     }
 }
@@ -523,9 +605,19 @@ export default {
   display: flex;
   width:90px;
   height:30px;
+  background-color: rgb(202, 202, 202);
+  border-radius: 20px;
+  margin-right:4px;
+  cursor:pointer;
+}
+.write_category2{
+  display: flex;
+  width:90px;
+  height:30px;
   background-color: rgb(187, 221, 241);
   border-radius: 20px;
   margin-right:4px;
+  cursor:pointer;
 }
 .write_icon{
   width:20px;
