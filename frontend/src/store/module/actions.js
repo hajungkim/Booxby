@@ -63,14 +63,18 @@ export function oxbooks () {
 
 // 찜 하기
 export function zzimOn ({}, zzim) {
-  console.log('찜', zzim)
   const url = baseUrl + '/scrap'
   return $axios.post(url, zzim)
 }
 
 // 찜 취소
 export function zzimOff ({}, zzim) {
-  console.log('취소', zzim)
-  const url = baseUrl + '/scrap'
+  const url = baseUrl + '/scrap/' + zzim.userId + '/' + zzim.isbn
   return $axios.delete(url, zzim)
+}
+
+// 리뷰 쓰기
+export function writeReview ({}, review) {
+  const url = baseUrl + '/book/review'
+  return $axios.post(url, review)
 }
