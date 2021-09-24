@@ -409,6 +409,7 @@ export default {
         const review_score = ref(4)
 
         const back = function() {
+            store.commit('module/setZzim', false)
             router.push('/main')
         }
         return {

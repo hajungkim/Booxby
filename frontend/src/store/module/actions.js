@@ -48,3 +48,15 @@ export function test ({}) {
   const url = 'http://192.168.35.9/MyRecommend'
   return $axios.get(url)
 }
+
+export function zzimOn ({}, zzim) {
+  console.log('찜',zzim)
+  const url = baseUrl + '/scrap'
+  return $axios.post(url, zzim)
+}
+
+export function zzimOff ({}, zzim) {
+  console.log('취소',zzim)
+  const url = baseUrl + '/scrap'
+  return $axios.delete(url, zzim)
+}
