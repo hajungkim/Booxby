@@ -80,7 +80,7 @@ module.exports = configure(function (ctx) {
       proxy: {
         '/data':{
           target:'http://localhost:5000/data',
-          pathRewrite:{'^/data':''},
+          pathRewrite:{'^/api':''},
           changeOrigin:true,
           secure:false
         }
