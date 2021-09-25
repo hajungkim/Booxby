@@ -47,11 +47,11 @@ public class ScrapController {
     }
 
     @ApiOperation(value = "책 찜하기 취소", notes = "", response = ControllerResponse.class)
-    @DeleteMapping("/scrap")
-    public ControllerResponse deleteScrap(@RequestBody ScrapDto.saveScrapRequest request) {
+    @DeleteMapping("/scrap/{userId}/{isbn}")
+    public ControllerResponse deleteScrap(@PathVariable Long userId, @PathVariable String isbn) {
         ControllerResponse response = null;
         try {
-            scrapService.deleteScrap(request);
+            scrapService.deleteScrap(userId, isbn);
             response = new ControllerResponse("success", "찜하기 취소 성공");
         } catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
