@@ -148,5 +148,24 @@ class scrapRecommend(Resource):
         # 가장 유사한 책 리턴
         return toJson(df.iloc[booxby_indices])
 
+#작가 이름으로 책 찾기        
+@api.route('/search/author/<search>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+class searchAuthor(Resource):
+    def get(self, search):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        print(search)
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        author = df[ df['author'].str.contains(search, na=False) ]
+
+        return toJson(author) 
+
+#제목으로 책 찾기
+@api.route('/search/title/<search>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+class searchTitle(Resource):
+    def get(self, search):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        print(search)
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        title = df[ df['title'].str.contains(search, na=False) ]
+
+        return toJson(title)  
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
