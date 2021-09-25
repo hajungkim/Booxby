@@ -70,5 +70,9 @@ export function zzimOn ({}, zzim) {
 export function zzimOff ({}, zzim) {
   console.log('취소',zzim)
   const url = baseUrl + '/scrap'
-  return $axios.delete(url, zzim)
+  return $axios.delete(url, zzim,{
+    headers:{
+      'Content-Type': 'application/json'
+    }
+  })
 }
