@@ -29,3 +29,11 @@ services:
     container_name: booxby_be
     volumes:
       - ./backend:/app
+
+  bigdata:
+    build:
+      dockerfile: Dockerfile
+      context: ./flask
+    container_name: booxby_flask_be
+    volumes:
+      - ./flask:/app
