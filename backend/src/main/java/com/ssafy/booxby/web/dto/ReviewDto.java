@@ -50,8 +50,8 @@ public class ReviewDto {
             this.reviewIdea = review.isReviewIdea();
             this.reviewUseful = review.isReviewUseful();
             this.reviewRead = review.isReviewRead();
-            this.title=title;
-            this.imgUrl=imgUrl;
+            this.title=review.getTitle();
+            this.imgUrl=review.getImgUrl();
         }
     }
 
