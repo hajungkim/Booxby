@@ -32,43 +32,102 @@
       <q-tab-panels v-model="tab" animated style="background-color: rgb(227,231,234);">
 
         <q-tab-panel class="three_options zzims" name="zzim">
-          <q-card v-for="zzimBook in list" :key="zzimBook.isbn" class="my-card no-shadow cardbooks">
-            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+          <q-card v-for="zzimBook in zzimList" :key="zzimBook.isbn" @click="zzimDetail(zzimBook.isbn)" class="my-card no-shadow cardbooks">
+            <q-img class="zzim_img" :src="zzimBook.imgUrl">
               <div class="absolute-bottom text-subtitle2 text-center">
-                {{zzimBook.isbn}}
+                {{zzimBook.title}}
               </div>
             </q-img>
           </q-card>
         </q-tab-panel>
 
         <q-tab-panel class="three_options" name="reviews">
-            <div class="review_container">
-              <div class="review_info" @click="moveDetail">
+            <div v-for="item in myReview" :key="item.reviewId" class="review_container" @click="moveDetail(item.isbn)">
+              <div class="review_info">
                 <div class="title">
-                  <p style="font-size:30px;">올라의 모험</p>
-                  <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
+                  <p style="font-size:30px;">{{item.title}}</p>
+                  <q-rating
+                      class="star"
+                      v-if="item.reviewScore == 5"
+                      v-model="score_5"
+                      max="5"
+                      size="1.8em"
+                      color="green-5"
+                      icon="star_border"
+                      icon-selected="star"
+                      icon-half="star_half"
+                      readonly
+                  />
+                  <q-rating
+                      class="star"
+                      v-if="item.reviewScore == 4"
+                      v-model="score_4"
+                      max="5"
+                      size="1.8em"
+                      color="green-5"
+                      icon="star_border"
+                      icon-selected="star"
+                      icon-half="star_half"
+                      readonly
+                  />
+                  <q-rating
+                      class="star"
+                      v-if="item.reviewScore == 3"
+                      v-model="score_3"
+                      max="5"
+                      size="1.8em"
+                      color="green-5"
+                      icon="star_border"
+                      icon-selected="star"
+                      icon-half="star_half"
+                      readonly
+                  />
+                  <q-rating
+                      class="star"
+                      v-if="item.reviewScore == 2"
+                      v-model="score_2"
+                      max="5"
+                      size="1.8em"
+                      color="green-5"
+                      icon="star_border"
+                      icon-selected="star"
+                      icon-half="star_half"
+                      readonly
+                  />
+                  <q-rating
+                      class="star"
+                      v-if="item.reviewScore == 1"
+                      v-model="score_1"
+                      max="5"
+                      size="1.8em"
+                      color="green-5"
+                      icon="star_border"
+                      icon-selected="star"
+                      icon-half="star_half"
+                      readonly
+                  />
                 </div>
-                <p style="margin-left:25px;">이 책 정말 재밌어요 주인공의 심경 변화가 이렇게 잘 묘사된 책은 없을 겁니다!</p>
+                <p style="margin-left:25px;">내용칸</p>
                 <div class="review_categories">
-                  <div class="review_category">
+                  <div v-if="item.reviewIdea" class="review_category">
                     <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
                     <div class="word">기발해요</div>
                   </div>
-                  <div class="review_category">
+                  <div v-if="item.reviewLike" class="review_category">
                     <img class="review_icon" src="../assets/Thumbs_Up_Emoji.png" alt="">
                     <span class="word">유용해요</span>
                   </div>
-                  <div class="review_category">
+                  <div v-if="item.reviewRead" class="review_category">
                     <img class="review_icon" src="../assets/Eyes_Emoji.png" alt="">
                     <span class="word">잘읽혀요</span>
                   </div>
-                  <div class="review_category">
+                  <div v-if="item.reviewUseful" class="review_category">
                     <img class="review_icon" src="../assets/Heart_Emoji.png" alt="">
                     <span class="word">추천해요</span>
                   </div>
                 </div>
               </div>
-              <img style="width:90px; height:130px; margin-right:20px;" src="../assets/sampleImg.jpg" alt="">
+              <img style="width:90px; height:130px; margin-right:20px; margin-top:10px;" :src="item.imgUrl" alt="">
             </div>
           </q-tab-panel>
 
@@ -115,7 +174,7 @@ export default {
 
     const loginUser = store.getters['module/getLoginUser']
     const hashtags = store.getters['module/getHashtags']
-    const list = computed(() => store.getters['module/getZzimList'])
+    const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
 
     const back = function() {
@@ -125,27 +184,33 @@ export default {
     const moveModify = function(){
       router.push('/modify')
     }
-    function moveDetail(){
-      router.push('detail')
+    function moveDetail(isbn){
+      store.dispatch('module/getisbnInfo',isbn)
+        .then(function (result) {
+          store.commit('module/setSelectBook', result.data[0])
+        })
+      router.push('/detail')
     }
     function moveHash(){
       router.push('hashtag')
     }
 
-    function zzimDetail(){
-      const isbn = '9788949113999'
+    function zzimDetail(isbn){
       store.dispatch('module/getisbnInfo',isbn)
       .then((res) =>{
-        console.log(res.data[0],'isbn 책정보')
-        console.log(res.data[0].isbn13,'isbn13')
+        store.commit('module/setSelectBook', res.data[0])
       })
+      router.push('/detail')
     }
 
     onMounted(() => {
+      console.log(store.getters['module/getZzimList'])
       store.dispatch('module/requestMyReview')
         .then(function (result){
           console.log(result.data)
+          store.commit('module/setMyReview', result.data.data)
         })
+      console.log('123', zzimList.value)
     })
 
     return{
@@ -157,8 +222,13 @@ export default {
       back,
       moveHash,
       moveDetail,
-      list,
-      myReview
+      zzimList,
+      myReview,
+      score_5: ref(5),
+      score_4: ref(4),
+      score_3: ref(3),
+      score_2: ref(2),
+      score_1: ref(1),
     }
   }
 }
@@ -283,6 +353,10 @@ export default {
   margin:6px 0px 0px 5px;
   color:rgb(8, 84, 173);
   font-weight: bold;
+}
+.star{
+  margin-bottom:20px;
+  margin-left:5px;
 }
 /* 설정 */
 .img{

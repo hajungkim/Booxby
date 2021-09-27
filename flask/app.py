@@ -105,12 +105,11 @@ class categoryRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/data/isbn')
+@api.route('/data/isbn/<isbn>')
 class getIsbn(Resource):
-    def post(self):
+    def get(self,isbn):
         """isbn으로 책 상세정보 반환하기"""
-        print(request.json.get('isbn'),'@@@')
-        isbn='125153525'
+        print(isbn)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[(df['isbn13'] == int(isbn))]
         return toJson(df1)
