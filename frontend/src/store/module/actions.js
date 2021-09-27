@@ -45,7 +45,7 @@ export function emojiRecommend ({}) {
 }
 // my 추천
 export function myRecommend ({},score) {
-  // console.log(score, typeof(score))
+  console.log(score, typeof(score))
   const url = basePythonUrl + '/myrecommend/' + score
   return $axios.get(url)
 }
@@ -56,6 +56,28 @@ export function ageRecommend ({},ageGender) {
   console.log(url,'url')
   return $axios.get(url)
 }
+// category 추천
+export function getCategory ({},category) {
+  console.log(category,'액션카테고리')
+  const url = basePythonUrl + '/category/' + category
+  console.log(url,'url')
+  return $axios.get(url)
+}
+// 책 검색
+export function getSearchbook ({},keyword) {
+  console.log(keyword,'서치북')
+  const url = basePythonUrl + '/title/' + keyword
+  console.log(url,'url')
+  return $axios.get(url)
+}
+// 작가 검색
+export function getWriter ({},keyword) {
+  console.log(keyword,'서치작가')
+  const url = basePythonUrl + '/author/' + keyword
+  console.log(url,'url')
+  return $axios.get(url)
+}
+
 // isbn 정보반환
 export function getisbnInfo ({},isbn) {
   console.log(isbn)
