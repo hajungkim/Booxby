@@ -9,15 +9,15 @@
           <div class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">
-          <div class="side_list">
+          <div @click="emojiRecommend" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="emoji_emotions"/>
             <span class="list_text">감성책 추천</span>
           </div>
-          <div class="side_list">
+          <div @click="myRecommend" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="brush"/>
             <span class="list_text">나의 감성 책 추천</span>
           </div>
-          <div class="side_list">
+          <div @click="ageRecommend" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="people"/>
             <span class="list_text">나이와 성별 추천</span>
           </div>
@@ -63,7 +63,7 @@ export default {
     const store = useStore()
     const router = useRouter()
 
-    const loginUser = computed(() => store.getters['module/getLoginUser'])
+    const loginUser = store.getters['module/getLoginUser']
     const categoryMode = computed(() => store.getters['module/getCategoryMode'])
 
     const showCategory = function () {
@@ -74,6 +74,35 @@ export default {
     }
     const logout = function() {
       router.push('/')
+    }
+    function emojiRecommend(){
+      store.dispatch('module/emojiRecommend').then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+    function myRecommend(){
+      // loginUser.score 넘겨주기
+      const score = '4321'
+      store.dispatch('module/myRecommend',score).then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+    function ageRecommend(){
+      // loginUser.age / loginUser.gender 넘겨주기
+      const age = '20대'
+      const gender = '남성'
+      store.dispatch('module/ageRecommend',age,gender).then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      }).catch((err)=>{
+        console.log(err)
+      })
     }
     return {
       category1: ref(false),
@@ -89,7 +118,10 @@ export default {
       categoryMode,
       showCategory,
       goMypage,
-      logout
+      logout,
+      emojiRecommend,
+      myRecommend,
+      ageRecommend
     }
   }
 }

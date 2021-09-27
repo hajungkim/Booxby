@@ -2,39 +2,48 @@
     <div class="worldcup_container">
         <div class="worldcup">
             <div class="worldcup_main">
-                <q-card class="my-card" id="card">
-                    <q-img src="~assets/images/html.jpg" class="worldcup_img">
-                        <div class="absolute-bottom" v-if="textMode">
-                            <div class="text-h6" style="font-weight:bold;">HTML5 + CSS3 바이블</div>
-                            <div class="text-subtitle2" style="font-weight:bold;">이 책은 HTML + CSS 책입니다 이 책은 HTML + CSS 책입니다 이 책은 HTML + CSS 책입니다 이 책은 HTML + CSS 책입니다 이 책은 HTML + CSS 책입니다 이 책은 HTML + CSS 책입니다</div>
-                        </div>
-                    </q-img>
-                    <q-card-actions>
-                        <q-icon @click="signUp" class="btn" style="font-size: 4.0em; color: red; margin-left:50px;" name="close"/>
-                        <q-icon class="btn" style="font-size: 4.0em; color: orange;" name="change_history"/>
-                        <q-icon class="btn" style="font-size: 4.0em; color: green;" name="done"/>
-                    </q-card-actions>
-                </q-card>
+                <Oxbook :abc="select_books" :change="change"></Oxbook>
+                <q-card-actions style="margin: 10px 0px 0px 70px;">
+                    <q-icon @click="signUp" class="btn" style="font-size: 4.0em; color: red; margin-left:50px;" name="close"/>
+                    <q-icon class="btn" style="font-size: 4.0em; color: orange;" name="change_history"/>
+                    <q-icon @click="next" class="btn" style="font-size: 4.0em; color: green;" name="done"/>
+                </q-card-actions>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { onMounted, computed } from 'vue'
+import Oxbook from '../components/Oxbook.vue'
 import { useStore } from 'vuex'
+// import { onMounted } from 'vue'
 export default {
+    components: {
+        Oxbook,
+    },
     setup() {
         const store = useStore()
-        const textMode = computed(() => store.getters['module/getTextMode'])
         const infos = store.getters['module/getInfos']
         const hashtags_list = (store.getters['module/getHashtags'])
-        let oxbooks = []
-        let hashtag = ''
-        hashtags_list.forEach(e => {
-            hashtag = hashtag + e
-        });
+        const oxbooks = store.getters['module/getOxbooks']
+
+        let change = true
+        let select_books = {}
+        let i = 0
+        select_books = oxbooks[i]
+        store.commit('module/setselectOxbooks', oxbooks[i])
+        function next(){
+        i = i + 1
+        select_books = oxbooks[i]
+        change = !change
+        store.commit('module/setselectOxbooks', oxbooks[i])
+        console.log(i,select_books,'selectoxbook')
+        }
         function signUp(){
+            let hashtag = ''
+            hashtags_list.forEach(e => {
+                hashtag = hashtag + e
+            });
             store.dispatch('module/signup',{
                 age: infos.age,
                 email: infos.email,
@@ -49,25 +58,12 @@ export default {
                 console.log(err,'err')
             })
         }
-        onMounted(() => {
-            const card = document.getElementById('card')
-            card.addEventListener('mouseover', function () {
-                store.commit('module/setTextMode', true)
-            }, true)
-            card.addEventListener('mouseout', function () {
-                store.commit('module/setTextMode', false)
-            }, true)
-            store.dispatch('module/oxbooks')
-            .then(function (res) {
-                oxbooks = res.data
-                oxbooks.forEach(e => {
-                    console.log('title',e.title,'img',e.img_url,'des',e.description)
-                });
-            })
-        })
-        return {
-            textMode,
-            signUp
+        return{
+            select_books,
+            i,
+            change,
+            signUp,
+            next
         }
     }
 }
@@ -92,18 +88,13 @@ export default {
     width:550px;
     height:650px;
 }
-.my-card{
-    margin-top:30px;
-    margin-left:80px;
-    width:375px;
-}
 .btn{
     width:65px;
     height:65px;
     border:1px solid rgb(219, 219, 219);
     border-radius: 75px;
     margin-left:30px;
-    background-color:rgb(219, 219, 219);
+    background-color:white;
     box-shadow:black 3px 3px 3px;
     cursor: pointer;
     position:relative;
