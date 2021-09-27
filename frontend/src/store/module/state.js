@@ -40,7 +40,6 @@ export default function () {
   const oxbooks = []
   const selectoxbooks = {}
 
-
   return {
     textMode,
     categoryMode,

@@ -36,16 +36,14 @@ export default {
       const userId = localStorage.getItem('userId')
       store.commit('module/setZzim', true)
       store.dispatch('module/zzimOn', {isbn: selectBook.value.isbn13, userId: userId})
-        .then(function(result) {
-          console.log(result)
+        .then(function() {
         })
     }
     const zzimOff = function () {
       const userId = localStorage.getItem('userId')
       store.commit('module/setZzim', false)
       store.dispatch('module/zzimOff', {isbn: selectBook.value.isbn13, userId: userId})
-        .then(function(result) {
-          console.log(result)
+        .then(function() {
         })
     }
 
