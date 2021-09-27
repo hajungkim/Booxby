@@ -59,40 +59,34 @@ export function ageRecommend ({},ageGender) {
 // isbn 정보반환
 export function getisbnInfo ({},isbn) {
   console.log(isbn)
-  const url = basePythonUrl + '/isbn'
-  return $axios.post(url,isbn)
+  const url = basePythonUrl + '/isbn/' + isbn
+  return $axios.get(url)
 }
-
 // oxbooks 랜덤
 export function oxbooks () {
   const url = basePythonUrl + '/oxbooks'
   return $axios.get(url)
 }
-
 // 찜 하기
 export function zzimOn ({}, zzim) {
   const url = baseUrl + '/scrap'
   return $axios.post(url, zzim)
 }
-
 // 찜 취소
 export function zzimOff ({}, zzim) {
   const url = baseUrl + '/scrap/' + zzim.userId + '/' + zzim.isbn
   return $axios.delete(url, zzim)
 }
-
 // 리뷰 쓰기
 export function writeReview ({}, review) {
   const url = baseUrl + '/book/review'
   return $axios.post(url, review)
 }
-
 // 리뷰 가져오기
 export function requestReview ({}, isbn) {
   const url = baseUrl + '/book/review/' + isbn + '/newest'
   return $axios.get(url)
 }
-
 // 나의 리뷰 가져오기
 export function requestMyReview ({}) {
   const userId = localStorage.getItem('userId')
