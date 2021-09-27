@@ -45,14 +45,14 @@ export function emojiRecommend ({}) {
 }
 // my 추천
 export function myRecommend ({},score) {
-  console.log(score, typeof(score))
+  // console.log(score, typeof(score))
   const url = basePythonUrl + '/myrecommend/' + score
   return $axios.get(url)
 }
 // age/gender 추천
-export function ageRecommend ({},age,gender) {
-  // console.log(score, typeof(score))
-  const url = basePythonUrl + '/agegender/' + age + '/' + gender
+export function ageRecommend ({},ageGender) {
+  console.log(ageGender.gender)
+  const url = basePythonUrl + '/agegender/' + ageGender.age + '/' + ageGender.gender
   console.log(url,'url')
   return $axios.get(url)
 }
