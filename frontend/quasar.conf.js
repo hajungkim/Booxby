@@ -78,9 +78,9 @@ module.exports = configure(function (ctx) {
       port: 8086,
       open: true, // opens browser window automatically
       proxy: {
-        '/data':{
-          target:'http://localhost:5000/data',
-          pathRewrite:{'^/api':''},
+        '/data/*':{
+          target:'http://localhost:5000/',
+          pathRewrite:{'^/data':''},
           changeOrigin:true,
           secure:false
         }
