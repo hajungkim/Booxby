@@ -22,6 +22,7 @@
 <script>
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { onMounted } from 'vue'
 export default {
     setup() {
         let hashflag = true
@@ -107,6 +108,11 @@ export default {
             store.commit('module/setHashscore',hashscore)
             router.push('my')
         }
+        onMounted(()=>{
+            store.dispatch('module/oxbooks').then(function (res) {
+            store.commit('module/setOxbooks',res.data)
+        })  
+        })
         return {
             hashtag_list,
             hashflag,

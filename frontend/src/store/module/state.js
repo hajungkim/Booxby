@@ -32,6 +32,10 @@ export default function () {
   const zzimList = []
   const zzim = false
 
+  const oxbooks = []
+  const selectoxbooks = {}
+
+
   return {
     textMode,
     categoryMode,
@@ -41,6 +45,8 @@ export default function () {
     bookList,
     selectBook,
     zzimList,
-    zzim
+    zzim,
+    oxbooks,
+    selectoxbooks
   }
 }

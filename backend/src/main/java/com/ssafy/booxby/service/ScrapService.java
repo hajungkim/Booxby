@@ -21,6 +21,8 @@ public class ScrapService {
         Scrap scrap = Scrap.builder()
                 .userId(request.getUserId())
                 .isbn(request.getIsbn())
+                .imgUrl(request.getImgUrl())
+                .title(request.getTitle())
                 .build();
         scrapRepository.save(scrap);
     }

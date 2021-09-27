@@ -33,3 +33,11 @@ export function getZzimList(state) {
 export function getZzim(state) {
   return state.zzim
 }
+
+export function getOxbooks(state) {
+  return state.oxbooks
+}
+
+export function getselectOxbooks(state) {
+  return state.selectoxbooks
+}
