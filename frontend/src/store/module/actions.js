@@ -43,16 +43,29 @@ export function requestzzim ({}, userId) {
   return $axios.get(url)
 }
 
-// 테스트용
-export function test ({}) {
-  const url = basePythonUrl + '/MyRecommend'
+// 7권 책 반환
+export function emojiRecommend ({}) {
+  const url = basePythonUrl + '/emojirecommend'
   return $axios.get(url)
 }
-
+// my 추천
+export function myRecommend ({},score) {
+  console.log(score, typeof(score))
+  const url = basePythonUrl + '/myrecommend/' + score
+  return $axios.get(url)
+}
+// age/gender 추천
+export function ageRecommend ({},age,gender) {
+  // console.log(score, typeof(score))
+  const url = basePythonUrl + '/agegender/' + age + '/' + gender
+  console.log(url,'url')
+  return $axios.get(url)
+}
 // isbn 정보반환
 export function getisbnInfo ({},isbn) {
-  const url = basePythonUrl + '/isbn/' + isbn
-  return $axios.get(url)
+  console.log(isbn)
+  const url = basePythonUrl + '/isbn'
+  return $axios.post(url,isbn)
 }
 
 // oxbooks 랜덤

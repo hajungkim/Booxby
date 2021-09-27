@@ -36,10 +36,10 @@ class HelloWorld(Resource):
         return res
 
 
-@api.route('/data/MyRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/myrecommend/<score>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class userEmotionRecommend(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        user_number = 5
+    def get(self,score):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        user_number = score
         colornum=0
         if -29726<=user_number <=-1170:
             colornum=7
@@ -62,7 +62,7 @@ class userEmotionRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/data/EmojiRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/emojirecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class randomEmotion(Resource):
     def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
@@ -74,11 +74,11 @@ class randomEmotion(Resource):
 
         return toJson(df1)
 
-@api.route('/data/agegender')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/agegender/<age>/<gender>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class ageGenderRecommend(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
-        gender = '남성' # 남성 여성
+    def get(self,age,gender):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        # age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
+        # gender = '남성' # 남성 여성
         df = pd.read_csv('booxby_gender_age_data2.csv', encoding='cp949')
         df1 = df[(df['age'] == age) & (df['sex'] == gender)].sample(n=7)
 
@@ -93,9 +93,11 @@ class categoryRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/data/isbn/<isbn>')
+@api.route('/data/isbn')
 class getIsbn(Resource):
-    def get(self,isbn):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def post(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        print(request.json.get('isbn'),'@@@')
+        isbn='125153525'
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[(df['isbn13'] == int(isbn))]
         return toJson(df1)
