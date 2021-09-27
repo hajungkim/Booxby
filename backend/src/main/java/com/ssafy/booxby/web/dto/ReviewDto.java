@@ -34,6 +34,7 @@ public class ReviewDto {
     public static class reviewResponse{
         private Long reviewId;
         private String isbn;
+        private String reviewContent;
         private String title;
         private String imgUrl;
         private int reviewScore;
@@ -45,6 +46,7 @@ public class ReviewDto {
         public reviewResponse(Review review){
             this.reviewId = review.getReviewId();
             this.isbn = review.getIsbn();
+            this.reviewContent=review.getReviewContent();
             this.reviewScore = review.getReviewScore();
             this.reviewLike = review.isReviewLike();
             this.reviewIdea = review.isReviewIdea();
