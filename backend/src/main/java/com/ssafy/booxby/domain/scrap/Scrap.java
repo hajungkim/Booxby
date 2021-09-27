@@ -25,12 +25,16 @@ public class Scrap {
 
     private String imgUrl;
 
+    private String title;
+
     //private LocalDateTime createdDate;
 
     @Builder
-    public Scrap(Long userId, String isbn) {
+    public Scrap(Long userId, String isbn, String imgUrl, String title) {
         this.userId = userId;
         this.isbn = isbn;
+        this.imgUrl= imgUrl;
+        this.title = title;
         //this.createdDate = LocalDateTime.now();
     }
 }
