@@ -45,3 +45,7 @@ export function getOxbooks(state) {
 export function getselectOxbooks(state) {
   return state.selectoxbooks
 }
+
+export function getMyReview(state) {
+  return state.myReview
+}

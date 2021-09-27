@@ -74,6 +74,15 @@ class randomEmotion(Resource):
 
         return toJson(df1)
 
+@api.route('/data/emojirecommend2')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+class randomEmotion2(Resource):
+    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        isbn='9788956186412'
+        df1 = df[(df['isbn13'] == int(isbn))]
+
+        return toJson(df1)
+
 @api.route('/data/agegender/<age>/<gender>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class ageGenderRecommend(Resource):
     def get(self,age,gender):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환

@@ -32,38 +32,10 @@
       <q-tab-panels v-model="tab" animated style="background-color: rgb(227,231,234);">
 
         <q-tab-panel class="three_options zzims" name="zzim">
-          <q-card @click="zzimDetail" class="my-card no-shadow cardbooks" id="card">
+          <q-card v-for="zzimBook in list" :key="zzimBook.isbn" class="my-card no-shadow cardbooks">
             <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
               <div class="absolute-bottom text-subtitle2 text-center">
-                Title
-              </div>
-            </q-img>
-          </q-card>
-          <q-card class="my-card no-shadow cardbooks" id="card">
-            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center">
-                Title
-              </div>
-            </q-img>
-          </q-card>
-          <q-card class="my-card no-shadow cardbooks" id="card">
-            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center">
-                Title
-              </div>
-            </q-img>
-          </q-card>
-          <q-card class="my-card no-shadow cardbooks" id="card">
-            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center">
-                Title
-              </div>
-            </q-img>
-          </q-card>
-          <q-card class="my-card no-shadow cardbooks" id="card">
-            <q-img class="zzim_img" src="https://cdn.quasar.dev/img/parallax2.jpg">
-              <div class="absolute-bottom text-subtitle2 text-center">
-                Title
+                {{zzimBook.isbn}}
               </div>
             </q-img>
           </q-card>
@@ -72,62 +44,6 @@
         <q-tab-panel class="three_options" name="reviews">
             <div class="review_container">
               <div class="review_info" @click="moveDetail">
-                <div class="title">
-                  <p style="font-size:30px;">올라의 모험</p>
-                  <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
-                </div>
-                <p style="margin-left:25px;">이 책 정말 재밌어요 주인공의 심경 변화가 이렇게 잘 묘사된 책은 없을 겁니다!</p>
-                <div class="review_categories">
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
-                    <div class="word">기발해요</div>
-                  </div>
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Thumbs_Up_Emoji.png" alt="">
-                    <span class="word">유용해요</span>
-                  </div>
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Eyes_Emoji.png" alt="">
-                    <span class="word">잘읽혀요</span>
-                  </div>
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Heart_Emoji.png" alt="">
-                    <span class="word">추천해요</span>
-                  </div>
-                </div>
-              </div>
-              <img style="width:90px; height:130px; margin-right:20px;" src="../assets/sampleImg.jpg" alt="">
-            </div>
-            <div class="review_container">
-              <div class="review_info">
-                <div class="title">
-                  <p style="font-size:30px;">올라의 모험</p>
-                  <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
-                </div>
-                <p style="margin-left:25px;">이 책 정말 재밌어요 주인공의 심경 변화가 이렇게 잘 묘사된 책은 없을 겁니다!</p>
-                <div class="review_categories">
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
-                    <div class="word">기발해요</div>
-                  </div>
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Thumbs_Up_Emoji.png" alt="">
-                    <span class="word">유용해요</span>
-                  </div>
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Eyes_Emoji.png" alt="">
-                    <span class="word">잘읽혀요</span>
-                  </div>
-                  <div class="review_category">
-                    <img class="review_icon" src="../assets/Heart_Emoji.png" alt="">
-                    <span class="word">추천해요</span>
-                  </div>
-                </div>
-              </div>
-              <img style="width:90px; height:130px; margin-right:20px;" src="../assets/sampleImg.jpg" alt="">
-            </div>
-            <div class="review_container">
-              <div class="review_info">
                 <div class="title">
                   <p style="font-size:30px;">올라의 모험</p>
                   <span style="font-size:20px; margin-top:10px; color:gray;"><q-icon style="margin-top:-4px;" name="star"></q-icon>5</span>
@@ -188,7 +104,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router' 
 
@@ -199,8 +115,9 @@ export default {
 
     const loginUser = store.getters['module/getLoginUser']
     const hashtags = store.getters['module/getHashtags']
-    const zzim_books = []
-    
+    const list = computed(() => store.getters['module/getZzimList'])
+    const myReview = computed(() => store.getters['module/getMyReview'])
+
     const back = function() {
         router.push('/main')
     }
@@ -214,14 +131,7 @@ export default {
     function moveHash(){
       router.push('hashtag')
     }
-    store.dispatch('module/requestzzim',loginUser.userId)
-    .then((res) =>{
-      console.log(res,'찜목록가져오기')
-      zzim_books = res.data.data
-    })
-    .catch((err) =>{
-      console.log(err)
-    })
+
     function zzimDetail(){
       const isbn = '9788949113999'
       store.dispatch('module/getisbnInfo',isbn)
@@ -230,16 +140,25 @@ export default {
         console.log(res.data[0].isbn13,'isbn13')
       })
     }
+
+    onMounted(() => {
+      store.dispatch('module/requestMyReview')
+        .then(function (result){
+          console.log(result.data)
+        })
+    })
+
     return{
       tab: ref('zzim'),
       loginUser,
       hashtags,
-      zzim_books,
       zzimDetail,
       moveModify,
       back,
       moveHash,
-      moveDetail
+      moveDetail,
+      list,
+      myReview
     }
   }
 }

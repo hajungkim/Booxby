@@ -135,6 +135,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress5" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -147,6 +148,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress4" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -159,6 +161,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress3" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -171,6 +174,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress2" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -183,9 +187,14 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress1" color="secondary"/>
                                     </div>
                                 </div>
                                 <div class="state_right">
+                                        <q-linear-progress class="progress2" style="margin-left:27px;" size="35px" :value="progress6" color="primary"/>
+                                        <q-linear-progress class="progress2" style="margin-left:26px;" size="35px" :value="progress7" color="warning"/>
+                                        <q-linear-progress class="progress2" style="margin-left:25px;" size="35px" :value="progress8" color="accent"/>
+                                        <q-linear-progress class="progress2" style="margin-left:25px;" size="35px" :value="progress9" color="negative"/>
                                     <div class="state_categories">
                                         <div class="state_category">
                                             <img class="review_icon" src="../../assets/Surprised_Emoji.png">
@@ -210,13 +219,13 @@
                                 <div class="review_left">
                                     <q-img src="~assets/images/book.jpg" class="review_profile"/>
                                     <div class="review_name">
-                                        김싸피
+                                        {{item.nickname}}
                                     </div>
                                 </div>
                                 <div class="review_right">
                                     <div class="review_score">
                                         <q-rating
-                                            v-model="review_score"
+                                            v-model="item.reviewScore"
                                             max="5"
                                             size="2em"
                                             color="green-5"
@@ -227,24 +236,22 @@
                                         />
                                     </div>
                                     <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                        {{item.reviewContent}}
                                     </div>
                                     <div class="review_categories">
-                                        <div class="review_category">
+                                        <div v-if="item.reviewIdea" class="review_category">
                                             <img class="review_icon" src="../../assets/Surprised_Emoji.png">
                                             <span class="review_word">기발해요</span>
                                         </div>
-                                        <div class="review_category">
+                                        <div v-if="item.reviewLike" class="review_category">
                                             <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
                                             <span class="review_word">유용해요</span>
                                         </div>
-                                        <div class="review_category">
+                                        <div v-if="item.reviewRead" class="review_category">
                                             <img class="review_icon" src="../../assets/Eyes_Emoji.png">
                                             <span class="review_word">잘읽혀요</span>
                                         </div>
-                                        <div class="review_category">
+                                        <div v-if="item.reviewUseful" class="review_category">
                                             <img class="review_icon" src="../../assets/Heart_Emoji.png">
                                             <span class="review_word">추천해요</span>
                                         </div>
@@ -291,6 +298,16 @@ export default {
         const writeMode = ref(false)
 
         const reviewList = computed(() => store.getters['module/getReviewList'])
+        
+        const progress1 = ref(0)
+        const progress2 = ref(0)
+        const progress3 = ref(0)
+        const progress4 = ref(0)
+        const progress5 = ref(0)
+        const progress6 = ref(0)
+        const progress7 = ref(0)
+        const progress8 = ref(0)
+        const progress9 = ref(0)
 
         const form = reactive({
             text: '',
@@ -329,12 +346,11 @@ export default {
                 userId: userId
             }
             store.dispatch('module/writeReview', review)
-                .then(function (res) {
-                    console.log(res)
+                .then(function () {
                     store.dispatch('module/requestReview', selectBook.value.isbn13)
                         .then(function (result) {
-                            console.log(result.data)
                             store.commit('module/setReviewList', result.data.data)
+                            requestReview()
                         })
                 })
             form.text = ''
@@ -358,12 +374,76 @@ export default {
         const tag4 = function() {
             form.tag4 = !form.tag4
         }
-
-        onMounted(() => {
+        const requestReview = function() {
             store.dispatch('module/requestReview', selectBook.value.isbn13)
                 .then(function (result) {
+                    var reviewIdea = 0
+                    var reviewLike = 0
+                    var reviewRead = 0
+                    var reviewUseful = 0
+                    var emotionCount = 0
+                    var star1 = 0
+                    var star2 = 0
+                    var star3 = 0
+                    var star4 = 0
+                    var star5 = 0
+                    var scoreCount = 0
+                    for(let i=0; i<result.data.data.length; i++) {
+                        if(result.data.data[i].reviewScore == 1) {
+                            star1++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 2) {
+                            star2++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 3) {
+                            star3++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 4) {
+                            star4++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 5) {
+                            star5++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewIdea){
+                            reviewIdea++
+                            emotionCount++
+                        }
+                        if(result.data.data[i].reviewLike){
+                            reviewLike++
+                            emotionCount++
+                        }
+                        if(result.data.data[i].reviewRead){
+                            reviewRead++
+                            emotionCount++
+                        }
+                        if(result.data.data[i].reviewUseful){
+                            reviewUseful++
+                            emotionCount++
+                        }
+                    }
+                    if(scoreCount != 0) {
+                        progress1.value = star1 / scoreCount
+                        progress2.value = star2 / scoreCount
+                        progress3.value = star3 / scoreCount
+                        progress4.value = star4 / scoreCount
+                        progress5.value = star5 / scoreCount
+                    }
+                    if(emotionCount != 0) {
+                        progress6.value = reviewIdea / emotionCount
+                        progress7.value = reviewLike / emotionCount
+                        progress8.value = reviewRead / emotionCount
+                        progress9.value = reviewUseful / emotionCount
+                    }
                     store.commit('module/setReviewList', result.data.data)
                 })
+        }
+        onMounted(() => {
+            requestReview()
         })
 
         return {
@@ -384,7 +464,16 @@ export default {
             tag3,
             tag4,
             downReview,
-            reviewList
+            reviewList,
+            progress1,
+            progress2,
+            progress3,
+            progress4,
+            progress5,
+            progress6,
+            progress7,
+            progress8,
+            progress9
         }
     }
 }
@@ -548,6 +637,17 @@ export default {
 }
 .review_list{
     margin-top:5px;
+}
+.progress{
+    margin-top:7px;
+    float:right;
+    width:130px;
+}
+.progress2{
+    margin-top:40px;
+    display:inline-block;
+    width:85px;
+    transform: rotate(270deg);
 }
 .state_left{
     width:33%;
