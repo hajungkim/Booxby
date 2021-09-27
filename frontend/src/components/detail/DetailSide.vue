@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -48,21 +48,19 @@ export default {
         })
     }
 
-    onMounted(() => {
-      const userId = localStorage.getItem('userId')
-      store.dispatch('module/requestzzim', userId)
-        .then(function (result) {
-            for(let i = 0; i < result.data.data.length; i++) {
-                if(selectBook.value.isbn13 == result.data.data[i].isbn) {
-                  store.commit('module/setZzim', true)
-                  break
-                }
-                if(i==result.data.data.length-1) {
-                  store.commit('module/setZzim', false)
-                }
-            }
-        })
-    })
+    const userId = localStorage.getItem('userId')
+    store.dispatch('module/requestzzim', userId)
+      .then(function (result) {
+          for(let i = 0; i < result.data.data.length; i++) {
+              if(selectBook.value.isbn13 == result.data.data[i].isbn) {
+                store.commit('module/setZzim', true)
+                break
+              }
+              if(i==result.data.data.length-1) {
+                store.commit('module/setZzim', false)
+              }
+          }
+      })
 
     return {
       selectBook,

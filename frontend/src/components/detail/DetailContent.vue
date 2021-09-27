@@ -38,7 +38,7 @@
 
                 <q-tab-panel name="review" class="q-pa-none">
                     <div class="detail_view_review">
-                        <div class="review_head">책리뷰 (1)
+                        <div class="review_head">책리뷰
                             <q-btn @click="writeMode = true" style="float:right; margin-right:25px; font-weight:bold; border-radius:15px;" color="primary" label="리뷰쓰기" />
                         </div>
                         <!-- 리뷰 모달 -->
@@ -377,17 +377,17 @@ export default {
         const requestReview = function() {
             store.dispatch('module/requestReview', selectBook.value.isbn13)
                 .then(function (result) {
-                    var reviewIdea = 0
-                    var reviewLike = 0
-                    var reviewRead = 0
-                    var reviewUseful = 0
-                    var emotionCount = 0
-                    var star1 = 0
-                    var star2 = 0
-                    var star3 = 0
-                    var star4 = 0
-                    var star5 = 0
-                    var scoreCount = 0
+                    let reviewIdea = 0
+                    let reviewLike = 0
+                    let reviewRead = 0
+                    let reviewUseful = 0
+                    let emotionCount = 0
+                    let star1 = 0
+                    let star2 = 0
+                    let star3 = 0
+                    let star4 = 0
+                    let star5 = 0
+                    let scoreCount = 0
                     for(let i=0; i<result.data.data.length; i++) {
                         if(result.data.data[i].reviewScore == 1) {
                             star1++

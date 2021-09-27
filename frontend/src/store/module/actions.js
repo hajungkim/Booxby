@@ -40,7 +40,7 @@ export function requestzzim ({}, userId) {
 
 // 7권 책 반환
 export function emojiRecommend ({}) {
-  const url = basePythonUrl + '/emojirecommend2'
+  const url = basePythonUrl + '/emojirecommend'
   return $axios.get(url)
 }
 // my 추천
