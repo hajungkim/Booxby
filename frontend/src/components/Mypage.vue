@@ -188,8 +188,8 @@ export default {
       store.dispatch('module/getisbnInfo',isbn)
         .then(function (result) {
           store.commit('module/setSelectBook', result.data[0])
+          router.push('/detail')
         })
-      router.push('/detail')
     }
     function moveHash(){
       router.push('hashtag')
@@ -199,18 +199,16 @@ export default {
       store.dispatch('module/getisbnInfo',isbn)
       .then((res) =>{
         store.commit('module/setSelectBook', res.data[0])
+        router.push('/detail')
       })
-      router.push('/detail')
     }
 
     onMounted(() => {
-      console.log(store.getters['module/getZzimList'])
       store.dispatch('module/requestMyReview')
         .then(function (result){
-          console.log(result.data)
           store.commit('module/setMyReview', result.data.data)
         })
-      console.log('123', zzimList.value)
+
     })
 
     return{
