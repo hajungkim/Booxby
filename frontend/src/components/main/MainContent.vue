@@ -58,7 +58,7 @@ export default {
             store.commit('module/setSelectBook', list[index])
         }
         onMounted(() => {
-            store.dispatch('module/test')
+            store.dispatch('module/emojiRecommend')
                 .then(function (result) {
                     console.log(result.data)
                     store.commit('module/setBookList', result.data)

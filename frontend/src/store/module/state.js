@@ -37,6 +37,9 @@ export default function () {
 
   // 마이페이지 리뷰리스트
   const myReview = [] 
+  const oxbooks = []
+  const selectoxbooks = {}
+
 
   return {
     textMode,
@@ -49,6 +52,8 @@ export default function () {
     zzimList,
     zzim,
     reviewList,
-    myReview
+    myReview,
+    oxbooks,
+    selectoxbooks
   }
 }

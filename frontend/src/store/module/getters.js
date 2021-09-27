@@ -37,3 +37,11 @@ export function getZzim(state) {
 export function getReviewList(state) {
   return state.reviewList
 }
+
+export function getOxbooks(state) {
+  return state.oxbooks
+}
+
+export function getselectOxbooks(state) {
+  return state.selectoxbooks
+}
