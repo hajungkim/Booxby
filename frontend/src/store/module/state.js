@@ -33,6 +33,8 @@ export default function () {
   const zzim = false
 
   const oxbooks = []
+  const selectoxbooks = {}
+
 
   return {
     textMode,
@@ -45,5 +47,6 @@ export default function () {
     zzimList,
     zzim,
     oxbooks,
+    selectoxbooks
   }
 }

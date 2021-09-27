@@ -41,3 +41,7 @@ export function setZzim (state, zzim) {
 export function setOxbooks (state, oxbooks) {
   state.oxbooks = oxbooks
 }
+
+export function setselectOxbooks (state, oxbooks) {
+  state.selectoxbooks = oxbooks
+}

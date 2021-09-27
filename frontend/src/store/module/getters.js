@@ -37,3 +37,7 @@ export function getZzim(state) {
 export function getOxbooks(state) {
   return state.oxbooks
 }
+
+export function getselectOxbooks(state) {
+  return state.selectoxbooks
+}

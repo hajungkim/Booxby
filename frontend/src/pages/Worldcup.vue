@@ -2,7 +2,7 @@
     <div class="worldcup_container">
         <div class="worldcup">
             <div class="worldcup_main">
-                <Oxbook :abc="oxbooks[i]"></Oxbook>
+                <Oxbook :abc="select_books" :change="change"></Oxbook>
                 <q-card-actions style="margin: 10px 0px 0px 70px;">
                     <q-icon @click="signUp" class="btn" style="font-size: 4.0em; color: red; margin-left:50px;" name="close"/>
                     <q-icon class="btn" style="font-size: 4.0em; color: orange;" name="change_history"/>
@@ -26,16 +26,24 @@ export default {
         const infos = store.getters['module/getInfos']
         const hashtags_list = (store.getters['module/getHashtags'])
         const oxbooks = store.getters['module/getOxbooks']
+
+        let change = true
+        let select_books = {}
         let i = 0
-        let hashtag = ''
-        hashtags_list.forEach(e => {
-            hashtag = hashtag + e
-        });
+        select_books = oxbooks[i]
+        store.commit('module/setselectOxbooks', oxbooks[i])
         function next(){
         i = i + 1
-        console.log(i,oxbooks[i],'oxbook')
+        select_books = oxbooks[i]
+        change = !change
+        store.commit('module/setselectOxbooks', oxbooks[i])
+        console.log(i,select_books,'selectoxbook')
         }
         function signUp(){
+            let hashtag = ''
+            hashtags_list.forEach(e => {
+                hashtag = hashtag + e
+            });
             store.dispatch('module/signup',{
                 age: infos.age,
                 email: infos.email,
@@ -51,8 +59,9 @@ export default {
             })
         }
         return{
-            oxbooks,
+            select_books,
             i,
+            change,
             signUp,
             next
         }

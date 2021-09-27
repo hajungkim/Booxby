@@ -1,10 +1,10 @@
 <template>
   <div>
-    <q-card class="my-card" id="card">
+    <q-card v-if="change" class="my-card" id="card">
         <q-img src="~assets/images/html.jpg" class="worldcup_img">
             <div class="absolute-bottom" v-if="textMode">
-                <div class="text-h6" style="font-weight:bold;">{{ abc.title }}</div>
-                <div class="text-subtitle2" style="font-weight:bold;">{{ abc.description }}</div>
+                <div class="text-h6" style="font-weight:bold;">{{ title }}</div>
+                <div class="text-subtitle2" style="font-weight:bold;">{{ description }}</div>
             </div>
         </q-img>
     </q-card>
@@ -13,14 +13,17 @@
 
 <script>
 import { useStore } from 'vuex'
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, toRefs, watchEffect } from 'vue'
 export default {
   props:{
     abc:{
       type:Object,
     },
+    change:{
+      type:Boolean,
+    }
   },
-  setup () {
+  setup (props) {
     const store = useStore()
     const textMode = computed(()=> store.getters['module/getTextMode'])
     onMounted(()=>{
@@ -32,7 +35,20 @@ export default {
         store.commit('module/setTextMode',false)
       },true)
     })
+    let title = ''
+    let description = ''
+    // let aaa = props.abc
+    watchEffect(()=>{
+      title = store.getters['module/getselectOxbooks'].title
+      console.log(title)
+      console.log(props.change,'~~~')
+      // props.change = !props.change
+      description = store.getters['module/getselectOxbooks'].description
+      console.log(description)
+    })
     return {
+      title,
+      description,
       textMode,
     }
   }
