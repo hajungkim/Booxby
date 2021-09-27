@@ -33,3 +33,7 @@ export function getZzimList(state) {
 export function getZzim(state) {
   return state.zzim
 }
+
+export function getReviewList(state) {
+  return state.reviewList
+}

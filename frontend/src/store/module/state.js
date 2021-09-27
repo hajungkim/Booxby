@@ -32,6 +32,12 @@ export default function () {
   const zzimList = []
   const zzim = false
 
+  // 세부창 리뷰리스트
+  const reviewList = []
+
+  // 마이페이지 리뷰리스트
+  const myReview = [] 
+
   return {
     textMode,
     categoryMode,
@@ -41,6 +47,8 @@ export default function () {
     bookList,
     selectBook,
     zzimList,
-    zzim
+    zzim,
+    reviewList,
+    myReview
   }
 }
