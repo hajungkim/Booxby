@@ -11,6 +11,8 @@ public class ScrapDto {
     public static class saveScrapRequest {
         private Long userId;
         private String isbn;
+        private String imgUrl;
+        private String title;
     }
 
     @Getter
