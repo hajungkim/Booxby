@@ -97,7 +97,11 @@ export default {
       // loginUser.age / loginUser.gender 넘겨주기
       const age = '20대'
       const gender = '남성'
-      store.dispatch('module/ageRecommend',age,gender).then((result)=>{
+      const ageGender = {
+        age: age,
+        gender: gender
+      }
+      store.dispatch('module/ageRecommend',ageGender).then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
       }).catch((err)=>{
