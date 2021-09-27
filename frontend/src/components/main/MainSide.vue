@@ -28,19 +28,19 @@
           </div>
           <div class="side_category row" v-show="categoryMode">
             <div class="col-4">
-              <q-checkbox v-model="category1" />아동
-              <q-checkbox v-model="category2" />문학
-              <q-checkbox v-model="category3" />취미
+              <q-checkbox @click="sendCategory" v-model="category1" />아동
+              <q-checkbox @click="sendCategory" v-model="category2" />문학
+              <q-checkbox @click="sendCategory" v-model="category3" />취미
             </div>
             <div class="col-4">
-              <q-checkbox v-model="category4" />청소년
-              <q-checkbox v-model="category5" />학문
-              <q-checkbox v-model="category6" />오락
+              <q-checkbox @click="sendCategory" v-model="category4" />청소년
+              <q-checkbox @click="sendCategory" v-model="category5" />학문
+              <q-checkbox @click="sendCategory" v-model="category6" />오락
             </div>
             <div class="col-4">
-              <q-checkbox v-model="category7" />가정
-              <q-checkbox v-model="category8" />교육
-              <q-checkbox v-model="category9" />기타
+              <q-checkbox @click="sendCategory" v-model="category7" />가정
+              <q-checkbox @click="sendCategory" v-model="category8" />교육
+              <q-checkbox @click="sendCategory" v-model="category9" />기타
             </div>
           </div>
           <div @click="logout" id="logout">
@@ -62,9 +62,21 @@ export default {
   setup () {
     const store = useStore()
     const router = useRouter()
-
+    
     const loginUser = store.getters['module/getLoginUser']
     const categoryMode = computed(() => store.getters['module/getCategoryMode'])
+
+    const category1= ref(false)
+    const category2= ref(false)
+    const category3= ref(false)
+    const category4= ref(false)
+    const category5= ref(false)
+    const category6= ref(false)
+    const category7= ref(false)
+    const category8= ref(false)
+    const category9= ref(false)
+    
+    let category = []
 
     const showCategory = function () {
       store.commit('module/setCategoryMode', !store.getters['module/getCategoryMode'])
@@ -84,8 +96,7 @@ export default {
       })
     }
     function myRecommend(){
-      // loginUser.score 넘겨주기
-      const score = '4321'
+      let score = (loginUser.hashscore + loginUser.worldcupscore) / 2
       store.dispatch('module/myRecommend',score).then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
@@ -94,9 +105,8 @@ export default {
       })
     }
     function ageRecommend(){
-      // loginUser.age / loginUser.gender 넘겨주기
-      const age = '20대'
-      const gender = '남성'
+      const age = loginUser.age
+      const gender = loginUser.gender=='0' ? "남성" : "여성"
       const ageGender = {
         age: age,
         gender: gender
@@ -108,16 +118,71 @@ export default {
         console.log(err)
       })
     }
+    function sendCategory(){
+      if (category1.value == true && !category.includes('아동')) category.push('아동')
+      else if (category1.value == false && category.includes('아동')) {
+        var index = category.indexOf('아동')
+        category.splice(index,1)
+      }
+      if (category2.value == true && !category.includes('문학')) category.push('문학')
+      else if (category2.value == false && category.includes('문학')) {
+        var index = category.indexOf('문학')
+        category.splice(index,1)
+      }
+      if (category3.value == true && !category.includes('취미')) category.push('취미')
+      else if (category3.value == false && category.includes('취미')) {
+        var index = category.indexOf('취미')
+        category.splice(index,1)
+      }
+      if (category4.value == true && !category.includes('청소년')) category.push('청소년')
+      else if (category4.value == false && category.includes('청소년')) {
+        var index = category.indexOf('청소년')
+        category.splice(index,1)
+      }
+      if (category5.value == true && !category.includes('학문')) category.push('학문')
+      else if (category5.value == false && category.includes('학문')) {
+        var index = category.indexOf('학문')
+        category.splice(index,1)
+      }
+      if (category6.value == true && !category.includes('오락')) category.push('오락')
+      else if (category6.value == false && category.includes('오락')) {
+        var index = category.indexOf('오락')
+        category.splice(index,1)
+      }
+      if (category7.value == true && !category.includes('가정')) category.push('가정')
+      else if (category7.value == false && category.includes('가정')) {
+        var index = category.indexOf('가정')
+        category.splice(index,1)
+      }
+      if (category8.value == true && !category.includes('교육')) category.push('교육')
+      else if (category8.value == false && category.includes('교육')) {
+        var index = category.indexOf('교육')
+        category.splice(index,1)
+      }
+      if (category9.value == true && !category.includes('기타')) category.push('기타')
+      else if (category9.value == false && category.includes('기타')) {
+        var index = category.indexOf('기타')
+        category.splice(index,1)
+      }
+      if (category.length == 0) return
+      store.dispatch('module/getCategory',category).then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    }
     return {
-      category1: ref(false),
-      category2: ref(false),
-      category3: ref(false),
-      category4: ref(false),
-      category5: ref(false),
-      category6: ref(false),
-      category7: ref(false),
-      category8: ref(false),
-      category9: ref(false),
+      category1,
+      category2,
+      category3,
+      category4,
+      category5,
+      category6,
+      category7,
+      category8,
+      category9,
       loginUser,
       categoryMode,
       showCategory,
@@ -125,7 +190,8 @@ export default {
       logout,
       emojiRecommend,
       myRecommend,
-      ageRecommend
+      ageRecommend,
+      sendCategory
     }
   }
 }

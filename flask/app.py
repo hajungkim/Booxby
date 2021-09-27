@@ -86,14 +86,24 @@ class ageGenderRecommend(Resource):
         df1 = df[(df['age'] == age) & (df['sex'] == gender)].sample(n=7)
         return toJson(df1)
 
-@api.route('/data/category')
+@api.route('/data/category/<category>')
 class categoryRecommend(Resource):
-    def get(self):
+    def get(self,category):
         """카테고리에 따라 책 반환하기"""
-        category = '아동' # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
-        df1 = df[(df['category'] == category)].sample(n=7)
-
+        category = category.split(',')
+        df1 = pd.DataFrame(columns=['no','rank','isbn13','title','author','description','publisher','pub_date','img_url','emotion_score','color','category'])
+        if len(category)==1:
+            temp_df = df[(df['category'] == category[0])]
+            df1 = pd.concat([df1,temp_df]).sample(n=7)
+            return toJson(df1)
+        else:
+            for c in category:
+                # category = c # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
+                temp_df = df[(df['category'] == c)]
+                print(temp_df,'for temp')
+                df1 = pd.concat([df1,temp_df])
+        df1 = df1.sample(n=7)
         return toJson(df1)
 
 @api.route('/data/isbn')
@@ -155,24 +165,28 @@ class scrapRecommend(Resource):
         # 가장 유사한 책 리턴
         return toJson(df.iloc[booxby_indices])
         
-@api.route('/search/author/<search>')
+@api.route('/data/author/<search>')
 class searchAuthor(Resource):
     def get(self, search):
         """작가 이름으로 책 찾기"""
-        print(search)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         author = df[ df['author'].str.contains(search, na=False) ]
+        if len(author) == 0:
+            return None
+        elif len(author) > 7:
+            author = author.sample(n=7)
+        return toJson(author)  
 
-        return toJson(author) 
-
-@api.route('/search/title/<search>')
+@api.route('/data/title/<search>')
 class searchTitle(Resource):
     def get(self, search):
         """제목으로 책 찾기"""
-        print(search)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         title = df[ df['title'].str.contains(search, na=False) ]
-
+        if len(title) == 0:
+            return None
+        elif len(title) > 7:
+            title = title.sample(n=7)
         return toJson(title)  
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
