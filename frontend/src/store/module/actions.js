@@ -78,3 +78,9 @@ export function writeReview ({}, review) {
   const url = baseUrl + '/book/review'
   return $axios.post(url, review)
 }
+
+// 리뷰 가져오기
+export function requestReview ({}, isbn) {
+  const url = baseUrl + '/book/review/' + isbn + '/newest'
+  return $axios.get(url)
+}

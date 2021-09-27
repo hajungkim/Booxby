@@ -37,3 +37,7 @@ export function setZzimList (state, zzimList) {
 export function setZzim (state, zzim) {
   state.zzim = zzim
 }
+
+export function setReviewList (state, reviewList) {
+  state.reviewList = reviewList
+}
