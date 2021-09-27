@@ -1,5 +1,5 @@
-from flask import Flask, request  # 서버 구현을 위한 Flask 객체 import
-from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
+from flask import Flask, request
+from flask_restx import Api, Resource
 from flask import make_response
 from flask_cors import CORS
 import json
@@ -36,10 +36,11 @@ class HelloWorld(Resource):
         return res
 
 
-@api.route('/data/myrecommend/<score>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/myrecommend/<score>')
 class userEmotionRecommend(Resource):
-    def get(self,score):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        user_number = score
+    def get(self,score):
+        """감정점수에 따라 책 반환하기"""
+        user_number = int(score)
         colornum=0
         if -29726<=user_number <=-1170:
             colornum=7
@@ -62,9 +63,10 @@ class userEmotionRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/data/emojirecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/emojirecommend')
 class randomEmotion(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self):
+        """메인 책 7권 반환하기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[df['color'] == 1].sample(n=1)
 
@@ -74,19 +76,20 @@ class randomEmotion(Resource):
 
         return toJson(df1)
 
-@api.route('/data/agegender/<age>/<gender>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/agegender/<age>/<gender>')
 class ageGenderRecommend(Resource):
-    def get(self,age,gender):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self,age,gender):
+        """나이, 성별에 따라 책 반환하기"""
         # age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
         # gender = '남성' # 남성 여성
-        df = pd.read_csv('booxby_gender_age_data2.csv', encoding='cp949')
+        df = pd.read_csv('booxby_gender_age_data.csv', encoding='cp949')
         df1 = df[(df['age'] == age) & (df['sex'] == gender)].sample(n=7)
-
         return toJson(df1)
 
-@api.route('/data/category')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/category')
 class categoryRecommend(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self):
+        """카테고리에 따라 책 반환하기"""
         category = '아동' # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[(df['category'] == category)].sample(n=7)
@@ -95,7 +98,8 @@ class categoryRecommend(Resource):
 
 @api.route('/data/isbn')
 class getIsbn(Resource):
-    def post(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def post(self):
+        """isbn으로 책 상세정보 반환하기"""
         print(request.json.get('isbn'),'@@@')
         isbn='125153525'
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
@@ -104,7 +108,8 @@ class getIsbn(Resource):
 
 @api.route('/data/oxbooks')
 class OXbooks(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self):
+        """"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[df['color'] == 1].sample(n=1)
         for i in range(2,8):
@@ -149,21 +154,21 @@ class scrapRecommend(Resource):
         booxby_indices = list(set(booxby_indices))
         # 가장 유사한 책 리턴
         return toJson(df.iloc[booxby_indices])
-
-#작가 이름으로 책 찾기        
-@api.route('/search/author/<search>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+        
+@api.route('/search/author/<search>')
 class searchAuthor(Resource):
-    def get(self, search):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self, search):
+        """작가 이름으로 책 찾기"""
         print(search)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         author = df[ df['author'].str.contains(search, na=False) ]
 
         return toJson(author) 
 
-#제목으로 책 찾기
-@api.route('/search/title/<search>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/search/title/<search>')
 class searchTitle(Resource):
-    def get(self, search):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self, search):
+        """제목으로 책 찾기"""
         print(search)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         title = df[ df['title'].str.contains(search, na=False) ]
