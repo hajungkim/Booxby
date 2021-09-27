@@ -221,10 +221,9 @@ export default {
     })
     .catch((err) =>{
       console.log(err)
-      console.log('@@@@@@@@@@@@@')
     })
     function zzimDetail(){
-      const isbn = '9788901052922'
+      const isbn = '9788949113999'
       store.dispatch('module/getisbnInfo',isbn)
       .then((res) =>{
         console.log(res.data[0],'isbn 책정보')
