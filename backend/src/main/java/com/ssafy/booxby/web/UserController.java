@@ -2,6 +2,7 @@ package com.ssafy.booxby.web;
 
 import com.ssafy.booxby.domain.user.User;
 import com.ssafy.booxby.service.UserService;
+import com.ssafy.booxby.web.dto.EmailDto;
 import com.ssafy.booxby.web.dto.UserDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -102,4 +103,22 @@ public class UserController {
         }
         return response;
     }
+
+    @ApiOperation(value = "임시 비밀번호 발급", notes = "임시비밀번호 발급 및 이메일 전송 성공시 '전송 성공' 반환 / 실패 시 에러메시지", response = ControllerResponse.class)
+    @PutMapping("/changepw")
+    public ControllerResponse sendTempPwEmail(@RequestBody EmailDto emailDto){
+        ControllerResponse response = null;
+
+        User user = userService.findUserByEmail(emailDto.getEmail());
+
+        try{
+            userService.sendTempPwEmail(user);
+            response = new ControllerResponse("success", "전송 성공");
+        }catch (Exception e){
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+
+        return response;
+    }
+
 }
