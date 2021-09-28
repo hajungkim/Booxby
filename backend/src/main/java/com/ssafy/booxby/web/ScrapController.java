@@ -29,7 +29,7 @@ public class ScrapController {
         return response;
     }
 
-    @ApiOperation(value = "책 찜목록 리스트", notes = "찜목록이 없으면 false, 있으면 [isbn, imgUrl] 리스트 반환", response = ControllerResponse.class)
+    @ApiOperation(value = "책 찜목록 리스트", notes = "찜목록이 없으면 false, 있으면 [isbn, imgUrl, title] 리스트 반환", response = ControllerResponse.class)
     @GetMapping("/scrap/{id}")
     public ControllerResponse findScrap(@PathVariable("id") Long userId) {
         ControllerResponse response = null;

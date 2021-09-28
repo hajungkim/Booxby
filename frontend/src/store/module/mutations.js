@@ -37,3 +37,23 @@ export function setZzimList (state, zzimList) {
 export function setZzim (state, zzim) {
   state.zzim = zzim
 }
+
+export function setReviewList (state, reviewList) {
+  state.reviewList = reviewList
+}
+
+export function setOxbooks (state, oxbooks) {
+  state.oxbooks = oxbooks
+}
+
+export function setselectOxbooks (state, oxbooks) {
+  state.selectoxbooks = oxbooks
+}
+
+export function setMyReview (state, myReview) {
+  state.myReview = myReview
+}
+
+export function setWriterList (state, writerList) {
+  state.writerList = writerList
+}

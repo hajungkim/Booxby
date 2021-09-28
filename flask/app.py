@@ -1,5 +1,5 @@
-from flask import Flask, request  # 서버 구현을 위한 Flask 객체 import
-from flask_restx import Api, Resource  # Api 구현을 위한 Api 객체 import
+from flask import Flask, request
+from flask_restx import Api, Resource
 from flask import make_response
 from flask_cors import CORS
 import json
@@ -36,10 +36,11 @@ class HelloWorld(Resource):
         return res
 
 
-@api.route('/data/MyRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/myrecommend/<score>')
 class userEmotionRecommend(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        user_number = 5
+    def get(self,score):
+        """감정점수에 따라 책 반환하기"""
+        user_number = int(score)
         colornum=0
         if -29726<=user_number <=-1170:
             colornum=7
@@ -62,9 +63,10 @@ class userEmotionRecommend(Resource):
 
         return toJson(df1)
 
-@api.route('/data/EmojiRecommend')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/emojirecommend')
 class randomEmotion(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self):
+        """메인 책 7권 반환하기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[df['color'] == 1].sample(n=1)
 
@@ -74,35 +76,49 @@ class randomEmotion(Resource):
 
         return toJson(df1)
 
-@api.route('/data/agegender')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/agegender/<age>/<gender>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class ageGenderRecommend(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
-        gender = '남성' # 남성 여성
-        df = pd.read_csv('booxby_gender_age_data2.csv', encoding='cp949')
+    def get(self,age,gender):
+        """나이, 성별에 따라 책 반환하기"""
+        # age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
+        # gender = '남성' # 남성 여성
+        df = pd.read_csv('booxby_gender_age_data.csv', encoding='cp949')
         df1 = df[(df['age'] == age) & (df['sex'] == gender)].sample(n=7)
-
         return toJson(df1)
 
-@api.route('/data/category')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/category/<category>')
 class categoryRecommend(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        category = '아동' # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
+    def get(self,category):
+        """카테고리에 따라 책 반환하기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
-        df1 = df[(df['category'] == category)].sample(n=7)
-
+        category = category.split(',')
+        df1 = pd.DataFrame(columns=['no','rank','isbn13','title','author','description','publisher','pub_date','img_url','emotion_score','color','category'])
+        if len(category)==1:
+            temp_df = df[(df['category'] == category[0])]
+            df1 = pd.concat([df1,temp_df]).sample(n=7)
+            return toJson(df1)
+        else:
+            for c in category:
+                # category = c # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
+                temp_df = df[(df['category'] == c)]
+                print(temp_df,'for temp')
+                df1 = pd.concat([df1,temp_df])
+        df1 = df1.sample(n=7)
         return toJson(df1)
 
 @api.route('/data/isbn/<isbn>')
 class getIsbn(Resource):
-    def get(self,isbn):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self,isbn):
+        """isbn으로 책 상세정보 반환하기"""
+        print(isbn)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[(df['isbn13'] == int(isbn))]
         return toJson(df1)
 
 @api.route('/data/oxbooks')
 class OXbooks(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
+    def get(self):
+        """"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[df['color'] == 1].sample(n=1)
         for i in range(2,8):
@@ -116,13 +132,11 @@ class scrapRecommend(Resource):
     def post(self):
         """찜하기 목록에 따른 추천 리스트"""
         isbn_list = request.json.get('isbn_list')
-        print(isbn_list)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949').reset_index(drop=True)
         df['description'] = df['description'].fillna('')
 
         tfidf = TfidfVectorizer(stop_words=None)
         tfidf_matrix = tfidf.fit_transform(df['description'])
-        print(tfidf_matrix.shape)
 
         cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
@@ -131,7 +145,7 @@ class scrapRecommend(Resource):
 
         for isbn in isbn_list:
             # 선택한 책의 인덱스 받아오기
-            idx = indices[isbn]
+            idx = indices[int(isbn)]
             # 모든 책에 대해 해당 책과의 유사도 구하기
             sim_scores = list(enumerate(cosine_sim[idx]))
             # 유사도에 따라 책들을 정렬
@@ -145,27 +159,34 @@ class scrapRecommend(Resource):
                 booxby_indices.append(sim[0])
 
         booxby_indices = list(set(booxby_indices))
+        if len(df.iloc[booxby_indices])<=7:
+            return toJson(df.iloc[booxby_indices])
+        df = df.iloc[booxby_indices].sample(n=7)
         # 가장 유사한 책 리턴
-        return toJson(df.iloc[booxby_indices])
-
-#작가 이름으로 책 찾기        
-@api.route('/search/author/<search>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+        return toJson(df)
+        
+@api.route('/data/author/<search>')
 class searchAuthor(Resource):
-    def get(self, search):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        print(search)
+    def get(self, search):
+        """작가 이름으로 책 찾기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         author = df[ df['author'].str.contains(search, na=False) ]
+        if len(author) == 0:
+            return None
+        elif len(author) > 7:
+            author = author.sample(n=7)
+        return toJson(author)  
 
-        return toJson(author) 
-
-#제목으로 책 찾기
-@api.route('/search/title/<search>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
+@api.route('/data/title/<search>')
 class searchTitle(Resource):
-    def get(self, search):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        print(search)
+    def get(self, search):
+        """제목으로 책 찾기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         title = df[ df['title'].str.contains(search, na=False) ]
-
+        if len(title) == 0:
+            return None
+        elif len(title) > 7:
+            title = title.sample(n=7)
         return toJson(title)  
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)

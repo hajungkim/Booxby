@@ -32,7 +32,7 @@
         </div>
 
         <div class="form-mb">
-          <q-input label="Confirm Password" type="password" v-model="form.passwordconfirmation"
+          <q-input class="input" label="Confirm Password" type="password" v-model="form.passwordconfirmation"
             lazy-rules
               :rules="[
                 val => val && val.length > 0 || '필수입력항목 입니다.',
@@ -41,7 +41,7 @@
         </div>
 
         <div>
-          <q-input label="닉네임"
+          <q-input class="input" label="닉네임"
             v-model="form.nickname"
             lazy-rules
               :rules="[
@@ -256,6 +256,9 @@ export default {
   width:400px;
   margin-top:20px;
 }
+.input{
+  font-size:25px;
+}
 .mail_button{
   float:right;
   margin: -19px 0px 0px;
@@ -263,10 +266,11 @@ export default {
 .signupImg{
   float:right;
   width:650px;
-  height:648px;
-  background-color : lightblue;
+  height:650px;
   border-top-right-radius: 38px;
   border-bottom-right-radius: 38px;
+  background-image: url('assets/images/book.jpg');
+  background-size:1000px;
 }
 .submit_bt{
   display: flex;
@@ -277,5 +281,7 @@ export default {
   width:250px;
   height:50px;
   border-radius: 15px;
+  font-size:17px;
+  font-weight:bold;
 }
 </style>

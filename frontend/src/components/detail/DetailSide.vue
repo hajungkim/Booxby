@@ -1,7 +1,7 @@
 <template>
   <div class="main_side">
       <div class="logo">
-        Booxby
+        <q-img class="main_logo" src="~assets/images/logo.png"/>
       </div>
       <div class="side_content">
             <div>
@@ -35,19 +35,32 @@ export default {
     const zzimOn = function () {
       const userId = localStorage.getItem('userId')
       store.commit('module/setZzim', true)
-      store.dispatch('module/zzimOn', {isbn: selectBook.value.isbn13, userId: userId})
-        .then(function(result) {
-          console.log(result)
+      console.log(selectBook.value)
+      store.dispatch('module/zzimOn', {isbn: selectBook.value.isbn13, userId: userId, title: selectBook.value.title, imgUrl: selectBook.value.img_url})
+        .then(function() {
         })
     }
     const zzimOff = function () {
       const userId = localStorage.getItem('userId')
       store.commit('module/setZzim', false)
       store.dispatch('module/zzimOff', {isbn: selectBook.value.isbn13, userId: userId})
-        .then(function(result) {
-          console.log(result)
+        .then(function() {
         })
     }
+
+    const userId = localStorage.getItem('userId')
+    store.dispatch('module/requestzzim', userId)
+      .then(function (result) {
+          for(let i = 0; i < result.data.data.length; i++) {
+              if(selectBook.value.isbn13 == result.data.data[i].isbn) {
+                store.commit('module/setZzim', true)
+                break
+              }
+              if(i==result.data.data.length-1) {
+                store.commit('module/setZzim', false)
+              }
+          }
+      })
 
     return {
       selectBook,
@@ -69,15 +82,20 @@ export default {
   /* border:1px solid blue; */
   font-size:50px;
   font-weight:bold;
-  padding-left:105px;
-  padding-top:15px;
+  text-align:center;
+}
+.main_logo{
+  position:relative;
+  top:5px;
+  left:15px;
+  width:70%;
 }
 .side_content{
   width:90%;
   height:525px;
   background-color: white;
   position:relative;
-  top:10px;
+  top:5px;
   left:30px;
   border-radius: 30px;
 }

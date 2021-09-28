@@ -25,7 +25,7 @@ public class ReviewController {
     @PostMapping("/review")
     public ControllerResponse saveReview(@RequestBody ReviewDto.reviewSaveRequest request){
         ControllerResponse response = null;
-
+        System.out.println(request);
         try{
             bookService.saveReview(request);
             response = new ControllerResponse("success", "리뷰 등록 성공");
