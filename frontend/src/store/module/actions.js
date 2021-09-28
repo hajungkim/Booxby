@@ -84,7 +84,6 @@ export function getSearchbook ({},keyword) {
 // 작가 검색
 export function getWriterList ({},keyword) {
   const url = basePythonUrl + '/author/' + keyword
-  console.log(url,'url')
   return $axios.get(url)
 }
 // isbn 정보반환
@@ -125,3 +124,10 @@ export function requestMyReview ({}) {
   return $axios.get(url)
 }
 
+// 워드클라우드
+export function getwords ({},isbn) {
+  console.log(isbn,'워드클라우드')
+  const url = basePythonUrl + '/nouns-count/' + isbn
+  console.log(url,'확인 url')
+  return $axios.get(url)
+}
