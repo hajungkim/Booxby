@@ -8,6 +8,8 @@ import csv
 import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
+from konlpy.tag import Okt
+from typing import Counter
 
 app = Flask(__name__)  # Flask 객체 선언, 파라미터로 어플리케이션 패키지의 이름을 넣어줌.
 CORS(app,resources={r"/*": {"origins": "*"}})
@@ -187,6 +189,32 @@ class searchTitle(Resource):
             return None
         elif len(title) > 7:
             title = title.sample(n=7)
-        return toJson(title)  
+        return toJson(title)
+
+@api.route('/data/nouns-count/<isbn>')
+class nounsCount(Resource):
+    pd.set_option('display.max_colwidth',-1)
+    def get(self, isbn):
+        """워드클라우드 배열 보내기"""
+        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        description = df[(df['isbn13'] == int(isbn))]['description'].to_string()
+
+        okt = Okt()
+        noun = okt.nouns(description)
+        temp = []
+        for i,v in enumerate(noun):
+            if len(v) > 1:
+                temp.append(noun[i])
+        
+        count = Counter(temp)
+
+        noun_list = count.most_common(100)
+
+        for v in noun_list:
+            print(v)
+
+        return noun_list
+
+
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=5000)
