@@ -325,7 +325,7 @@ export default {
 
         const back = function() {
             store.commit('module/setZzim', false)
-            router.push('/main')
+            router.go(-1)
         }
         
         const downReview = function() {
@@ -617,7 +617,7 @@ export default {
 .write_icon{
   width:20px;
   height:20px;
-  margin: 5px 0px 0px 3px;
+  margin: 5px 0px 0px 7px;
 }
 .write_word{
   margin:6px 0px 0px 2px;
@@ -642,7 +642,7 @@ export default {
 .review_icon{
   width:20px;
   height:20px;
-  margin: 5px 0px 0px 3px;
+  margin: 5px 0px 0px 7px;
 }
 .review_word{
   margin:6px 0px 0px 2px;

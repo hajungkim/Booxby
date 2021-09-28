@@ -156,12 +156,12 @@ export default {
 .login_img{
     width:650px;
     height:650px;
-    background-color:skyblue;
+    /* background-color:skyblue; */
     float:left;
     border-top-left-radius: 38px;
     border-bottom-left-radius: 38px;
-    /* background-image: url('assets/images/book.jpg');
-    background-size:1200px; */
+    background-image: url('assets/images/book2.jpg');
+    background-size:1000px;
 }
 .login{
     display:flex;
@@ -195,6 +195,9 @@ export default {
     margin-top:40px;
     font-size:25px;
     font-weight:bold;
+}
+.form{
+    font-size:25px;
 }
 .findBt{
     width:150px;

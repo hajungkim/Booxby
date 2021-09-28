@@ -180,7 +180,7 @@ export default {
     const myReview = computed(() => store.getters['module/getMyReview'])
 
     const back = function() {
-        router.push('/main')
+        router.go(-1)
     }
 
     const moveModify = function(){
@@ -351,7 +351,7 @@ export default {
 .review_icon{
   width:20px;
   height:20px;
-  margin: 5px 0px 0px 3px;
+  margin: 5px 0px 0px 7px;
 }
 .word{
   margin:6px 0px 0px 5px;
