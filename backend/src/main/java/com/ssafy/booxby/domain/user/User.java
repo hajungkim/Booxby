@@ -56,5 +56,7 @@ public class User {
         this.nickname = request.getNickname();
         this.password = request.getPassword();
         this.hashtag = request.getHashtag();
+        this.worldcupScore=request.getWorldcupScore();
+        this.hashScore=request.getHashScore();
     }
 }
