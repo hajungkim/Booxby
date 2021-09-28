@@ -6,7 +6,7 @@
       <div class="side_content">
         <div class="side_user">
           <q-img @click="goMypage" :src="loginUser.profile" class="user_profile"/>
-          <div class="user_name">{{ loginUser.nickname }}</div>
+          <div @click="goMypage" class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">
           <div @click="emojiRecommend" class="side_list">

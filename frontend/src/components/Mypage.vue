@@ -12,7 +12,7 @@
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
         <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
-          <div v-for="(word,idx) in hashtags" :key="idx">{{ word }} </div>
+          <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
         </div>
       </div>
       <img class="emotion_chr" src="../assets/user_default.png">
@@ -175,12 +175,15 @@ export default {
     const router = useRouter()
 
     const loginUser = store.getters['module/getLoginUser']
-    const hashtags = store.getters['module/getHashtags']
+    const hashtag_contain = loginUser.hashtag
     const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
+    
+    let hashtags = hashtag_contain.split('#')
+    hashtags.shift()
 
     const back = function() {
-        router.push('/main')
+      router.push('/main')
     }
 
     const moveModify = function(){
@@ -212,7 +215,6 @@ export default {
         })
 
     })
-
     return{
       tab: ref('zzim'),
       loginUser,
