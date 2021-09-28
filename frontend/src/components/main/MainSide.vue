@@ -286,13 +286,14 @@ export default {
   margin-left:20px;
   float:left;
   cursor: pointer;
+  background: grey;
 }
 .user_name{
   float:right;
   width:53%;
-  font-size:20px;
+  font-size:24px;
   font-weight:bold;
-  margin-top:40px;
+  margin-top:38px;
   /* border:1px solid green; */
 }
 .side_menu{
@@ -302,7 +303,7 @@ export default {
 }
 .side_list{
   margin-bottom:5px;
-  padding-left:15px;
+  padding-left:20px;
   margin-left:10px;
   margin-right:10px;
   cursor: pointer;
