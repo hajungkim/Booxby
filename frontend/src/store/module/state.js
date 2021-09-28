@@ -21,6 +21,9 @@ export default function () {
   const zzimList = []
   const zzim = false
 
+  // 워드클라우드
+  const words = []
+
   // 세부창 리뷰리스트
   const reviewList = []
 
@@ -46,6 +49,7 @@ export default function () {
     myReview,
     oxbooks,
     selectoxbooks,
-    writerList
+    writerList,
+    words
   }
 }
