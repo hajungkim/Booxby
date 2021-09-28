@@ -136,7 +136,7 @@ class scrapRecommend(Resource):
         isbn_list = request.json.get('isbn_list')
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949').reset_index(drop=True)
         df['description'] = df['description'].fillna('')
-
+        
         tfidf = TfidfVectorizer(stop_words=None)
         tfidf_matrix = tfidf.fit_transform(df['description'])
 
@@ -198,7 +198,7 @@ class nounsCount(Resource):
         """워드클라우드 배열 보내기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         description = df[(df['isbn13'] == int(isbn))]['description'].to_string()
-
+        print(description,'@@@@@@@@@@2')
         okt = Okt()
         noun = okt.nouns(description)
         temp = []
