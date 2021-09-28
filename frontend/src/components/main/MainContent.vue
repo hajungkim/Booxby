@@ -69,7 +69,8 @@ export default {
                 })
             }
             else if (model.value == '작가검색'){
-                store.dispatch('module/getWriter',form.keyword)
+                console.log(form.keyword)
+                store.dispatch('module/getWriterList',form.keyword)
                 .then((result)=>{
                     if (result.data == null){
                         Swal.fire({
