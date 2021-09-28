@@ -20,10 +20,12 @@ public class ScrapDto {
     public static class scrapResponse {
         private String isbn;
         private String imgUrl;
+        private String title;
 
         public scrapResponse(Scrap scrap){
             this.isbn=scrap.getIsbn();
             this.imgUrl=scrap.getImgUrl();
+            this.title=scrap.getTitle();
         }
     }
 }
