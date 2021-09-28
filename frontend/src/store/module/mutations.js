@@ -53,3 +53,7 @@ export function setselectOxbooks (state, oxbooks) {
 export function setMyReview (state, myReview) {
   state.myReview = myReview
 }
+
+export function setWriterList (state, writerList) {
+  state.writerList = writerList
+}

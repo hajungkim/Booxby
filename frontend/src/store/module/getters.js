@@ -49,3 +49,7 @@ export function getselectOxbooks(state) {
 export function getMyReview(state) {
   return state.myReview
 }
+
+export function getWriterList(state) {
+  return state.writerList
+}

@@ -1,7 +1,7 @@
 <template>
   <div class="main_side">
       <div class="logo">
-        Booxby
+        <q-img class="main_logo" src="~assets/images/logo.png"/>
       </div>
       <div class="side_content">
         <div class="side_user">
@@ -207,15 +207,20 @@ export default {
   /* border:1px solid blue; */
   font-size:50px;
   font-weight:bold;
-  padding-left:105px;
-  padding-top:15px;
+  text-align:center;
+}
+.main_logo{
+  position:relative;
+  top:5px;
+  left:15px;
+  width:70%;
 }
 .side_content{
   width:90%;
   height:525px;
   background-color: white;
   position:relative;
-  top:10px;
+  top:5px;
   left:30px;
   border-radius: 30px;
 }
