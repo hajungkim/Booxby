@@ -29,7 +29,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(185, 217, 241);
+  background-color: rgb(170, 196, 216);
 }
 body {
   background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
@@ -73,5 +73,15 @@ body {
   50% {
     transform: translate3d(0,5px,0);
   }
+}
+
+@font-face {
+    font-family: 'IM_Hyemin-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+  font-family: 'IM_Hyemin-Bold';
 }
 </style>
