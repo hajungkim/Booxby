@@ -4,7 +4,9 @@
       </div>
       <div class="login">
           <div class="login_form">
-              <h2 class="head">Login</h2>
+              <div class="login_logo_box">
+                <q-img class="login_logo" src="~assets/images/logo.png"/>
+              </div>
               <q-input v-on:keyup.enter="login" class="login_form_main" label="Email" type="email" 
               v-model="form.email"
               lazy-rules
@@ -172,6 +174,12 @@ export default {
     border-bottom-right-radius: 38px;
     background-color: rgb(241, 237, 237);
 }
+.login_logo_box{
+    text-align: center;
+}
+.login_logo{
+    width:70%;
+}
 .login_form{
     padding-top:100px;
     width:500px;
@@ -210,7 +218,7 @@ export default {
     height:40px;
     font-size:20px;
     margin: 0 100px;
-    margin-top:70px;
+    margin-top:60px;
     font-weight:bold;
 }
 </style>

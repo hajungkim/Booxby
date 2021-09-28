@@ -71,13 +71,11 @@ export function getSearchbook ({},keyword) {
   return $axios.get(url)
 }
 // 작가 검색
-export function getWriter ({},keyword) {
-  console.log(keyword,'서치작가')
+export function getWriterList ({},keyword) {
   const url = basePythonUrl + '/author/' + keyword
   console.log(url,'url')
   return $axios.get(url)
 }
-
 // isbn 정보반환
 export function getisbnInfo ({},isbn) {
   console.log(isbn)
@@ -115,3 +113,4 @@ export function requestMyReview ({}) {
   const url = baseUrl + '/book/review/my/' + userId
   return $axios.get(url)
 }
+

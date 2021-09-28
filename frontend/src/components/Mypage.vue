@@ -1,7 +1,9 @@
 <template>
   <div>
     <div class="top_bar">
-      <span class="logo">Booxby</span>
+      <div class="logo">
+        <q-img class="mypage_logo" src="~assets/images/logo.png"/>
+      </div>
       <q-btn class="back_btn" @click="back" round color="primary" icon="undo" />
     </div>
     <!-- 유저 정보들 -->
@@ -107,7 +109,7 @@
                       readonly
                   />
                 </div>
-                <p style="margin-left:25px;">내용칸</p>
+                <p style="margin-left:25px;">{{item.reviewContent}}</p>
                 <div class="review_categories">
                   <div v-if="item.reviewIdea" class="review_category">
                     <img class="review_icon" src="../assets/Surprised_Emoji.png" alt="">
@@ -202,7 +204,7 @@ export default {
         router.push('/detail')
       })
     }
-
+    
     onMounted(() => {
       store.dispatch('module/requestMyReview')
         .then(function (result){
@@ -239,10 +241,14 @@ export default {
   height:50px;
 }
 .logo{
-  font-size:50px;
-  font-weight:bold;
+  width:350px;
+  display:inline-block;
+}
+.mypage_logo{
+  width:70%;
   position:relative;
-  top:-5px;
+  top:-15px;
+  left:15px;
 }
 .back_btn{
   float:right;
@@ -254,10 +260,10 @@ export default {
 }
 /* 유저 정보창 */
 .user_img{
-  width: 120px;
-  height:120px;
+  width: 100px;
+  height:100px;
   border-radius: 70px;
-  margin-right:50px;
+  margin-right:30px;
 }
 .user_info{
   margin: 10px 0px 0px 20px;

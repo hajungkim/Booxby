@@ -35,6 +35,9 @@ export default function () {
   // 세부창 리뷰리스트
   const reviewList = []
 
+  // 세부창 작가의 다른책
+  const writerList = []
+
   // 마이페이지 리뷰리스트
   const myReview = [] 
   const oxbooks = []
@@ -53,6 +56,7 @@ export default function () {
     reviewList,
     myReview,
     oxbooks,
-    selectoxbooks
+    selectoxbooks,
+    writerList
   }
 }

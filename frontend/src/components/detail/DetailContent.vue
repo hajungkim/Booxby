@@ -263,16 +263,16 @@
                 </q-tab-panel>
                 <q-tab-panel name="author" class="q-pa-none">
                     <div class="detail_view_author">
-                        <div class="author_head">ㅇㅇㅇ 작가의 다른 책</div>
+                        <div class="author_head">{{ show.writer }}의 다른 책</div>
                         <div class="author_list">
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
-                            <q-img class="author_img" src="~assets/images/html.jpg"/>
+                            <!-- <q-img v-for="item in writerList" :key="item.isbn" class="author_img" :src="item.img_url"/> -->
+                            <q-card v-for="item in writerList" :key="item.isbn13" @click="writerDetail(item.isbn13)" class="my-card no-shadow cardbooks">
+                                <q-img class="author_img" :src="item.img_url">
+                                <div class="absolute-bottom text-subtitle2 text-center">
+                                    {{item.title}}
+                                </div>
+                                </q-img>
+                            </q-card>
                         </div>
                     </div>
                 </q-tab-panel>
@@ -298,7 +298,13 @@ export default {
         const writeMode = ref(false)
 
         const reviewList = computed(() => store.getters['module/getReviewList'])
+        const writerList = computed(() => store.getters['module/getWriterList'])
         
+        const show = reactive({
+            writer: ''
+        })
+        const tab = ref('view')
+
         const progress1 = ref(0)
         const progress2 = ref(0)
         const progress3 = ref(0)
@@ -442,12 +448,29 @@ export default {
                     store.commit('module/setReviewList', result.data.data)
                 })
         }
+
+        const writerDetail = function(isbn){
+            store.dispatch('module/getisbnInfo',isbn)
+                .then((res) =>{
+                    console.log(res.data)
+                    store.commit('module/setSelectBook', res.data[0])
+                    tab.value = 'view'
+                })
+        }
+
         onMounted(() => {
             requestReview()
+            const select = store.getters['module/getSelectBook']
+            store.dispatch('module/getWriterList', select.author)
+                .then((res) => {
+                    console.log(res.data)
+                    store.commit('module/setWriterList', res.data)
+                    show.writer = select.author
+                })
         })
 
         return {
-            tab: ref('view'),
+            tab,
             writeMode,
             selectBook,
             review_score,
@@ -473,7 +496,10 @@ export default {
             progress6,
             progress7,
             progress8,
-            progress9
+            progress9,
+            writerList,
+            show,
+            writerDetail
         }
     }
 }
@@ -742,12 +768,17 @@ export default {
     font-size:25px;
 }
 .author_list{
-    margin-top:15px;
+    display: flex;
+    flex-wrap: wrap;
+    width:830px;
+    padding-top:15px;
+    padding-left:20px;
 }
 .author_img{
-    border:1px solid grey;
-    width:20%;
-    margin-left:30px;
-    margin-bottom:15px;
+    width:170px;
+    height:200px;
+    cursor: pointer;
+    margin-left:20px;
+    margin-bottom:20px;
 }
 </style>
