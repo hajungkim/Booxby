@@ -180,7 +180,7 @@ export default {
     const myReview = computed(() => store.getters['module/getMyReview'])
 
     const back = function() {
-        router.go(-1)
+        router.push('/main')
     }
 
     const moveModify = function(){
