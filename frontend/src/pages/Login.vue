@@ -107,14 +107,15 @@ export default {
                                     nickname: data.nickname,
                                     gender: data.gender,
                                     age: data.age,
-                                    worldcupscore: data.worldcupScore,
-                                    hashscore: data.hashScore,
+                                    worldcupScore: data.worldcupScore,
+                                    hashScore: data.hashScore,
                                     profile: data.profilePath,
                                     hashtag: data.hashtag,
                                     token: token
                                 }
                                 // store에 저장
                                 store.commit('module/setLoginUser', loginUser)
+                                console.log('로그인정보', store.getters['module/getLoginUser'])
                                 router.push('/main')
                             })
                     }
