@@ -13,7 +13,7 @@
             <q-icon style="font-size: 2.5em; color: grey;" name="emoji_emotions"/>
             <span class="list_text">감성책 추천</span>
           </div>
-          <div @click="myRecommend" class="side_list">
+          <div @click="test" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="brush"/>
             <span class="list_text">나의 감성 책 추천</span>
           </div>
@@ -95,6 +95,15 @@ export default {
     }
     function emojiRecommend(){
       store.dispatch('module/emojiRecommend').then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+    function test(){
+      const isbn = '9788994780801'
+      store.dispatch('module/getisbnInfo',isbn).then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
       }).catch((err)=>{
@@ -232,6 +241,7 @@ export default {
       category9,
       loginUser,
       categoryMode,
+      test,
       showCategory,
       goMypage,
       logout,
