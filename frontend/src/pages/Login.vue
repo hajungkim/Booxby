@@ -105,7 +105,8 @@ export default {
                                     nickname: data.nickname,
                                     gender: data.gender,
                                     age: data.age,
-                                    score: data.emotionScore,
+                                    worldcupscore: data.worldcupScore,
+                                    hashscore: data.hashScore,
                                     profile: data.profilePath,
                                     hashtag: data.hashtag,
                                     token: token

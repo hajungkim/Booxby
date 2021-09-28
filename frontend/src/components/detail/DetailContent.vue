@@ -38,7 +38,7 @@
 
                 <q-tab-panel name="review" class="q-pa-none">
                     <div class="detail_view_review">
-                        <div class="review_head">책리뷰 (1)
+                        <div class="review_head">책리뷰
                             <q-btn @click="writeMode = true" style="float:right; margin-right:25px; font-weight:bold; border-radius:15px;" color="primary" label="리뷰쓰기" />
                         </div>
                         <!-- 리뷰 모달 -->
@@ -65,19 +65,35 @@
                                         <div class="modal_tag">
                                             <span style="font-weight:bold;">태그 </span>- 이 책을 읽었을 때의 느낌을 남겨주세요
                                             <div class="write_categories">
-                                                <div class="write_category">
+                                                <div v-if="!form.tag1" @click="tag1" class="write_category">
                                                     <img class="write_icon" src="../../assets/Surprised_Emoji.png">
                                                     <span class="write_word">기발해요</span>
                                                 </div>
-                                                <div class="write_category">
+                                                <div v-if="form.tag1" @click="tag1" class="write_category2">
+                                                    <img class="write_icon" src="../../assets/Surprised_Emoji.png">
+                                                    <span class="write_word">기발해요</span>
+                                                </div>
+                                                <div v-if="!form.tag2" @click="tag2" class="write_category">
                                                     <img class="write_icon" src="../../assets/Thumbs_Up_Emoji.png">
                                                     <span class="write_word">유용해요</span>
                                                 </div>
-                                                <div class="write_category">
+                                                <div v-if="form.tag2" @click="tag2" class="write_category2">
+                                                    <img class="write_icon" src="../../assets/Thumbs_Up_Emoji.png">
+                                                    <span class="write_word">유용해요</span>
+                                                </div>
+                                                <div v-if="!form.tag3" @click="tag3" class="write_category">
                                                     <img class="write_icon" src="../../assets/Eyes_Emoji.png">
                                                     <span class="write_word">잘읽혀요</span>
                                                 </div>
-                                                <div class="write_category">
+                                                <div v-if="form.tag3" @click="tag3" class="write_category2">
+                                                    <img class="write_icon" src="../../assets/Eyes_Emoji.png">
+                                                    <span class="write_word">잘읽혀요</span>
+                                                </div>
+                                                <div v-if="!form.tag4" @click="tag4" class="write_category">
+                                                    <img class="write_icon" src="../../assets/Heart_Emoji.png">
+                                                    <span class="write_word">추천해요</span>
+                                                </div>
+                                                <div v-if="form.tag4" @click="tag4" class="write_category2">
                                                     <img class="write_icon" src="../../assets/Heart_Emoji.png">
                                                     <span class="write_word">추천해요</span>
                                                 </div>
@@ -87,6 +103,7 @@
                                             <span style="font-weight:bold;">리뷰 </span>- 이 책의 감상평을 간단히 적어주세요
                                             <div style="max-width: 350px; margin-left:5px; margin-top:10px;">
                                                 <q-input
+                                                v-model="form.text"
                                                 class="textarea"
                                                 filled
                                                 type="textarea"
@@ -98,8 +115,8 @@
                                 </q-card-section>
                                 <q-card-actions>
                                     <div style="display:inline-block; margin:0 auto;">
-                                        <q-btn class="modal_btn" label="취소" color="primary" v-close-popup />
-                                        <q-btn class="modal_btn" label="등록" color="primary"/>
+                                        <q-btn @click="downReview" class="modal_btn" label="취소" color="primary" v-close-popup />
+                                        <q-btn @click="review" class="modal_btn" label="등록" color="primary"/>
                                     </div>
                                 </q-card-actions>
                             </q-card>
@@ -118,6 +135,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress5" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -130,6 +148,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress4" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -142,6 +161,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress3" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -154,6 +174,7 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress2" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
@@ -166,9 +187,14 @@
                                             icon-half="star_half"
                                             readonly
                                         />
+                                        <q-linear-progress class="progress" rounded size="15px" :value="progress1" color="secondary"/>
                                     </div>
                                 </div>
                                 <div class="state_right">
+                                        <q-linear-progress class="progress2" style="margin-left:27px;" size="35px" :value="progress6" color="primary"/>
+                                        <q-linear-progress class="progress2" style="margin-left:26px;" size="35px" :value="progress7" color="warning"/>
+                                        <q-linear-progress class="progress2" style="margin-left:25px;" size="35px" :value="progress8" color="accent"/>
+                                        <q-linear-progress class="progress2" style="margin-left:25px;" size="35px" :value="progress9" color="negative"/>
                                     <div class="state_categories">
                                         <div class="state_category">
                                             <img class="review_icon" src="../../assets/Surprised_Emoji.png">
@@ -189,17 +215,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class='review_item'>
+                            <div v-for="(item, index) in reviewList" :key='index' class='review_item'>
                                 <div class="review_left">
                                     <q-img src="~assets/images/book.jpg" class="review_profile"/>
                                     <div class="review_name">
-                                        김싸피
+                                        {{item.nickname}}
                                     </div>
                                 </div>
                                 <div class="review_right">
                                     <div class="review_score">
                                         <q-rating
-                                            v-model="review_score"
+                                            v-model="item.reviewScore"
                                             max="5"
                                             size="2em"
                                             color="green-5"
@@ -210,159 +236,22 @@
                                         />
                                     </div>
                                     <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
+                                        {{item.reviewContent}}
                                     </div>
                                     <div class="review_categories">
-                                        <div class="review_category">
+                                        <div v-if="item.reviewIdea" class="review_category">
                                             <img class="review_icon" src="../../assets/Surprised_Emoji.png">
                                             <span class="review_word">기발해요</span>
                                         </div>
-                                        <div class="review_category">
+                                        <div v-if="item.reviewLike" class="review_category">
                                             <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
                                             <span class="review_word">유용해요</span>
                                         </div>
-                                        <div class="review_category">
+                                        <div v-if="item.reviewRead" class="review_category">
                                             <img class="review_icon" src="../../assets/Eyes_Emoji.png">
                                             <span class="review_word">잘읽혀요</span>
                                         </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
-                                            <span class="review_word">추천해요</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='review_item'>
-                                <div class="review_left">
-                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
-                                    <div class="review_name">
-                                        김싸피
-                                    </div>
-                                </div>
-                                <div class="review_right">
-                                    <div class="review_score">
-                                        <q-rating
-                                            v-model="review_score"
-                                            max="5"
-                                            size="2em"
-                                            color="green-5"
-                                            icon="star_border"
-                                            icon-selected="star"
-                                            icon-half="star_half"
-                                            readonly
-                                        />
-                                    </div>
-                                    <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
-                                    </div>
-                                    <div class="review_categories">
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
-                                            <span class="review_word">기발해요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
-                                            <span class="review_word">유용해요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
-                                            <span class="review_word">잘읽혀요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
-                                            <span class="review_word">추천해요</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='review_item'>
-                                <div class="review_left">
-                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
-                                    <div class="review_name">
-                                        김싸피
-                                    </div>
-                                </div>
-                                <div class="review_right">
-                                    <div class="review_score">
-                                        <q-rating
-                                            v-model="review_score"
-                                            max="5"
-                                            size="2em"
-                                            color="green-5"
-                                            icon="star_border"
-                                            icon-selected="star"
-                                            icon-half="star_half"
-                                            readonly
-                                        />
-                                    </div>
-                                    <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
-                                    </div>
-                                    <div class="review_categories">
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
-                                            <span class="review_word">기발해요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
-                                            <span class="review_word">유용해요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
-                                            <span class="review_word">잘읽혀요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Heart_Emoji.png">
-                                            <span class="review_word">추천해요</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class='review_item'>
-                                <div class="review_left">
-                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
-                                    <div class="review_name">
-                                        김싸피
-                                    </div>
-                                </div>
-                                <div class="review_right">
-                                    <div class="review_score">
-                                        <q-rating
-                                            v-model="review_score"
-                                            max="5"
-                                            size="2em"
-                                            color="green-5"
-                                            icon="star_border"
-                                            icon-selected="star"
-                                            icon-half="star_half"
-                                            readonly
-                                        />
-                                    </div>
-                                    <div class="review_text">
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요.
-                                        이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요. 이 책을 추천해요
-                                    </div>
-                                    <div class="review_categories">
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Surprised_Emoji.png">
-                                            <span class="review_word">기발해요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Thumbs_Up_Emoji.png">
-                                            <span class="review_word">유용해요</span>
-                                        </div>
-                                        <div class="review_category">
-                                            <img class="review_icon" src="../../assets/Eyes_Emoji.png">
-                                            <span class="review_word">잘읽혀요</span>
-                                        </div>
-                                        <div class="review_category">
+                                        <div v-if="item.reviewUseful" class="review_category">
                                             <img class="review_icon" src="../../assets/Heart_Emoji.png">
                                             <span class="review_word">추천해요</span>
                                         </div>
@@ -372,7 +261,6 @@
                         </div>
                     </div>
                 </q-tab-panel>
-
                 <q-tab-panel name="author" class="q-pa-none">
                     <div class="detail_view_author">
                         <div class="author_head">ㅇㅇㅇ 작가의 다른 책</div>
@@ -396,7 +284,7 @@
 </template>
 
 <script>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -407,14 +295,160 @@ export default {
         
         const selectBook = computed(() => store.getters['module/getSelectBook'])
         const review_score = ref(4)
+        const writeMode = ref(false)
+
+        const reviewList = computed(() => store.getters['module/getReviewList'])
+        
+        const progress1 = ref(0)
+        const progress2 = ref(0)
+        const progress3 = ref(0)
+        const progress4 = ref(0)
+        const progress5 = ref(0)
+        const progress6 = ref(0)
+        const progress7 = ref(0)
+        const progress8 = ref(0)
+        const progress9 = ref(0)
+
+        const form = reactive({
+            text: '',
+            tag1: false,
+            tag2: false,
+            tag3: false,
+            tag4: false
+        })
 
         const back = function() {
             store.commit('module/setZzim', false)
             router.push('/main')
         }
+        
+        const downReview = function() {
+            form.text = ''
+            form.tag1 = false
+            form.tag2 = false
+            form.tag3 = false
+            form.tag4 = false
+            review_score.value = 4
+        }
+
+        const review = function() {
+            const userId = localStorage.getItem('userId')
+            const review = {
+                imgUrl: selectBook.value.img_url,
+                isbn: selectBook.value.isbn13,
+                reviewContent: form.text,
+                reviewIdea: form.tag1,
+                reviewLike: form.tag2,
+                reviewRead: form.tag3,
+                reviewScore: review_score.value,
+                reviewUseful: form.tag4,
+                title: selectBook.value.title,
+                userId: userId
+            }
+            store.dispatch('module/writeReview', review)
+                .then(function () {
+                    store.dispatch('module/requestReview', selectBook.value.isbn13)
+                        .then(function (result) {
+                            store.commit('module/setReviewList', result.data.data)
+                            requestReview()
+                        })
+                })
+            form.text = ''
+            form.tag1 = false
+            form.tag2 = false
+            form.tag3 = false
+            form.tag4 = false
+            review_score.value = 4
+            writeMode.value = false
+        }
+
+        const tag1 = function() {
+            form.tag1 = !form.tag1
+        }
+        const tag2 = function() {
+            form.tag2 = !form.tag2
+        }
+        const tag3 = function() {
+            form.tag3 = !form.tag3
+        }
+        const tag4 = function() {
+            form.tag4 = !form.tag4
+        }
+        const requestReview = function() {
+            store.dispatch('module/requestReview', selectBook.value.isbn13)
+                .then(function (result) {
+                    let reviewIdea = 0
+                    let reviewLike = 0
+                    let reviewRead = 0
+                    let reviewUseful = 0
+                    let emotionCount = 0
+                    let star1 = 0
+                    let star2 = 0
+                    let star3 = 0
+                    let star4 = 0
+                    let star5 = 0
+                    let scoreCount = 0
+                    for(let i=0; i<result.data.data.length; i++) {
+                        if(result.data.data[i].reviewScore == 1) {
+                            star1++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 2) {
+                            star2++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 3) {
+                            star3++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 4) {
+                            star4++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewScore == 5) {
+                            star5++
+                            scoreCount++
+                        }
+                        if(result.data.data[i].reviewIdea){
+                            reviewIdea++
+                            emotionCount++
+                        }
+                        if(result.data.data[i].reviewLike){
+                            reviewLike++
+                            emotionCount++
+                        }
+                        if(result.data.data[i].reviewRead){
+                            reviewRead++
+                            emotionCount++
+                        }
+                        if(result.data.data[i].reviewUseful){
+                            reviewUseful++
+                            emotionCount++
+                        }
+                    }
+                    if(scoreCount != 0) {
+                        progress1.value = star1 / scoreCount
+                        progress2.value = star2 / scoreCount
+                        progress3.value = star3 / scoreCount
+                        progress4.value = star4 / scoreCount
+                        progress5.value = star5 / scoreCount
+                    }
+                    if(emotionCount != 0) {
+                        progress6.value = reviewIdea / emotionCount
+                        progress7.value = reviewLike / emotionCount
+                        progress8.value = reviewRead / emotionCount
+                        progress9.value = reviewUseful / emotionCount
+                    }
+                    store.commit('module/setReviewList', result.data.data)
+                })
+        }
+        onMounted(() => {
+            requestReview()
+        })
+
         return {
             tab: ref('view'),
-            writeMode: ref(false),
+            writeMode,
             selectBook,
             review_score,
             score_5: ref(5),
@@ -422,7 +456,24 @@ export default {
             score_3: ref(3),
             score_2: ref(2),
             score_1: ref(1),
-            back
+            back,
+            form,
+            review,
+            tag1,
+            tag2,
+            tag3,
+            tag4,
+            downReview,
+            reviewList,
+            progress1,
+            progress2,
+            progress3,
+            progress4,
+            progress5,
+            progress6,
+            progress7,
+            progress8,
+            progress9
         }
     }
 }
@@ -523,9 +574,19 @@ export default {
   display: flex;
   width:90px;
   height:30px;
+  background-color: rgb(202, 202, 202);
+  border-radius: 20px;
+  margin-right:4px;
+  cursor:pointer;
+}
+.write_category2{
+  display: flex;
+  width:90px;
+  height:30px;
   background-color: rgb(187, 221, 241);
   border-radius: 20px;
   margin-right:4px;
+  cursor:pointer;
 }
 .write_icon{
   width:20px;
@@ -576,6 +637,17 @@ export default {
 }
 .review_list{
     margin-top:5px;
+}
+.progress{
+    margin-top:7px;
+    float:right;
+    width:130px;
+}
+.progress2{
+    margin-top:40px;
+    display:inline-block;
+    width:85px;
+    transform: rotate(270deg);
 }
 .state_left{
     width:33%;
