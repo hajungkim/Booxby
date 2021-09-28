@@ -38,6 +38,10 @@ export default {
       console.log(selectBook.value)
       store.dispatch('module/zzimOn', {isbn: selectBook.value.isbn13, userId: userId, title: selectBook.value.title, imgUrl: selectBook.value.img_url})
         .then(function() {
+          store.dispatch('module/requestzzim', userId)
+                .then(function (result) {
+                    store.commit('module/setZzimList', result.data.data)
+                })
         })
     }
     const zzimOff = function () {
@@ -45,6 +49,10 @@ export default {
       store.commit('module/setZzim', false)
       store.dispatch('module/zzimOff', {isbn: selectBook.value.isbn13, userId: userId})
         .then(function() {
+          store.dispatch('module/requestzzim', userId)
+                .then(function (result) {
+                    store.commit('module/setZzimList', result.data.data)
+                })
         })
     }
 

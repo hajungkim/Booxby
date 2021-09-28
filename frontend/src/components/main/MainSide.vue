@@ -102,7 +102,8 @@ export default {
       })
     }
     function myRecommend(){
-      let score = (loginUser.hashscore + loginUser.worldcupscore) / 2
+      let score = (loginUser.hashScore + loginUser.worldcupScore) / 2
+      score = Math.floor(score)
       store.dispatch('module/myRecommend',score).then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
