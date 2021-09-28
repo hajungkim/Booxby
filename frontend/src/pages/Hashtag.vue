@@ -98,13 +98,19 @@ export default {
                 hashString = hashString + e
             })
             store.commit('module/setHashtags',select_hashtag,hashString)
-            store.dispatch('module/modifyInfo', {hashtag : hashString, nickname : loginUser.nickname, password: loginUser.password })
-            .then((res)=>{
-                console.log(res)
-            })
-            .catch((err)=>{
-                console.log(err)
-            })
+            store.dispatch('module/modifyInfo', {
+                    hashtag : hashString, 
+                    nickname : loginUser.nickname, 
+                    password: loginUser.password, 
+                    worldcupScore: loginUser.worldcupScore, 
+                    hashScore: hashScore 
+                    })
+                .then((res)=>{
+                    console.log(res)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
             store.commit('module/setHashscore',hashscore)
             router.push('my')
         }
