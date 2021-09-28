@@ -54,6 +54,12 @@ export function myRecommend ({},score) {
   const url = basePythonUrl + '/myrecommend/' + score
   return $axios.get(url)
 }
+// zzim 추천
+export function zzimRecommend ({},isbn_list) {
+  console.log(isbn_list, typeof(isbn_list))
+  const url = basePythonUrl + '/scrap-recommend'
+  return $axios.post(url,isbn_list)
+}
 // age/gender 추천
 export function ageRecommend ({},ageGender) {
   console.log(ageGender.gender)

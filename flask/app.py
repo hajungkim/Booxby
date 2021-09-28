@@ -132,13 +132,11 @@ class scrapRecommend(Resource):
     def post(self):
         """찜하기 목록에 따른 추천 리스트"""
         isbn_list = request.json.get('isbn_list')
-        print(isbn_list)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949').reset_index(drop=True)
         df['description'] = df['description'].fillna('')
 
         tfidf = TfidfVectorizer(stop_words=None)
         tfidf_matrix = tfidf.fit_transform(df['description'])
-        print(tfidf_matrix.shape)
 
         cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
 
@@ -147,7 +145,7 @@ class scrapRecommend(Resource):
 
         for isbn in isbn_list:
             # 선택한 책의 인덱스 받아오기
-            idx = indices[isbn]
+            idx = indices[int(isbn)]
             # 모든 책에 대해 해당 책과의 유사도 구하기
             sim_scores = list(enumerate(cosine_sim[idx]))
             # 유사도에 따라 책들을 정렬
@@ -161,8 +159,11 @@ class scrapRecommend(Resource):
                 booxby_indices.append(sim[0])
 
         booxby_indices = list(set(booxby_indices))
+        if len(df.iloc[booxby_indices])<=7:
+            return toJson(df.iloc[booxby_indices])
+        df = df.iloc[booxby_indices].sample(n=7)
         # 가장 유사한 책 리턴
-        return toJson(df.iloc[booxby_indices])
+        return toJson(df)
         
 @api.route('/data/author/<search>')
 class searchAuthor(Resource):
