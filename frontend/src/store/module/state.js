@@ -32,6 +32,17 @@ export default function () {
   const zzimList = []
   const zzim = false
 
+  // 세부창 리뷰리스트
+  const reviewList = []
+
+  // 세부창 작가의 다른책
+  const writerList = []
+
+  // 마이페이지 리뷰리스트
+  const myReview = [] 
+  const oxbooks = []
+  const selectoxbooks = {}
+
   return {
     textMode,
     categoryMode,
@@ -41,6 +52,11 @@ export default function () {
     bookList,
     selectBook,
     zzimList,
-    zzim
+    zzim,
+    reviewList,
+    myReview,
+    oxbooks,
+    selectoxbooks,
+    writerList
   }
 }

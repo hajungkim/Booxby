@@ -4,7 +4,9 @@
       </div>
       <div class="login">
           <div class="login_form">
-              <h2 class="head">Login</h2>
+              <div class="login_logo_box">
+                <q-img class="login_logo" src="~assets/images/logo.png"/>
+              </div>
               <q-input v-on:keyup.enter="login" class="login_form_main" label="Email" type="email" 
               v-model="form.email"
               lazy-rules
@@ -105,7 +107,8 @@ export default {
                                     nickname: data.nickname,
                                     gender: data.gender,
                                     age: data.age,
-                                    score: data.emotionScore,
+                                    worldcupscore: data.worldcupScore,
+                                    hashscore: data.hashScore,
                                     profile: data.profilePath,
                                     hashtag: data.hashtag,
                                     token: token
@@ -153,12 +156,12 @@ export default {
 .login_img{
     width:650px;
     height:650px;
-    background-color:skyblue;
+    /* background-color:skyblue; */
     float:left;
     border-top-left-radius: 38px;
     border-bottom-left-radius: 38px;
-    /* background-image: url('assets/images/book.jpg');
-    background-size:1200px; */
+    background-image: url('assets/images/book2.jpg');
+    background-size:1000px;
 }
 .login{
     display:flex;
@@ -170,6 +173,12 @@ export default {
     border-top-right-radius: 38px;
     border-bottom-right-radius: 38px;
     background-color: rgb(241, 237, 237);
+}
+.login_logo_box{
+    text-align: center;
+}
+.login_logo{
+    width:70%;
 }
 .login_form{
     padding-top:100px;
@@ -186,6 +195,9 @@ export default {
     margin-top:40px;
     font-size:25px;
     font-weight:bold;
+}
+.form{
+    font-size:25px;
 }
 .findBt{
     width:150px;
@@ -209,7 +221,7 @@ export default {
     height:40px;
     font-size:20px;
     margin: 0 100px;
-    margin-top:70px;
+    margin-top:60px;
     font-weight:bold;
 }
 </style>

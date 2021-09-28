@@ -1,8 +1,9 @@
 <template>
   <div class="main_box">
       <div class="main_search">
-          <q-input class="main_search_input" outlined  label="검색" />
-          <q-btn round class="main_search_btn" color="primary" icon="search" />
+          <q-select outlined v-model="model" :options="options" style="width:117px; height:10px; margin-right:5px;"/>
+          <q-input v-model="form.keyword" class="main_search_input" outlined label="검색" @keyup.enter="onInput"/>
+          <q-btn @click="onInput" round class="main_search_btn" color="primary" icon="search" />
       </div>
       <div class="main_content">
           <div class="main_content_view">
@@ -27,30 +28,76 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-
 export default {
     setup () {
         const store = useStore()
         const router = useRouter()
+        const Swal = require('sweetalert2')
 
         const bookList = computed(() => store.getters['module/getBookList'])
         const selectBook = computed(() => store.getters['module/getSelectBook'])
         const zzimList = computed(() => store.getters['module/getZzimList'])
 
-        const goDetail = function() {
-            const userId = localStorage.getItem('userId')
-            store.dispatch('module/requestzzim', userId)
-                .then(function (result) {
-                    for(let i = 0; i < result.data.data.length; i++) {
-                        if(selectBook.value.isbn13 == result.data.data[i].isbn) {
-                            store.commit('module/setZzim', true)
-                            break
-                        }
+        const form = reactive({
+            keyword : ''
+        })
+        const model = ref('책 검색')
+        const options = [
+                '책 검색', '작가검색'
+        ]
+        function onInput(){
+            console.log(form.keyword,'@@')
+            console.log(model.value,'model')
+            if (model.value == '책 검색'){
+                store.dispatch('module/getSearchbook',form.keyword)
+                .then((result)=>{
+                    if (result.data == null){
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<span style="font-size:25px;">검색한 내용이 없습니다.</span>',
+                            confirmButtonColor: '#ce1919',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    }
+                    else{
+                        store.commit('module/setBookList', result.data)
+                        store.commit('module/setSelectBook', result.data[0])
                     }
                 })
+            }
+            else if (model.value == '작가검색'){
+                store.dispatch('module/getWriter',form.keyword)
+                .then((result)=>{
+                    if (result.data == null){
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<span style="font-size:25px;">검색한 내용이 없습니다.</span>',
+                            confirmButtonColor: '#ce1919',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    }
+                    else{
+                        store.commit('module/setBookList', result.data)
+                        store.commit('module/setSelectBook', result.data[0])
+                    }
+                })
+            }
+        }
+
+        const goDetail = function() {
+            // const userId = localStorage.getItem('userId')
+            // store.dispatch('module/requestzzim', userId)
+            //     .then(function (result) {
+            //         for(let i = 0; i < result.data.data.length; i++) {
+            //             if(selectBook.value.isbn13 == result.data.data[i].isbn) {
+            //                 store.commit('module/setZzim', true)
+            //                 break
+            //             }
+            //         }
+            //     })
             router.push('/detail')
         }
         const select = function(index) {
@@ -58,24 +105,27 @@ export default {
             store.commit('module/setSelectBook', list[index])
         }
         onMounted(() => {
-            store.dispatch('module/test')
+            store.dispatch('module/emojiRecommend')
                 .then(function (result) {
-                    console.log(result.data)
                     store.commit('module/setBookList', result.data)
                     store.commit('module/setSelectBook', result.data[0])
                 })
             const userId = localStorage.getItem('userId')
             store.dispatch('module/requestzzim', userId)
                 .then(function (result) {
-                    store.commit('module/setZzimList', result.data)
+                    store.commit('module/setZzimList', result.data.data)
                 })
         })
 
         return {
+            model,
+            options,
             bookList,
             selectBook,
+            form,
             goDetail,
             select,
+            onInput,
             zzimList
         }
     }
@@ -89,6 +139,7 @@ export default {
     margin:0 auto;
 }
 .main_search{
+    display:flex;
     margin-top:25px;
     float:right;
 }
