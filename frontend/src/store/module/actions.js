@@ -1,8 +1,13 @@
 import $axios from 'axios'
 
-// 기본 url
-const baseUrl = 'http://localhost:7777/api'
-const basePythonUrl = 'http://localhost:5000/data'
+// [서버] 배포 url
+const baseUrl = 'https://j5b203.p.ssafy.io/api'
+const basePythonUrl = 'https://j5b203.p.ssafy.io/data'
+
+// [로컬] 기본 url
+//const baseUrl = 'http://localhost:7777/api'
+//const basePythonUrl = 'http://localhost:5000/data'
+
 // 회원가입 axios
 export function signup ({}, info) {
   const url = baseUrl + '/user/signup'
@@ -48,6 +53,12 @@ export function myRecommend ({},score) {
   console.log(score, typeof(score))
   const url = basePythonUrl + '/myrecommend/' + score
   return $axios.get(url)
+}
+// zzim 추천
+export function zzimRecommend ({},isbn_list) {
+  console.log(isbn_list, typeof(isbn_list))
+  const url = basePythonUrl + '/scrap-recommend'
+  return $axios.post(url,isbn_list)
 }
 // age/gender 추천
 export function ageRecommend ({},ageGender) {
