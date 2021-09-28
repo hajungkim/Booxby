@@ -1,8 +1,13 @@
 import $axios from 'axios'
 
-// 기본 url
-const baseUrl = 'http://localhost:7777/api'
-const basePythonUrl = 'http://localhost:5000/data'
+// [서버] 배포 url
+const baseUrl = 'https://j5b203.p.ssafy.io/api'
+const basePythonUrl = 'https://j5b203.p.ssafy.io/data'
+
+// [로컬] 기본 url
+//const baseUrl = 'http://localhost:7777/api'
+//const basePythonUrl = 'http://localhost:5000/data'
+
 // 회원가입 axios
 export function signup ({}, info) {
   const url = baseUrl + '/user/signup'
