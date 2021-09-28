@@ -15,12 +15,11 @@ services:
     build:
       dockerfile: Dockerfile
       context: ./nginx
-    container_name: booxby_nginx
     volumes:
       - /etc/letsencrypt:/etc/letsencrypt
     ports:
-      - "80:80"
-      - "443:443"
+      - '80:80'
+      - '443:443'
 
   backend:
     build:
@@ -29,3 +28,11 @@ services:
     container_name: booxby_be
     volumes:
       - ./backend:/app
+
+  data:
+    build:
+      dockerfile: Dockerfile
+      context: ./flask
+    container_name: booxby_flask_be
+    volumes:
+      - ./flask:/app

@@ -32,9 +32,13 @@ export default function () {
   const zzimList = []
   const zzim = false
 
+  // 세부창 리뷰리스트
+  const reviewList = []
+
+  // 마이페이지 리뷰리스트
+  const myReview = [] 
   const oxbooks = []
   const selectoxbooks = {}
-
 
   return {
     textMode,
@@ -46,6 +50,8 @@ export default function () {
     selectBook,
     zzimList,
     zzim,
+    reviewList,
+    myReview,
     oxbooks,
     selectoxbooks
   }
