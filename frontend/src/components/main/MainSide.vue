@@ -17,6 +17,10 @@
             <q-icon style="font-size: 2.5em; color: grey;" name="brush"/>
             <span class="list_text">나의 감성 책 추천</span>
           </div>
+          <div @click="zzimRecommend" class="side_list">
+            <q-icon style="font-size: 2.5em; color: grey;" name="thumb_up"/>
+            <span class="list_text">찜기반 책 추천</span>
+          </div>
           <div @click="ageRecommend" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="people"/>
             <span class="list_text">나이와 성별 추천</span>
@@ -62,9 +66,11 @@ export default {
   setup () {
     const store = useStore()
     const router = useRouter()
-    
+    const Swal = require('sweetalert2')
+
     const loginUser = store.getters['module/getLoginUser']
     const categoryMode = computed(() => store.getters['module/getCategoryMode'])
+    const zzimList = computed(() => store.getters['module/getZzimList'])
 
     const category1= ref(false)
     const category2= ref(false)
@@ -98,6 +104,47 @@ export default {
     function myRecommend(){
       let score = (loginUser.hashscore + loginUser.worldcupscore) / 2
       store.dispatch('module/myRecommend',score).then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+    function zzimRecommend(){
+      if (!zzimList.value.length){
+        Swal.fire({
+          icon: 'error',
+          title: '<span style="font-size:25px;">찜을 하지 않았어요!!</span>',
+          confirmButtonColor: '#ce1919',
+          confirmButtonText: '<span style="font-size:18px;">확인</span>'
+        })
+        return
+      }
+      let timerInterval
+      Swal.fire({
+        title: '찜목록을 분석하고 있습니다',
+        html: '<b></b>ms 뒤에 종료됩니다',
+        timer: 2500,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then(() => {
+      })
+      let sendzzim = {
+        isbn_list:[]
+      }
+      zzimList.value.forEach(e => {
+        sendzzim.isbn_list.push(e.isbn)
+      });
+      store.dispatch('module/zzimRecommend',sendzzim).then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
       }).catch((err)=>{
@@ -190,6 +237,7 @@ export default {
       logout,
       emojiRecommend,
       myRecommend,
+      zzimRecommend,
       ageRecommend,
       sendCategory
     }
