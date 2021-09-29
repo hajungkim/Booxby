@@ -59,4 +59,8 @@ public class User {
         this.worldcupScore=request.getWorldcupScore();
         this.hashScore=request.getHashScore();
     }
+
+    public void updatePassword(String tempKey) {
+        this.password=tempKey;
+    }
 }
