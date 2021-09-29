@@ -14,6 +14,10 @@ export function setInfos (state, info) {
   state.user_info = info
 }
 
+export function setwords (state, words) {
+  state.words = words
+}
+
 export function setHashtags (state, hashtags,hashString) {
   state.loginUser.hashtag = hashString
   state.hash_tags = hashtags

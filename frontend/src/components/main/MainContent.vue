@@ -88,17 +88,25 @@ export default {
         }
 
         const goDetail = function() {
-            // const userId = localStorage.getItem('userId')
-            // store.dispatch('module/requestzzim', userId)
-            //     .then(function (result) {
-            //         for(let i = 0; i < result.data.data.length; i++) {
-            //             if(selectBook.value.isbn13 == result.data.data[i].isbn) {
-            //                 store.commit('module/setZzim', true)
-            //                 break
-            //             }
-            //         }
-            //     })
-            router.push('/detail')
+            store.dispatch('module/getwords',selectBook.value.isbn13).then((res)=>{
+                let tmp = []
+                for (let i = 0; i < res.data.length; i++) {
+                    let j = {
+                        "name": '',
+                        "value": ''
+                    }
+                    j.name = res.data[i][0]
+                    j.value = res.data[i][1]
+                    tmp.push(j)
+                }
+                store.commit('module/setwords', tmp)
+                console.log(tmp,'tmp')
+                setTimeout(function(){
+                    router.push('/detail')
+                },5000)
+            }).catch((err)=>{
+                console.log(err)
+            })
         }
         const select = function(index) {
             const list = store.getters['module/getBookList']

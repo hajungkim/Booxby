@@ -6,14 +6,14 @@
       <div class="side_content">
         <div class="side_user">
           <q-img @click="goMypage" :src="loginUser.profile" class="user_profile"/>
-          <div class="user_name">{{ loginUser.nickname }}</div>
+          <div @click="goMypage" class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">
           <div @click="emojiRecommend" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="emoji_emotions"/>
             <span class="list_text">감성책 추천</span>
           </div>
-          <div @click="myRecommend" class="side_list">
+          <div @click="test" class="side_list">
             <q-icon style="font-size: 2.5em; color: grey;" name="brush"/>
             <span class="list_text">나의 감성 책 추천</span>
           </div>
@@ -95,6 +95,15 @@ export default {
     }
     function emojiRecommend(){
       store.dispatch('module/emojiRecommend').then((result)=>{
+        store.commit('module/setBookList', result.data)
+        store.commit('module/setSelectBook', result.data[0])
+      }).catch((err)=>{
+        console.log(err)
+      })
+    }
+    function test(){
+      const isbn = '9788994780801'
+      store.dispatch('module/getisbnInfo',isbn).then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
       }).catch((err)=>{
@@ -232,6 +241,7 @@ export default {
       category9,
       loginUser,
       categoryMode,
+      test,
       showCategory,
       goMypage,
       logout,
@@ -286,13 +296,14 @@ export default {
   margin-left:20px;
   float:left;
   cursor: pointer;
+  background: grey;
 }
 .user_name{
   float:right;
   width:53%;
-  font-size:20px;
+  font-size:24px;
   font-weight:bold;
-  margin-top:40px;
+  margin-top:38px;
   /* border:1px solid green; */
 }
 .side_menu{
@@ -302,7 +313,7 @@ export default {
 }
 .side_list{
   margin-bottom:5px;
-  padding-left:15px;
+  padding-left:20px;
   margin-left:10px;
   margin-right:10px;
   cursor: pointer;
