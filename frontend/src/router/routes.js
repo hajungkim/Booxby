@@ -11,10 +11,9 @@ const routes = [
       { path: 'detail', component: () => import('pages/Detail.vue')},
       { path: 'signup', component: () => import('pages/Signup.vue') },
       { path: 'modify', component: () => import('pages/Modify.vue') },
-      { path: 'my', component: () => import('components/Mypage.vue') }
+      { path: 'my', component: () => import('components/Mypage.vue') },
     ]
   },
-
   // Always leave this as last one,
   // but you can also remove it
   {

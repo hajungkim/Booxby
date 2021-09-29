@@ -67,7 +67,7 @@ export default {
                 })
             }
             else if (model.value == '작가검색'){
-                store.dispatch('module/getWriter',form.keyword)
+                store.dispatch('module/getWriterList',form.keyword)
                 .then((result)=>{
                     if (result.data == null){
                         Swal.fire({
@@ -86,18 +86,18 @@ export default {
         }
 
         const goDetail = function() {
-            store.dispatch('module/getwords',selectBook.value.isbn13).then((res)=>{
-                let tmp = []
-                for (let i = 0; i < res.data.length; i++) {
-                    let j = {
-                        "name": '',
-                        "value": ''
+            store.dispatch('module/getwords',selectBook.value.isbn13)
+                .then((res)=>{
+                    let tmp = []
+                    for (let i = 0; i < res.data.length; i++) {
+                        let j = {
+                            "name": '',
+                            "value": ''
+                        }
+                        j.name = res.data[i][0]
+                        j.value = res.data[i][1]
+                        tmp.push(j)
                     }
-                    j.name = res.data[i][0]
-                    j.value = res.data[i][1]
-                    tmp.push(j)
-                }
-                console.log(tmp,'tmp')
                 store.commit('module/setwords', tmp)
                 router.push('/detail')
             }).catch((err)=>{

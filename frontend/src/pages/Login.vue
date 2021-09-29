@@ -20,16 +20,34 @@
                   val => val && val.length > 0 || '필수입력항목 입니다.',
                   checkPassWord
                 ]"/>
-              <q-btn @click="prompt" class="findBt" flat style="color: rgb(71, 76, 80)" label="비밀번호 찾기" />
+              <q-btn @click="pwdMode = true" class="findBt" flat style="color: rgb(71, 76, 80)" label="비밀번호 찾기" />
               <q-btn @click="login" class="loginBt" color="primary" label="로그인" />
               <q-btn @click="goSignUp" class="signBt" flat style="color: black;" label="회원가입하기!" />
+              <!-- 비밀번호 찾기 모달 -->
+              <q-dialog v-model="pwdMode">
+                <q-card style="background: #E3E7EA">
+                    <q-card-section class="row items-center">
+                        <div class="find_form">
+                            <div style="font-size:25px;">비밀번호 찾기</div>
+                            <div style="font-size:18px; padding-left:10px; padding-top:10px;">이메일로 임시 비밀번호를 발급해드립니다.</div>
+                            <q-input v-model="find.email" style="width:90%; margin-left:10px;" label="e-mail" />
+                        </div>
+                    </q-card-section>
+                    <q-card-actions>
+                        <div style="display:inline-block; margin:0 auto;">
+                            <q-btn flat  @click="downPwd" class="find_btn" label="취소" color="black" v-close-popup />
+                            <q-btn flat  @click="findPwd" class="find_btn" label="발송" color="black"/>
+                        </div>
+                    </q-card-actions>
+                </q-card>
+            </q-dialog>
           </div>
       </div>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { useQuasar } from 'quasar'
@@ -49,25 +67,11 @@ export default {
             password: '',
             findpw: '',
         })
-
-        const $q = useQuasar()
-
-        function  prompt () {
-            $q.dialog({
-            title: '비밀번호 찾기',
-            message: '이메일로 임시 비밀번호를 발급해드립니다',
-            prompt: {
-                model: '',
-                isValid: val => checkemail(val), // << here is the magic
-                type: 'text' // optional
-            },
-            cancel: true,
-            persistent: false,
-            }).onOk(data => {
-                console.log('>>>> OK, received', data)
-                alert("이메일이 발송되었습니다.")
-            })
-        }
+        const find = reactive({
+            email: ''
+        })
+        const pwdMode = ref(false)
+    
         // 아이디 유효성 검사 
         function checkId (val) {
             const reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
@@ -137,13 +141,35 @@ export default {
             router.push('/signUp')
         }
 
+        // 모달 false
+        const downPwd = function() {
+            pwdMode.value = false
+        }
+        // 이메일 발송
+        const findPwd = function() {
+            store.dispatch('module/findPwd', { email: find.email })
+                .then((res) => {
+                    console.log(res)
+                    Swal.fire({
+                        icon: 'success',
+                        title: '<span style="font-size:25px;">이메일을 발송했습니다.</span>',
+                        confirmButtonColor: '#primary',
+                        confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                    })
+                    pwdMode.value = false
+                })
+        }
         return {
             form,
             prompt,
             checkId,
             checkPassWord,
             login,
-            goSignUp
+            goSignUp,
+            pwdMode,
+            downPwd,
+            findPwd,
+            find
         }
     }
 }
@@ -224,5 +250,13 @@ export default {
     margin: 0 100px;
     margin-top:60px;
     font-weight:bold;
+}
+.find_form{
+    width:370px;
+    height:130px;
+}
+.find_btn{
+    font-weight:bold;
+    font-size:20px;
 }
 </style>

@@ -8,14 +8,13 @@
     </div>
     <!-- 유저 정보들 -->
     <div class="user_info_container">
-      <img class="user_img" :src="loginUser.profile">
+      <q-img class="user_img" src="~assets/images/book.jpg" />
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
         <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
           <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
         </div>
       </div>
-      <img class="emotion_chr" src="../assets/user_default.png">
     </div>
 
     <q-card class="card_container no-shadow" style="width:1000px;">
@@ -273,13 +272,6 @@ export default {
 .user_info_container{
   display:flex;
   justify-content: center;
-}
-.emotion_chr{
-  width: 100px;
-  height:100px;
-  border-radius: 50px;
-  margin-left:100px;
-  margin-top:10px;
 }
 .hashtag{
   display: flex;
