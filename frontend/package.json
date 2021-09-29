@@ -15,6 +15,8 @@
     "core-js": "^3.6.5",
     "quasar": "^2.0.0",
     "sweetalert2": "^11.1.5",
+    "vue-d3-cloud": "^0.2.0",
+    "vuewordcloud": "^18.7.12",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
