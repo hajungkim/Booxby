@@ -10,18 +10,7 @@ export default function () {
   const hash_tags = []
 
   // 로그인 유저 정보
-  const loginUser = {
-    userId:'',
-    email: '',
-    password: '',
-    nickname: '',
-    gender: '',
-    age:'',
-    score:'',
-    profile:'',
-    hashtag:'',
-    token:''
-  }
+  const loginUser = {}
   
   // 책 리스트
   const bookList = []
@@ -31,6 +20,9 @@ export default function () {
 
   const zzimList = []
   const zzim = false
+
+  // 워드클라우드
+  const words = []
 
   // 세부창 리뷰리스트
   const reviewList = []
@@ -57,6 +49,7 @@ export default function () {
     myReview,
     oxbooks,
     selectoxbooks,
-    writerList
+    writerList,
+    words
   }
 }

@@ -18,6 +18,10 @@ export function getHashtags (state) {
   return state.hash_tags
 }
 
+export function getwords (state) {
+  return state.words
+}
+
 export function getBookList (state) {
   return state.bookList
 }
