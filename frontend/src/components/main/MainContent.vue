@@ -174,7 +174,7 @@ export default {
     /* border:1px solid orange; */
     position:absolute;
     top:100px;
-    left:100px;
+    left:65px;
     display:inline-block;
 }
 .book_name{
