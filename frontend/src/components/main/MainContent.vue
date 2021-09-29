@@ -49,8 +49,6 @@ export default {
                 '책 검색', '작가검색'
         ]
         function onInput(){
-            console.log(form.keyword,'@@')
-            console.log(model.value,'model')
             if (model.value == '책 검색'){
                 store.dispatch('module/getSearchbook',form.keyword)
                 .then((result)=>{
@@ -69,7 +67,6 @@ export default {
                 })
             }
             else if (model.value == '작가검색'){
-                console.log(form.keyword)
                 store.dispatch('module/getWriterList',form.keyword)
                 .then((result)=>{
                     if (result.data == null){
@@ -89,25 +86,21 @@ export default {
         }
 
         const goDetail = function() {
-            store.dispatch('module/getwords',selectBook.value.isbn13).then((res)=>{
-                let tmp = []
-                for (let i = 0; i < res.data.length; i++) {
-                    let j = {
-                        "name": '',
-                        "value": ''
+            store.dispatch('module/getwords',selectBook.value.isbn13)
+                .then((res)=>{
+                    let tmp = []
+                    for (let i = 0; i < res.data.length; i++) {
+                        let j = {
+                            "name": '',
+                            "value": ''
+                        }
+                        j.name = res.data[i][0]
+                        j.value = res.data[i][1]
+                        tmp.push(j)
                     }
-                    j.name = res.data[i][0]
-                    j.value = res.data[i][1]
-                    tmp.push(j)
-                }
-                store.commit('module/setwords', tmp)
-                console.log(tmp,'tmp')
-                setTimeout(function(){
+                    store.commit('module/setwords', tmp)
                     router.push('/detail')
-                },5000)
-            }).catch((err)=>{
-                console.log(err)
-            })
+                })
         }
         const select = function(index) {
             const list = store.getters['module/getBookList']
