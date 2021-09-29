@@ -324,9 +324,6 @@ export default {
         })
 
         // word cloud
-        const words = computed(() =>
-            store.getters['module/getwords'],
-        )
         console.log(words,'스토어 워드')
         const back = function() {
             store.commit('module/setZzim', false)
