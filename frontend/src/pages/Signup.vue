@@ -262,6 +262,8 @@ export default {
 .mail_button{
   float:right;
   margin: -19px 0px 0px;
+  position: relative;
+  top:-30px;
 }
 .signupImg{
   float:right;
