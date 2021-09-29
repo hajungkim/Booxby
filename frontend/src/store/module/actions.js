@@ -131,3 +131,9 @@ export function getwords ({},isbn) {
   console.log(url,'확인 url')
   return $axios.get(url)
 }
+
+//비밀번호 찾기
+export function findPwd ({}, email) {
+  const url = baseUrl + '/changepw'
+  return $axios.put(url, email)
+}

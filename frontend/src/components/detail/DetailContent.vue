@@ -29,15 +29,7 @@
                         </div>  
                         <div class="view_bot">
                             <div style="font-weight:bold; font-size:25px;">키워드</div>
-                            <div v-if="flag" class="keyword" style="width:60%">
-                                <wordcloud
-                                    font="fantasy"
-                                    :fontSize="size"
-                                    :data="words"
-                                    nameKey="name"
-                                    valueKey="value"
-                                    :showTooltip="true">
-                                </wordcloud>
+                            <div class="keyword" style="width:60%">
                             </div>
                         </div>
                     </div>
@@ -294,42 +286,9 @@
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import wordcloud from 'vue-wordcloud'
 // import axios from 'axios' 
+
 export default {
-    components:{
-        wordcloud
-    },
-    // data() {
-    //     return {
-    //         size: [50,80],
-    //         words : [],
-    //         flag: false,
-    //     }
-    // },
-    // created() {
-    // this.getwords()
-    // },
-    // methods: {
-    //     getwords() {
-    //     axios.get('http://192.168.0.4:5000/data/nouns-count' + '/9788901052922')
-    //     .then(res => {
-    //         console.log(res,'여기다')
-    //         for (let i = 0; i < res.data.length; i++) {
-    //         let j = {
-    //             "name": '',
-    //             "value": ''
-    //         }
-    //         j.name = res.data[i][0]
-    //         j.value = res.data[i][1]
-    //         this.words.push(j)
-    //         }
-    //         this.flag=true
-    //         console.log(this.words,'eiajowrgoerjgi')
-    //         console.log(this.flag,'@@@@@@')
-    //     })
-    //     }
-    // },
     setup () {
         const store = useStore()
         const router = useRouter()
@@ -340,7 +299,8 @@ export default {
 
         const reviewList = computed(() => store.getters['module/getReviewList'])
         const writerList = computed(() => store.getters['module/getWriterList'])
-        
+        const words = computed(() => store.getters['module/getwords'])
+        console.log(words.value)
         const show = reactive({
             writer: ''
         })
@@ -363,30 +323,6 @@ export default {
             tag3: false,
             tag4: false
         })
-
-        // word cloud
-        const size =  [50,80]
-        let flag = false
-        const words = computed(() =>
-            store.getters['module/getwords'],
-            flag = true
-        )
-        console.log(words,'스토어 워드')
-        console.log(flag,'플래그')
-        // store.dispatch('module/getwords',selectBook.value.isbn13).then((res)=>{
-        //     for (let i = 0; i < res.data.length; i++) {
-        //         let j = {
-        //             "name": '',
-        //             "value": ''
-        //         }
-        //         j.name = res.data[i][0]
-        //         j.value = res.data[i][1]
-        //         words.push(j)
-        //     }
-        //     console.log(words,'wordsdsdasd')
-        // }).catch((err)=>{
-        //     console.log(err)
-        // })
 
         const back = function() {
             store.commit('module/setZzim', false)
@@ -517,7 +453,6 @@ export default {
         const writerDetail = function(isbn){
             store.dispatch('module/getisbnInfo',isbn)
                 .then((res) =>{
-                    console.log(res.data)
                     store.commit('module/setSelectBook', res.data[0])
                     tab.value = 'view'
                 })
@@ -528,7 +463,6 @@ export default {
             const select = store.getters['module/getSelectBook']
             store.dispatch('module/getWriterList', select.author)
                 .then((res) => {
-                    console.log(res.data)
                     store.commit('module/setWriterList', res.data)
                     show.writer = select.author
                 })
@@ -565,9 +499,7 @@ export default {
             writerList,
             show,
             writerDetail,
-            size,
-            words,
-            flag
+            words
         }
     }
 }
