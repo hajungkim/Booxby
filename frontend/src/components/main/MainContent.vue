@@ -49,8 +49,6 @@ export default {
                 '책 검색', '작가검색'
         ]
         function onInput(){
-            console.log(form.keyword,'@@')
-            console.log(model.value,'model')
             if (model.value == '책 검색'){
                 store.dispatch('module/getSearchbook',form.keyword)
                 .then((result)=>{
@@ -99,11 +97,9 @@ export default {
                     j.value = res.data[i][1]
                     tmp.push(j)
                 }
-                store.commit('module/setwords', tmp)
                 console.log(tmp,'tmp')
-                setTimeout(function(){
-                    router.push('/detail')
-                },5000)
+                store.commit('module/setwords', tmp)
+                router.push('/detail')
             }).catch((err)=>{
                 console.log(err)
             })
