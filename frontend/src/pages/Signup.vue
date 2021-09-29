@@ -260,6 +260,8 @@ export default {
   font-size:25px;
 }
 .mail_button{
+  position:relative;
+  top:-30px;
   float:right;
   margin: -19px 0px 0px;
 }
