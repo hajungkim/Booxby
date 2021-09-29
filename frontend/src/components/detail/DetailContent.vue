@@ -29,10 +29,7 @@
                         </div>  
                         <div class="view_bot">
                             <div style="font-weight:bold; font-size:25px;">키워드</div>
-                            <div class="keyword">
-                                <div v-for="i in words" :key=i style="display:flex; flex-wrap:wrap;">
-                                    <p style="font-size:35px;">{{i.name}}</p>
-                                </div>
+                            <div class="keyword" style="width:60%">
                             </div>
                         </div>
                     </div>
@@ -289,6 +286,7 @@
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+
 export default {
     setup () {
         const store = useStore()
@@ -300,7 +298,8 @@ export default {
 
         const reviewList = computed(() => store.getters['module/getReviewList'])
         const writerList = computed(() => store.getters['module/getWriterList'])
-        
+        const words = computed(() => store.getters['module/getwords'])
+        console.log(words.value)
         const show = reactive({
             writer: ''
         })
@@ -458,7 +457,6 @@ export default {
         const writerDetail = function(isbn){
             store.dispatch('module/getisbnInfo',isbn)
                 .then((res) =>{
-                    console.log(res.data)
                     store.commit('module/setSelectBook', res.data[0])
                     tab.value = 'view'
                 })
@@ -469,7 +467,6 @@ export default {
             const select = store.getters['module/getSelectBook']
             store.dispatch('module/getWriterList', select.author)
                 .then((res) => {
-                    console.log(res.data)
                     store.commit('module/setWriterList', res.data)
                     show.writer = select.author
                 })
@@ -506,7 +503,7 @@ export default {
             writerList,
             show,
             writerDetail,
-            words,
+            words
         }
     }
 }
