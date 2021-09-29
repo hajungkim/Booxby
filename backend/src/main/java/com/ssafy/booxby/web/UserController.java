@@ -110,7 +110,6 @@ public class UserController {
         ControllerResponse response = null;
 
         User user = userService.findUserByEmail(emailDto.getEmail());
-
         try{
             userService.sendTempPwEmail(user);
             response = new ControllerResponse("success", "전송 성공");

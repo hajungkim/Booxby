@@ -2,9 +2,11 @@ package com.ssafy.booxby.service;
 
 import com.ssafy.booxby.domain.user.User;
 import com.ssafy.booxby.domain.user.UserRepository;
+import com.ssafy.booxby.handler.EmailHandler;
 import com.ssafy.booxby.web.dto.UserDto;
 import io.jsonwebtoken.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +23,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final JavaMailSenderImpl mailSender;
     private boolean lowerCheck;
     private int size;
 
@@ -153,19 +156,19 @@ public class UserService {
     public void sendTempPwEmail(User user) {
         String tempKey = getKey(10, true);
 
-        /*try{
+        try{
             EmailHandler mailHandler = new EmailHandler(mailSender);
             mailHandler.setTo(user.getEmail());
             mailHandler.setSubject("[Booxby] 북스비 임시비밀번호 안내");
-            String message = makeContent("임시비밀번호 발급",user.getNickname(), tempKey);
+            String message = makeContent("📚 북스비 임시비밀번호 발급",user.getNickname(), tempKey);
             mailHandler.setText(message, true);
             mailHandler.send();
 
-            userService.changePassword(user.getUserId(), tempKey);
+            user.updatePassword(tempKey);
 
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
 
     }
 
@@ -179,7 +182,7 @@ public class UserService {
                 "<!DOCTYPE html><html><body>"
                         + "<div style=\"font-family: 'Apple SD Gothic Neo' , 'sans-serif'; width:600px; height:600px; border-top:5px solid #00bfa5; margin:10px auto; padding:30px 0; box-sizing:border-box;\">"
                         + "<h1 style=\"marginx:0; padding:0 5px; font-size:28px; font-weight:400;\">"
-                        + "<span style=\"font-size:15px; margin: 0 0 10px 3px;\">JUBGING</span><br />"
+                        + "<span style=\"font-size:15px; margin: 0 0 10px 3px;\">[Booxby]</span><br />"
                         + "<span style=\"color:00bfa5\">"
                         + title
                         + " 안내입니다.</h1>"
@@ -191,7 +194,7 @@ public class UserService {
         sb.append(
                 "임시 비밀번호를 발급해 드립니다. <br />"
                         + "아래 <b style=\"color:#00bfa5\"> '임시비밀번호'</b>로 로그인하여 비밀번호 변경을 진행해 주세요.<br />"
-                        + "감사합니다</p>"
+                        + "감사합니다😀</p>"
         );
 
         sb.append(
