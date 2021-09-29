@@ -11,8 +11,12 @@ const routes = [
       { path: 'detail', component: () => import('pages/Detail.vue')},
       { path: 'signup', component: () => import('pages/Signup.vue') },
       { path: 'modify', component: () => import('pages/Modify.vue') },
-      { path: 'my', component: () => import('components/Mypage.vue') }
+      { path: 'my', component: () => import('components/Mypage.vue') },
     ]
+  },
+  {
+    path: '/test', 
+    component: () => import('pages/step00.vue')
   },
 
   // Always leave this as last one,
