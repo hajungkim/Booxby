@@ -2,11 +2,32 @@
   <div class="container">
     <div class="mainBox">
       <router-view />
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
     </div>
-    <div class="ocean">
+    <!-- <div class="ocean">
       <div class="wave"></div>
       <div class="wave"></div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -17,21 +38,258 @@ export default {
 </script>
 
 <style>
-.mainBox{
-  width:1300px;
-  height:650px;
-  border-radius: 38px;
-  background-color: rgb(227,231,234);
-  z-index: 100;
-}
 .container{
   display:flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: rgb(170, 196, 216);
+}
+.mainBox{
+  width:1300px;
+  height:650px;
+  border-radius: 38px;
+  background-color: whitesmoke;
+  z-index: 100;
 }
 body {
+	width: 100wh;
+	height: 90vh;
+	background: linear-gradient(-45deg, rgb(207, 132, 132), rgb(224, 161, 109),rgb(158, 189, 140),rgb(164,194,242),rgb(124,138,210),rgb(200,167,213));
+	background-size: 1000% 400%;
+	-webkit-animation: Gradient 15s ease infinite;
+	-moz-animation: Gradient 15s ease infinite;
+	animation: Gradient 10s ease infinite;
+  font-family: 'Lato', sans-serif;
+}
+
+@-webkit-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@-moz-keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+@keyframes Gradient {
+	0% {
+		background-position: 0% 50%
+	}
+	50% {
+		background-position: 100% 50%
+	}
+	100% {
+		background-position: 0% 50%
+	}
+}
+
+.circles{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+.circles li{
+    position: absolute;
+    display: block;
+    list-style: none;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    animation: animate 25s linear infinite;
+    bottom: -150px;
+    
+}
+
+.circles li:nth-child(1){
+    left: 25%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 6s;
+}
+
+
+.circles li:nth-child(2){
+    left: 10%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 2s;
+    animation-duration: 12s;
+}
+
+.circles li:nth-child(3){
+    left: 70%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 4s;
+}
+
+.circles li:nth-child(4){
+    left: 40%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 7s;
+    animation-duration: 18s;
+}
+
+.circles li:nth-child(5){
+    left: 65%;
+    width: 20px;
+    height: 20px;
+    animation-delay: 1s;
+}
+
+.circles li:nth-child(6){
+    left: 75%;
+    width: 110px;
+    height: 110px;
+    animation-delay: 3s;
+}
+
+.circles li:nth-child(7){
+    left: 35%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 7s;
+}
+
+.circles li:nth-child(8){
+    left: 50%;
+    width: 25px;
+    height: 25px;
+    animation-delay: 15s;
+    animation-duration: 45s;
+}
+
+.circles li:nth-child(9){
+    left: 20%;
+    width: 15px;
+    height: 15px;
+    animation-delay: 2s;
+    animation-duration: 35s;
+}
+
+.circles li:nth-child(10){
+    left: 85%;
+    width: 150px;
+    height: 150px;
+    animation-delay: 2s;
+    animation-duration: 11s;
+}
+
+.circles li:nth-child(11){
+    left: 40%;
+    width: 100px;
+    height: 100px;
+    animation-delay: 5s;
+    animation-duration: 11s;
+}
+
+.circles li:nth-child(12){
+    left: 55%;
+    width: 120px;
+    height: 110px;
+    animation-delay: 0s;
+    animation-duration: 11s;
+}
+
+.circles li:nth-child(13){
+    left: 22%;
+    width: 90px;
+    height: 120px;
+    animation-delay: 3s;
+    animation-duration: 11s;
+}
+
+.circles li:nth-child(14){
+    left: 66%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 3s;
+    animation-duration: 9s;
+}
+
+.circles li:nth-child(15){
+    left: 44%;
+    width: 50px;
+    height: 50px;
+    animation-delay: 6s;
+    animation-duration: 8s;
+}
+
+.circles li:nth-child(16){
+    left: 7%;
+    width: 200px;
+    height: 200px;
+    animation-delay: 0s;
+    animation-duration: 8s;
+}
+
+.circles li:nth-child(17){
+    left: 12%;
+    width: 80px;
+    height: 80px;
+    animation-delay: 2s;
+    animation-duration: 6s;
+}
+
+.circles li:nth-child(18){
+    left: 25%;
+    width: 40px;
+    height: 70px;
+    animation-delay: 2s;
+    animation-duration: 7s;
+}
+
+.circles li:nth-child(19){
+    left: 60%;
+    width: 90px;
+    height: 120px;
+    animation-delay: 6s;
+    animation-duration: 5s;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+
+@keyframes animate {
+
+    0%{
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100%{
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+
+}
+/* body {
   background:radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
   overflow: hidden;
 }
@@ -73,7 +331,7 @@ body {
   50% {
     transform: translate3d(0,5px,0);
   }
-}
+} */
 
 @font-face {
     font-family: 'IM_Hyemin-Bold';

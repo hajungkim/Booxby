@@ -4,7 +4,7 @@
       <div class="logo">
         <q-img class="mypage_logo" src="~assets/images/logo.png"/>
       </div>
-      <q-btn class="back_btn" @click="back" round color="primary" icon="undo" />
+      <q-btn class="back_btn" @click="back" round style="background:rgb(86,86,239); color:white;" icon="undo" />
     </div>
     <!-- 유저 정보들 -->
     <div class="user_info_container">
@@ -30,7 +30,7 @@
 
       <q-separator />
 
-      <q-tab-panels v-model="tab" animated style="background-color: rgb(227,231,234);">
+      <q-tab-panels v-model="tab" animated style="background-color: whitesmoke;">
 
         <q-tab-panel class="three_options zzims" name="zzim">
           <q-card v-for="zzimBook in zzimList" :key="zzimBook.isbn" @click="zzimDetail(zzimBook.isbn)" class="my-card no-shadow cardbooks">
@@ -248,8 +248,8 @@ export default {
 .mypage_logo{
   width:70%;
   position:relative;
-  top:-15px;
-  left:15px;
+  top:-10px;
+  left:0px;
 }
 .back_btn{
   float:right;
@@ -281,7 +281,7 @@ export default {
   margin-top:30px;
   margin-left:210px;
   max-width: 900px;
-  background-color: rgb(227,231,234);
+  background-color: whitesmoke;
 }
 .three_options{
   height: 350px;
@@ -312,13 +312,14 @@ export default {
 }
 /* My 리뷰 */
 .review_container{
-  box-shadow: 1px 1px 1px 1px gray;
   margin-bottom:20px;
   padding-bottom: 10px;
   display: flex;
   justify-content: space-between;
   border-radius: 20px;
   cursor: pointer;
+  background: white;
+  box-shadow: lightgrey 3px 3px 3px;
 }
 .review_info{
   display:flex;

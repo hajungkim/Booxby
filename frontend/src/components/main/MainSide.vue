@@ -270,8 +270,8 @@ export default {
 }
 .main_logo{
   position:relative;
-  top:5px;
-  left:15px;
+  top:7px;
+  left:0px;
   width:70%;
 }
 .side_content{
@@ -282,6 +282,7 @@ export default {
   top:5px;
   left:30px;
   border-radius: 30px;
+  box-shadow: lightgrey 2px 3px 3px;
 }
 .side_user{
   width:75%;

@@ -1,7 +1,7 @@
 <template>
   <div class="detail_box">
       <div class="detail_back">
-          <q-btn class="back_btn" @click="back" round color="primary" icon="undo" />
+          <q-btn class="back_btn" @click="back" round style="background:rgb(86,86,239); color:white;" icon="undo" />
       </div>
       <div class="detail_content">
         <div class="q-pa-md" style="max-width: 900px;">
@@ -30,6 +30,12 @@
                         <div class="view_bot">
                             <div style="font-weight:bold; font-size:25px;">키워드</div>
                             <div class="keyword" style="width:60%">
+                                <div class="word_cloud" v-for="(word,index) in words" :key="index" style="display:inline-block;">
+                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-if="word.value===1" style="font-size:25px;">{{word.name}},</div>
+                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===2" style="font-size:40px;">{{word.name}},</div>
+                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===3" style="font-size:60px;">{{word.name}},</div>
+                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===4" style="font-size:60px;">{{word.name}},</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -38,11 +44,11 @@
                 <q-tab-panel name="review" class="q-pa-none">
                     <div class="detail_view_review">
                         <div class="review_head">책리뷰
-                            <q-btn @click="writeMode = true" style="float:right; margin-right:25px; font-weight:bold; border-radius:15px;" color="primary" label="리뷰쓰기" />
+                            <q-btn @click="writeMode = true" style="float:right; margin-right:25px; font-weight:bold; border-radius:15px; background:rgb(86,86,239); color:white;" label="리뷰쓰기" />
                         </div>
                         <!-- 리뷰 모달 -->
                         <q-dialog v-model="writeMode">
-                            <q-card style="background: #E3E7EA">
+                            <q-card style="background:whitesmoke;">
                                 <q-card-section class="row items-center">
                                     <div class="review_modal">
                                         <div class="modal_name">
@@ -114,8 +120,8 @@
                                 </q-card-section>
                                 <q-card-actions>
                                     <div style="display:inline-block; margin:0 auto;">
-                                        <q-btn @click="downReview" class="modal_btn" label="취소" color="primary" v-close-popup />
-                                        <q-btn @click="review" class="modal_btn" label="등록" color="primary"/>
+                                        <q-btn @click="downReview" class="modal_btn" label="취소" style="background:rgb(86,86,239); color:white;" v-close-popup />
+                                        <q-btn @click="review" class="modal_btn" label="등록" style="background:rgb(86,86,239); color:white;" />
                                     </div>
                                 </q-card-actions>
                             </q-card>
@@ -226,7 +232,7 @@
                                         <q-rating
                                             v-model="item.reviewScore"
                                             max="5"
-                                            size="2em"
+                                            size="1.5em"
                                             color="green-5"
                                             icon="star_border"
                                             icon-selected="star"
@@ -262,7 +268,7 @@
                 </q-tab-panel>
                 <q-tab-panel name="author" class="q-pa-none">
                     <div class="detail_view_author">
-                        <div class="author_head">{{ show.writer }}의 다른 책</div>
+                        <!-- <div class="author_head">{{ show.writer }}의 다른 책</div> -->
                         <div class="author_list">
                             <!-- <q-img v-for="item in writerList" :key="item.isbn" class="author_img" :src="item.img_url"/> -->
                             <q-card v-for="item in writerList" :key="item.isbn13" @click="writerDetail(item.isbn13)" class="my-card no-shadow cardbooks">
@@ -281,7 +287,6 @@
       </div>
   </div>
 </template>
-
 <script>
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
@@ -300,7 +305,11 @@ export default {
         const reviewList = computed(() => store.getters['module/getReviewList'])
         const writerList = computed(() => store.getters['module/getWriterList'])
         const words = computed(() => store.getters['module/getwords'])
-        console.log(words.value)
+
+        const color = [
+            'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)',
+        ]
+
         const show = reactive({
             writer: ''
         })
@@ -499,7 +508,8 @@ export default {
             writerList,
             show,
             writerDetail,
-            words
+            words,
+            color
         }
     }
 }
@@ -552,7 +562,7 @@ export default {
     margin-left:40px;
     margin-top:10px;
     width:500px;
-    height:210px;
+    min-height:210px;
 }
 #keyword_img{
     width:498px;
@@ -579,9 +589,9 @@ export default {
     padding:15px;
 }
 .modal_name{
-    color:rgb(60, 118, 204);
-    font-weight:bold;
-    font-size:20px;
+    color:rgb(86,86,239);
+    font-weight:700;
+    font-size:23px;
 }
 .modal_tag{
     margin-top:15px;
@@ -628,7 +638,7 @@ export default {
     margin-left:5px;
     margin-top:5px;
     position:absolute;
-    top:108px;
+    top:83px;
     display:flex;
 }
 .review_category{
@@ -677,11 +687,12 @@ export default {
 }
 .state_left{
     width:33%;
-    height:150px;
+    height:100px;
     display: inline-block;
     vertical-align: top;
     padding-left: 10px;
-    padding-top: 10px;
+    position:relative;
+    top:-5px;
 }   
 .state_right{
     width:67%;
@@ -689,6 +700,7 @@ export default {
     display:inline-block;
     vertical-align: top;
     position:relative;
+    top:-15px;
 }
 .state_categories{
     margin-left:5px;
@@ -707,30 +719,31 @@ export default {
   margin-right:20px;
 }
 .review_item{
-    border:1px solid grey;
-    height:150px;
+    border:1px solid lightgrey;
+    height:125px;
     margin-bottom: 15px;
     margin-right:25px;
     border-radius: 15px;
     position:relative;
-    box-shadow: 2px 2px 2px;
+    top:-15px;
+    box-shadow: lightgrey 1px 1px 3px;
 }
 .review_left{
     width:20%;
-    height:150px;
+    height:125px;
     display: inline-block;
     vertical-align: top;
     border-right:0.5px solid rgb(209, 209, 209);
 }
 .review_profile{
-    width:70px;
-    height:70px;
+    width:60px;
+    height:60px;
     border-radius: 50px;
-    margin-top:27px;
-    margin-left:46px;
+    margin-top:20px;
+    margin-left:53px;
 }
 .review_name{
-    font-size:18px;
+    font-size:15px;
     margin-top:5px;
     text-align: center;
 }
@@ -743,6 +756,7 @@ export default {
 .review_right{
     width:80%;
     height:150px;
+    padding-left:5px;
     display:inline-block;
     vertical-align: top;
 }
@@ -780,5 +794,23 @@ export default {
     cursor: pointer;
     margin-left:20px;
     margin-bottom:20px;
+}
+.word_item{
+    display:inline-block;
+    margin:0px 7px;
+    animation: wiggle 2.3s infinite;
+}
+@keyframes wiggle {
+    0% { transform: rotate(1.7deg); }
+    10% { transform: rotate(-1.7deg); }
+   20% { transform: rotate(1.7deg); }
+   30% { transform: rotate(-1.7deg); }
+   40% { transform: rotate(1.7deg); }
+   50% { transform: rotate(-1.7deg); }
+   60% { transform: rotate(1.7deg); }
+   70% { transform: rotate(-1.7deg); }
+   80% { transform: rotate(1.7deg); }
+   90% { transform: rotate(-1.7deg); }
+   100% { transform: rotate(1.7deg); }
 }
 </style>
