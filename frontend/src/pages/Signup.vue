@@ -1,11 +1,11 @@
 <template>
   <div class="signup_container">
     <div class="signup_wrap">
-      <div class="text-group">
+      <div class="text-group" style="position:relative; top:20px;">
         <h4 class="m-0">회원가입</h4>
       </div>
       <div class="form-group">
-        <div class="form-input-email">
+        <div class="form-input-email" style="position:relative; top:20px;">
           <q-input
               class="input"
               label="Email"
@@ -17,13 +17,11 @@
               checkEmail
               ]"
             />
-          <div>
-            <q-btn @click="duplicateEmail" rounded size="xs" class="mail_button" color="primary" label="중복 확인" />
-          </div>
+            <q-btn @click="duplicateEmail" rounded class="mail_button main_color" label="중복 확인" style="width:88px;"/>
         </div>
 
-        <div class="form-mb" style="margin-top:3px;">
-          <q-input class="input" label="Password" color="teal" v-model="form.password" type="password"
+        <div class="form-mb">
+          <q-input class="input np" label="Password" color="teal" v-model="form.password" type="password" style="width:400px;"
             lazy-rules
               :rules="[
                 val => val && val.length >= 8 || '8자리 이상 입력해주세요.',
@@ -60,7 +58,7 @@
         </div>
         <!-- 버튼 -->
         <div class="submit_bt">
-          <q-btn @click="setInfos" class="submit" color="primary" label="다음 단계로" />
+          <q-btn @click="setInfos" class="submit main_color" label="다음 단계로" />
         </div>
 
       </div>
@@ -105,16 +103,25 @@ export default {
       const reg = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
       if (reg.test(val)==true) valid.email = true
       else valid.email = false
-      return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
+      return (reg.test(val)||regExp.test(val)||'이메일 형식이 잘못되었습니다.')
     }
     function duplicateEmail() {
+      if(form.email==''){
+        Swal.fire({
+              icon: 'error',
+              title: '<span style="font-size:25px;">이메일을 입력해주세요.</span>',
+              confirmButtonColor: '#ce1919',
+              confirmButtonText: '<span style="font-size:18px;">확인</span>'
+        })
+        return 
+      }
       store.dispatch('module/checkEmail', { email: form.email })
       .then((res) => {
         if (res.data.data==true){
           Swal.fire({
               icon: 'success',
               title: '<span style="font-size:25px;">사용 가능한 이메일 입니다.</span>',
-              confirmButtonColor: '#ce1919',
+              confirmButtonColor: "rgb(86,86,239)",
               confirmButtonText: '<span style="font-size:18px;">확인</span>'
           })
         }
@@ -151,29 +158,6 @@ export default {
       return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
     }
     
-    function duplicateEmail() {
-      store.dispatch('module/checkEmail', { email: form.email })
-        .then((res) => {
-          if (res.data.data==true){
-            Swal.fire({
-                icon: 'success',
-                title: '<span style="font-size:25px;">사용 가능한 이메일 입니다.</span>',
-                confirmButtonColor: '#skyblue',
-                confirmButtonText: '<span style="font-size:18px;">확인</span>'
-            })
-          }
-          else{
-            Swal.fire({
-                icon: 'error',
-                title: '<span style="font-size:25px;">중복된 이메일 입니다.</span>',
-                confirmButtonColor: '#ce1919',
-                confirmButtonText: '<span style="font-size:18px;">확인</span>'
-            })
-          }
-        })
-        .catch(() => {
-        })
-    }
     function checkName (val) {
       const reg = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g
       if (reg.test(val)==true) valid.nickname = true
@@ -228,6 +212,13 @@ export default {
 
 <style lang="scss" scoped>
 @import "../css/app.scss";
+.np{
+  padding-top:0px !important;
+}
+.main_color{
+  background-color: rgb(86,86,239);
+  color : white;
+}
 .signup_container{
   display:flex;
 }
@@ -254,6 +245,10 @@ export default {
 }
 .form-input-email{
   width:400px;
+  margin-top:10px;
+}
+.form-input-password{
+  width:400px;
   margin-top:20px;
 }
 .input{
@@ -261,11 +256,10 @@ export default {
 }
 .mail_button{
   position:relative;
-  top:-30px;
+  top:-45px;
   float:right;
   margin: -19px 0px 0px;
-  position: relative;
-  top:-30px;
+  left:0px;
 }
 .signupImg{
   float:right;

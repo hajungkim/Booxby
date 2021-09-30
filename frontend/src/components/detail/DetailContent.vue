@@ -291,7 +291,6 @@
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-// import axios from 'axios' 
 
 export default {
     setup () {
@@ -333,6 +332,8 @@ export default {
             tag4: false
         })
 
+        // word cloud
+        console.log(words,'스토어 워드')
         const back = function() {
             store.commit('module/setZzim', false)
             router.go(-1)

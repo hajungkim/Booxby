@@ -314,7 +314,7 @@ export default {
   margin: 15px auto;
 }
 .side_list{
-  margin-bottom:5px;
+  margin-bottom:12px;
   padding-left:20px;
   margin-left:10px;
   margin-right:10px;
