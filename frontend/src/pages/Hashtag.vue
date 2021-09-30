@@ -12,8 +12,8 @@
                 <div class="hashtag_form_main" >
                     <q-btn :id="idx" @click="selectHashtag(hashtags,idx)" v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag notselect" :label="hashtags.hashtag"/>
                 </div>
-                <q-btn @click="goWorldcup" class="nextBt" color="primary" label="Next" v-if="hashflag"/>
-                <q-btn @click="goMy" class="nextBt" color="primary" label="변경하기" v-else/>
+                <q-btn @click="goWorldcup" class="nextBt main_color" label="Next" v-if="hashflag"/>
+                <q-btn @click="goMy" class="nextBt main_color" label="변경하기" v-else/>
             </div>
         </div>
     </div>
@@ -131,6 +131,10 @@ export default {
 </script>
 
 <style scoped>
+.main_color{
+  background-color: rgb(86,86,239);
+  color : white;
+}
 .hashtag_container{
     width:1300px;
     height:650px;
@@ -178,13 +182,12 @@ export default {
 }
 
 .select{
-    background-color: #1976d2;
+    background-color: rgb(86,86,239);
     color:white;
 }
 
 .notselect{
-    /* border: 1px solid #1976d2; */
-    color:#1976d2;
+    color:rgb(86,86,239);
     background-color: white;
 }
 
