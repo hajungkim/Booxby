@@ -15,12 +15,32 @@
               <div class="main_content_right">
                   <div class="main_circle">
                   </div>
-                  <q-img :src="selectBook.img_url" class="main_book"/>
+                  <q-img :src="selectBook.img_url" class="main_book"
+                    v-bind:class="{'shadow_red':selectBook.emotion_score<24386 && selectBook.emotion_score>1540,
+                        'shadow_orange':selectBook.emotion_score<1540 && selectBook.emotion_score>=778,
+                        'shadow_yellow':selectBook.emotion_score<778 && selectBook.emotion_score>=296,
+                        'shadow_green':selectBook.emotion_score<296 && selectBook.emotion_score>=1,
+                        'shadow_blue':selectBook.emotion_score<1 && selectBook.emotion_score>=-240,
+                        'shadow_navy':selectBook.emotion_score<-240 && selectBook.emotion_score>=-1169,
+                        'shadow_purple':selectBook.emotion_score<-1169 && selectBook.emotion_score>=-29726
+                    }"
+                  />
               </div>
           </div>
-          <div class="main_content_list">
+          <div class="main_content_list" style="display: flex;">
               <!-- <q-icon class="list_btn" style="font-size: 2.8em; color: grey; margin-right:20px;" name="navigate_before"/> -->
-              <q-img v-for="(book, index) in bookList" :src="book.img_url" :key="index" @click="select(index)" class="list_book" />
+                <div v-for="(book, index) in bookList" :key="index">
+                    <q-img  :src="book.img_url"  @click="select(index)" class="list_book"
+                        v-bind:class="{'shadow_red':book.emotion_score<24386 && book.emotion_score>1540,
+                        'shadow_orange':book.emotion_score<1540 && book.emotion_score>=778,
+                        'shadow_yellow':book.emotion_score<778 && book.emotion_score>=296,
+                        'shadow_green':book.emotion_score<296 && book.emotion_score>=1,
+                        'shadow_blue':book.emotion_score<1 && book.emotion_score>=-240,
+                        'shadow_navy':book.emotion_score<-240 && book.emotion_score>=-1169,
+                        'shadow_purple':book.emotion_score<-1169 && book.emotion_score>=-29726
+                        }"     
+                    />
+                </div>
               <!-- <q-icon class="list_btn" style="font-size: 2.8em; color: grey;" name="navigate_next"/> -->
           </div>
       </div>
@@ -40,7 +60,7 @@ export default {
         const bookList = computed(() => store.getters['module/getBookList'])
         const selectBook = computed(() => store.getters['module/getSelectBook'])
         const zzimList = computed(() => store.getters['module/getZzimList'])
-
+        console.log(bookList,'@@@@@@2')
         const form = reactive({
             keyword : ''
         })
@@ -239,6 +259,27 @@ export default {
     margin-right:20px;
     cursor:pointer;
     /* animation: wiggle 1s infinite; */
+}
+.shadow_red{
+    box-shadow: 10px 10px 15px rgb(253, 185, 185);
+}
+.shadow_orange{
+    box-shadow: 10px 10px 15px rgb(255, 202, 159);
+}
+.shadow_yellow{
+    box-shadow: 10px 10px 15px rgb(254, 235, 168);
+}
+.shadow_green{
+    box-shadow: 10px 10px 15px rgb(211, 236, 197);
+}
+.shadow_blue{
+    box-shadow: 10px 10px 15px rgb(164, 194, 242);
+}
+.shadow_navy{
+    box-shadow: 10px 10px 15px rgb(124, 138, 210);
+}
+.shadow_purple{
+    box-shadow: 10px 10px 15px rgb(200, 167, 213);
 }
 /*.list_book:nth-child(5){
     width:120px;
