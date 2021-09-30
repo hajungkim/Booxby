@@ -80,12 +80,16 @@ class randomEmotion(Resource):
 
 @api.route('/data/agegender/<age>/<gender>')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
 class ageGenderRecommend(Resource):
+    pd.set_option('display.max_colwidth',-1)
     def get(self,age,gender):
         """나이, 성별에 따라 책 반환하기"""
         # age = '20대'  # 유아 초등학생 청소년 20대 30대 40대 50대 60대 이상
         # gender = '남성' # 남성 여성
-        df = pd.read_csv('booxby_gender_age_data.csv', encoding='cp949')
+        df = pd.read_csv('booxby_gender_age_emotion_data.csv', encoding='cp949')
+        df2 = df[(df['isbn13'] == 9788950976903)]['emotion_score']
+        print(df2,'@@@')
         df1 = df[(df['age'] == age) & (df['sex'] == gender)].sample(n=7)
+        print(df1,'!!!!')
         return toJson(df1)
 
 @api.route('/data/category/<category>')

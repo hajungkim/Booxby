@@ -14,11 +14,6 @@ const routes = [
       { path: 'my', component: () => import('components/Mypage.vue') },
     ]
   },
-  {
-    path: '/test', 
-    component: () => import('pages/step00.vue')
-  },
-
   // Always leave this as last one,
   // but you can also remove it
   {
