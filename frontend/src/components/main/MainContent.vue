@@ -3,14 +3,14 @@
       <div class="main_search">
           <q-select outlined v-model="model" :options="options" style="width:117px; height:10px; margin-right:5px;"/>
           <q-input v-model="form.keyword" class="main_search_input" outlined label="검색" @keyup.enter="onInput"/>
-          <q-btn @click="onInput" round class="main_search_btn" color="primary" icon="search" />
+          <q-btn @click="onInput" round class="main_search_btn" style="background:rgb(86,86,239); color:white;" icon="search" />
       </div>
       <div class="main_content">
           <div class="main_content_view">
               <div class="main_content_left">
                 <div class="book_name">{{selectBook.title}}</div>
                 <div class="book_author">{{selectBook.author}}</div>
-                <q-btn @click="goDetail" class="book_detail_btn" color="primary" label="자세히 보기" />
+                <q-btn @click="goDetail" class="book_detail_btn" style="background:rgb(86,86,239); color:white;" label="자세히 보기" />
               </div>
               <div class="main_content_right">
                   <div class="main_circle">

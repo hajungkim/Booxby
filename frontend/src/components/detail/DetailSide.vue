@@ -1,13 +1,17 @@
 <template>
-  <div class="main_side">
+  <div class="detail_side">
       <div class="logo">
-        <q-img class="main_logo" src="~assets/images/logo.png"/>
+        <q-img class="side_logo" src="~assets/images/logo.png"/>
       </div>
-      <div class="side_content">
+      <div class="detail_side_content">
             <div>
-                <q-icon v-if="zzim" @click="zzimOff" class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
-                <q-icon v-if="!zzim" @click="zzimOn" class="bookmark" style="font-size: 3.7em; color: black;" name="bookmark_border"/>
+                <!-- <q-icon v-if="zzim" @click="zzimOff" class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
+                <q-icon v-if="!zzim" @click="zzimOn" class="bookmark" style="font-size: 3.7em; color: black;" name="bookmark_border"/> -->
+                <div class="placement">
+                  <div @click="bookmark" id="heart"></div>
+                </div>
             </div>
+            <div style="position:relative; top:-30px;">
             <div class="detail_name">
                 {{selectBook.title}}
             </div>
@@ -16,6 +20,7 @@
             </div>
             <div class="detail_book">
                 <q-img :src="selectBook.img_url" class="detail_img" />
+            </div>
             </div>
       </div>
   </div>
@@ -70,18 +75,23 @@ export default {
           }
       })
 
+    const bookmark = function() {
+      const heart = document.getElementById('heart')
+      heart.classList.add('is-active')
+    }
     return {
       selectBook,
       zzim,
       zzimOn,
-      zzimOff
+      zzimOff,
+      bookmark
     }
   }
 }
 </script>
 
-<style scoped>
-.main_side{
+<style lang="scss">
+.detail_side{
   width:350px;
   height:650px;
   /* border:1px solid red; */
@@ -92,13 +102,13 @@ export default {
   font-weight:bold;
   text-align:center;
 }
-.main_logo{
+.side_logo{
   position:relative;
-  top:5px;
-  left:15px;
+  top:7px;
+  left:0px;
   width:70%;
 }
-.side_content{
+.detail_side_content{
   width:90%;
   height:525px;
   background-color: white;
@@ -106,6 +116,7 @@ export default {
   top:5px;
   left:30px;
   border-radius: 30px;
+  box-shadow: lightgrey 2px 3px 3px;
 }
 .bookmark{
   margin-left:30px;
@@ -135,4 +146,22 @@ export default {
     width:250px;
     height:320px;
 }
+#heart {
+  width:100px;
+  height:100px;
+  background: url("https://cssanimation.rocks/images/posts/steps/heart.png") no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  transition: background-position 1s steps(28);
+  transition-duration: 0s;
+  position:relative;
+  top:-15px;
+  &.is-active {
+    transition-duration: 1s;
+    background-position: -2800px 0;
+  }
+}
+// .placement {
+//   // transform: translate(-50%, -50%);
+// }
 </style>
