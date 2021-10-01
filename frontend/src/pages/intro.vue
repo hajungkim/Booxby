@@ -10,7 +10,7 @@
                 <q-img class="intro_logo" src="~assets/images/logo.png"/>
             </div>
             <div class="intro_word_box">
-                <div class="word"></div>
+                <div class="intro_word"></div>
             </div>
         </div>
     </div>
@@ -36,8 +36,7 @@ export default {
                 skip_delay = 5,
                 speed = 4000
 
-            var wordflick = function(){
-                setInterval(function(){
+            var wordflick = setInterval(function(){
                     if (forwards) {
                         if(offset >= words[i].length){
                         ++skip_count
@@ -66,14 +65,13 @@ export default {
                         offset--
                         }
                     }
-                    const word = document.getElementsByClassName('word')[0]
+                    const word = document.getElementsByClassName('intro_word')[0]
                     word.innerText = part
-                },speed)
-            }
 
-            wordflick()
+                },speed)
 
             setTimeout(function() {
+                clearInterval(wordflick)
                 router.push('/login')
             }, 3800)
         })
@@ -97,6 +95,7 @@ $clouds:#ecf0f1;
     align-items: center;
 }
 .intro_content{
+    margin-top:100px;
     width:1000px;
     height:300px;
 }
@@ -195,7 +194,7 @@ $key: #55A4E9;
     width:430px;
     margin:0 auto;
 }
-.word{
+.intro_word{
   margin: auto;
   color: white;
   font: 700 normal 3em/1.5 'MapoPeacefull',sans-serif;

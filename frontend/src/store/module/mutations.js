@@ -18,9 +18,13 @@ export function setwords (state, words) {
   state.words = words
 }
 
-export function setHashtags (state, hashtags,hashString) {
+export function setHashtags (state,hashString) {
   state.loginUser.hashtag = hashString
-  state.hash_tags = hashtags
+  state.hashtag = hashString
+}
+
+export function setHashtag_list (state,hashlist) {
+  state.hash_tags = hashlist
 }
 export function setHashscore (state, score) {
   state.user_info.hashScore = score

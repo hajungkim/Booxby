@@ -17,7 +17,9 @@ export function getInfos (state) {
 export function getHashtags (state) {
   return state.hash_tags
 }
-
+export function getHashtag (state) {
+  return state.hashtag
+}
 export function getwords (state) {
   return state.words
 }
