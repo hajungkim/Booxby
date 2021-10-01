@@ -333,7 +333,6 @@ export default {
         })
 
         // word cloud
-        console.log(words,'스토어 워드')
         const back = function() {
             store.commit('module/setZzim', false)
             router.go(-1)
@@ -793,13 +792,19 @@ export default {
     width:170px;
     height:200px;
     cursor: pointer;
-    margin-left:20px;
-    margin-bottom:20px;
 }
 .word_item{
     display:inline-block;
     margin:0px 7px;
     animation: wiggle 2.3s infinite;
+}
+.cardbooks{
+    transition: .5s;
+    margin-left:25px;
+    margin-bottom:25px;
+}
+.cardbooks:hover{
+    transform:scale(1.1)
 }
 @keyframes wiggle {
     0% { transform: rotate(1.7deg); }

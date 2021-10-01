@@ -15,20 +15,24 @@
               <div class="main_content_right">
                   <div class="main_circle">
                   </div>
-                  <q-img :src="selectBook.img_url" class="main_book"
-                    v-bind:class="{'shadow_red':selectBook.emotion_score<24386 && selectBook.emotion_score>1540,
-                        'shadow_orange':selectBook.emotion_score<1540 && selectBook.emotion_score>=778,
-                        'shadow_yellow':selectBook.emotion_score<778 && selectBook.emotion_score>=296,
-                        'shadow_green':selectBook.emotion_score<296 && selectBook.emotion_score>=1,
-                        'shadow_blue':selectBook.emotion_score<1 && selectBook.emotion_score>=-240,
-                        'shadow_navy':selectBook.emotion_score<-240 && selectBook.emotion_score>=-1169,
-                        'shadow_purple':selectBook.emotion_score<-1169 && selectBook.emotion_score>=-29726
-                    }"
-                  />
+                  <div class="main_pen"> 
+                    <q-img class="main_pen_photo" src="~/assets/images/pen.png"/>
+                  </div>
+                  <div class="main_book_box">
+                    <q-img :src="selectBook.img_url" class="main_book"
+                        v-bind:class="{'shadow_red':selectBook.emotion_score<24386 && selectBook.emotion_score>1540,
+                            'shadow_orange':selectBook.emotion_score<1540 && selectBook.emotion_score>=778,
+                            'shadow_yellow':selectBook.emotion_score<778 && selectBook.emotion_score>=296,
+                            'shadow_green':selectBook.emotion_score<296 && selectBook.emotion_score>=1,
+                            'shadow_blue':selectBook.emotion_score<1 && selectBook.emotion_score>=-240,
+                            'shadow_navy':selectBook.emotion_score<-240 && selectBook.emotion_score>=-1169,
+                            'shadow_purple':selectBook.emotion_score<-1169 && selectBook.emotion_score>=-29726
+                        }"
+                    />
+                  </div>
               </div>
           </div>
           <div class="main_content_list" style="display: flex;">
-              <!-- <q-icon class="list_btn" style="font-size: 2.8em; color: grey; margin-right:20px;" name="navigate_before"/> -->
                 <div v-for="(book, index) in bookList" :key="index">
                     <q-img  :src="book.img_url"  @click="select(index)" class="list_book"
                         v-bind:class="{'shadow_red':book.emotion_score<24386 && book.emotion_score>1540,
@@ -41,7 +45,6 @@
                         }"     
                     />
                 </div>
-              <!-- <q-icon class="list_btn" style="font-size: 2.8em; color: grey;" name="navigate_next"/> -->
           </div>
       </div>
   </div>
@@ -60,7 +63,6 @@ export default {
         const bookList = computed(() => store.getters['module/getBookList'])
         const selectBook = computed(() => store.getters['module/getSelectBook'])
         const zzimList = computed(() => store.getters['module/getZzimList'])
-        console.log(bookList,'@@@@@@2')
         const form = reactive({
             keyword : ''
         })
@@ -120,8 +122,6 @@ export default {
                     }
                 store.commit('module/setwords', tmp)
                 router.push('/detail')
-            }).catch((err)=>{
-                console.log(err)
             })
         }
         const select = function(index) {
@@ -137,10 +137,10 @@ export default {
             const userId = localStorage.getItem('userId')
             store.dispatch('module/requestzzim', userId)
                 .then(function (result) {
+                    console.log(result.data.data)
                     store.commit('module/setZzimList', result.data.data)
                 })
         })
-
         return {
             model,
             options,
@@ -169,6 +169,7 @@ export default {
 }
 .main_search_input{
     width:270px;
+    font-size:23px;
     display:inline-block;
 }
 .main_search_btn{
@@ -180,18 +181,15 @@ export default {
 }
 .main_content{
     clear:both;
-    /* border:1px solid green; */
     width:100%;
     height:532px;
 }
 .main_content_view{
     width:100%;
     height:68%;
-    /* border:1px solid yellow; */
     position:relative;
 }
 .main_content_left{
-    /* border:1px solid orange; */
     position:absolute;
     top:100px;
     left:65px;
@@ -216,7 +214,6 @@ export default {
     margin-left:10px;
 }
 .main_content_right{
-    /* border:1px solid red; */
     display:inline-block;
     position:absolute;
     top:50px;
@@ -226,29 +223,53 @@ export default {
 }
 .main_circle{
     /* Permalink - use to edit and share this gradient: https://colorzilla.com/gradient-editor/#1e5799+0,207cca+20,2dc6ed+53,7db9e8+96,7db9e8+100 */
-    background: #1e5799; /* Old browsers */
-    background: -moz-linear-gradient(45deg,  #1e5799 0%, #207cca 20%, #2dc6ed 53%, #7db9e8 96%, #7db9e8 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(45deg,  #1e5799 0%,#207cca 20%,#2dc6ed 53%,#7db9e8 96%,#7db9e8 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(45deg,  #1e5799 0%,#207cca 20%,#2dc6ed 53%,#7db9e8 96%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+    background: rgb(58,106,154);
+    background: linear-gradient(90deg, rgba(58,106,154,0.9700924315038515) 0%, rgba(139,180,238,1) 31%, rgba(219,232,254,1) 100%);
     border-radius: 200px;
-    width:300px;
-    height:300px;
+    width:320px;
+    height:320px;
     float:right;
-    box-shadow: 3px 3px 3px;
+    position:relative;
+    top:-20px;
+    /* box-shadow: 3px 3px 3px; */
+    transform:rotate(240deg)
+}
+.main_pen{
+    height:200px;
+}
+.main_pen_photo{
+    z-index:100;
+    width:160px;
+    position:absolute;
+    top:80px;
+    left:40px;  
+    animation: float2 2s infinite;
+    transition: 1.3s;
 }
 .main_book{
+    /* position:absolute; */
+    /* top:5px; */
+    /* left:110px; */
+    width:200px;
+    height:280px;
+    animation: float 2s infinite;
+    transition: 1.3s;
+}
+.main_book_box{
     position:absolute;
-    top:5px;
+    top:-5px;
     left:110px;
     width:200px;
     height:280px;
-    animation: wiggle 1.5s infinite;
+    display: block;
+    transition: 1.3s;
+    /* 관찰자 시점을 설정 */
+    transform-style: preserve-3d;
+    perspective: 500px; 
 }
 .main_content_list{
-    /* border:3px solid pink; */
     padding-top:25px;
-    padding-left:20px;
+    padding-left:5px;
     height:32%;
     width:100%;
     margin:0 auto;
@@ -256,9 +277,12 @@ export default {
 .list_book{
     width:105px;
     height:135px;
-    margin-right:20px;
+    margin-right:25px;
     cursor:pointer;
-    /* animation: wiggle 1s infinite; */
+    transition: .5s;
+}
+.list_book:hover{
+    transform: scale(1.15);
 }
 .shadow_red{
     box-shadow: 10px 10px 15px rgb(253, 185, 185);
@@ -281,27 +305,30 @@ export default {
 .shadow_purple{
     box-shadow: 10px 10px 15px rgb(200, 167, 213);
 }
-/*.list_book:nth-child(5){
-    width:120px;
-    height:170px;
-    margin-right:20px;
-     animation: wiggle 1s infinite; 
-}*/
-.list_btn{
-    cursor: pointer;
-}
-@keyframes wiggle {
-    0% { transform: rotate(2deg); }
-    10% { transform: rotate(-2deg); }
-   20% { transform: rotate(2deg); }
-   30% { transform: rotate(-2deg); }
-   40% { transform: rotate(2deg); }
-   50% { transform: rotate(-2deg); }
-   60% { transform: rotate(2deg); }
-   70% { transform: rotate(-2deg); }
-   80% { transform: rotate(2deg); }
-   90% { transform: rotate(-2deg); }
-   100% { transform: rotate(2deg); }
-}
 
+@keyframes float {
+	0% {
+		box-shadow: 20px 20px 20px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px) rotate(15deg) rotateX(-10deg) rotateY(-10deg);
+	}
+	50% {
+		box-shadow: 40px 40px 20px 0px rgba(0,0,0,0.2);
+		transform: translatey(-20px) rotate(15deg) rotateX(-0deg) rotateY(-5deg);
+	}
+	100% {
+		box-shadow: 20px 20px 20px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px) rotate(15deg) rotateX(-10deg) rotateY(-10deg);
+	}
+}
+@keyframes float2 {
+	0% {
+		transform: translatey(0px) rotate(300deg) rotateX(-10deg) rotateY(-10deg);
+	}
+	50% {
+		transform: translatey(-20px) rotate(300deg) rotateX(-0deg) rotateY(-5deg);
+	}
+	100% {
+		transform: translatey(0px) rotate(300deg) rotateX(-10deg) rotateY(-10deg);
+	}
+}
 </style>
