@@ -210,7 +210,22 @@ export default {
     function moveWorldcup() {
       router.push('worldCup')
     }
+
     function zzimDetail(isbn){
+      store.dispatch('module/getwords',isbn)
+          .then((res)=>{
+              let tmp = []
+              for (let i = 0; i < res.data.length; i++) {
+                  let j = {
+                      "name": '',
+                      "value": ''
+                  }
+                  j.name = res.data[i][0]
+                  j.value = res.data[i][1]
+                  tmp.push(j)
+              }
+          store.commit('module/setwords', tmp)
+      })
       store.dispatch('module/getisbnInfo',isbn)
       .then((res) =>{
         store.commit('module/setSelectBook', res.data[0])

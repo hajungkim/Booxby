@@ -108,6 +108,7 @@ export default {
         }
 
         const goDetail = function() {
+            console.log(selectBook.value.isbn13,'@@@@@@@@@@@@')
             store.dispatch('module/getwords',selectBook.value.isbn13)
                 .then((res)=>{
                     let tmp = []

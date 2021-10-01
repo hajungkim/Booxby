@@ -34,7 +34,7 @@ export default {
                 forwards = true,
                 skip_count = 0,
                 skip_delay = 5,
-                speed = 4000
+                speed = 200
 
             var wordflick = setInterval(function(){
                     if (forwards) {

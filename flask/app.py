@@ -183,6 +183,7 @@ class nounsCount(Resource):
     def get(self, isbn):
         """워드클라우드 배열 보내기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        print(isbn,'~!~!~')
         description = df[(df['isbn13'] == int(isbn))]['description'].to_string()
         okt = Okt()
         noun = okt.nouns(description)
