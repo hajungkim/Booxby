@@ -46,14 +46,14 @@
             <div v-for="item in myReview" :key="item.reviewId" class="review_container" @click="moveDetail(item.isbn)">
               <div class="review_info">
                 <div class="title">
-                  <p style="font-size:30px;">{{item.title}}</p>
+                  <p style="font-size:25px;">{{item.title}}</p>
                   <q-rating
                       class="star"
                       v-if="item.reviewScore == 5"
                       v-model="score_5"
                       max="5"
-                      size="1.8em"
-                      color="green-5"
+                      size="1.5em"
+                      color="secondary"
                       icon="star_border"
                       icon-selected="star"
                       icon-half="star_half"
@@ -64,8 +64,8 @@
                       v-if="item.reviewScore == 4"
                       v-model="score_4"
                       max="5"
-                      size="1.8em"
-                      color="green-5"
+                      size="1.5em"
+                      color="secondary"
                       icon="star_border"
                       icon-selected="star"
                       icon-half="star_half"
@@ -76,8 +76,8 @@
                       v-if="item.reviewScore == 3"
                       v-model="score_3"
                       max="5"
-                      size="1.8em"
-                      color="green-5"
+                      size="1.5em"
+                      color="secondary"
                       icon="star_border"
                       icon-selected="star"
                       icon-half="star_half"
@@ -88,8 +88,8 @@
                       v-if="item.reviewScore == 2"
                       v-model="score_2"
                       max="5"
-                      size="1.8em"
-                      color="green-5"
+                      size="1.5em"
+                      color="secondary"
                       icon="star_border"
                       icon-selected="star"
                       icon-half="star_half"
@@ -100,8 +100,8 @@
                       v-if="item.reviewScore == 1"
                       v-model="score_1"
                       max="5"
-                      size="1.8em"
-                      color="green-5"
+                      size="1.5em"
+                      color="secondary"
                       icon="star_border"
                       icon-selected="star"
                       icon-half="star_half"
@@ -354,8 +354,8 @@ export default {
   font-weight: bold;
 }
 .star{
-  margin-bottom:20px;
-  margin-left:5px;
+  margin-bottom:15px;
+  margin-left:12px;
 }
 /* 설정 */
 .img{
