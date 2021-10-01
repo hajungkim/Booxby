@@ -88,7 +88,7 @@ export default {
                     Swal.fire({
                         icon: 'success',
                         title: '<span style="font-size:25px;">회원 가입이 완료 되었습니다.</span>',
-                        confirmButtonColor: '#ce1919',
+                        confirmButtonColor: 'rgb(86,86,239)',
                         confirmButtonText: '<span style="font-size:18px;">확인</span>'
                     })
                 }
@@ -100,7 +100,7 @@ export default {
                         confirmButtonText: '<span style="font-size:18px;">확인</span>'
                     })
                 }
-                router.push('/')
+                router.push('/login')
             }).catch((err)=>{
                 console.log(err,'err')
             })
