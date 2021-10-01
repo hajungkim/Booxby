@@ -34,7 +34,7 @@ export default {
                 forwards = true,
                 skip_count = 0,
                 skip_delay = 5,
-                speed = 200
+                speed = 4000
 
             var wordflick = function(){
                 setInterval(function(){
@@ -74,7 +74,7 @@ export default {
             wordflick()
 
             setTimeout(function() {
-                // router.push('/login')
+                router.push('/login')
             }, 3800)
         })
         

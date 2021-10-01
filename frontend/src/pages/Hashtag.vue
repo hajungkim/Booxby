@@ -93,6 +93,8 @@ export default {
             router.push('worldCup')
         }
         function goMy() {
+            // store에 저장
+            store.commit('module/setLoginUser', loginUser)
             let hashString = ''
             select_hashtag.forEach(e=>{
                 hashString = hashString + e
@@ -103,10 +105,11 @@ export default {
                     nickname : loginUser.nickname, 
                     password: loginUser.password, 
                     worldcupScore: loginUser.worldcupScore, 
-                    hashScore: hashScore 
+                    hashScore: hashscore 
                     })
                 .then((res)=>{
                     console.log(res)
+                    console.log(loginUser,'~!~!~1`')
                 })
                 .catch((err)=>{
                     console.log(err)
