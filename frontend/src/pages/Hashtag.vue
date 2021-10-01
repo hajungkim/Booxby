@@ -117,7 +117,7 @@ export default {
         }
         onMounted(()=>{
             store.dispatch('module/oxbooks').then(function (res) {
-            store.commit('module/setOxbooks',res.data)
+                store.commit('module/setOxbooks',res.data)
         })  
         })
         return {

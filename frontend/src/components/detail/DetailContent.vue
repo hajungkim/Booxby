@@ -56,7 +56,7 @@
                                 <q-card-section class="row items-center">
                                     <div class="review_modal">
                                         <div class="modal_name">
-                                            모던웹을 위한 HTML+CSS
+                                            리뷰 남기기
                                         </div>
                                         <div class="modal_score">
                                             <span style="font-weight:bold;">장점 </span>- 이 책에 대한 별점을 남겨주세요
