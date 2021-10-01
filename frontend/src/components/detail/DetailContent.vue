@@ -9,11 +9,15 @@
                 <q-tabs
                     v-model="tab"
                     dense
+                    class="text-grey"
+                    active-color="secondary"
+                    indicator-color="secondary"
                     align="justify"
+                    narrow-indicator
                 >
-                    <q-tab name="view" class="text-red" label="상세설명" />
-                    <q-tab name="review" class="text-green" label="리뷰" />
-                    <q-tab name="author" class="text-blue" label="작가의 다른 책" />
+                    <q-tab name="view" label="상세설명" />
+                    <q-tab name="review" label="리뷰" />
+                    <q-tab name="author" label="작가의 다른 책" />
                 </q-tabs>
 
             <q-separator />
@@ -134,7 +138,7 @@
                                             v-model="score_5"
                                             max="5"
                                             size="1.8em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
@@ -147,7 +151,7 @@
                                             v-model="score_4"
                                             max="5"
                                             size="1.8em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
@@ -160,7 +164,7 @@
                                             v-model="score_3"
                                             max="5"
                                             size="1.8em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
@@ -173,7 +177,7 @@
                                             v-model="score_2"
                                             max="5"
                                             size="1.8em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
@@ -186,7 +190,7 @@
                                             v-model="score_1"
                                             max="5"
                                             size="1.8em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
@@ -233,7 +237,7 @@
                                             v-model="item.reviewScore"
                                             max="5"
                                             size="1.5em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
