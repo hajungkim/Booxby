@@ -9,7 +9,7 @@ const routes = [
     component: () => import('layouts/CommonBox.vue'),
     redirect: 'login',
     children: [
-      { path: 'login', component: () => import('pages/login.vue')},
+      { path: 'login', component: () => import('pages/Login.vue')},
       { path: 'hashtag', component: () => import('pages/Hashtag.vue')},
       { path: 'worldCup', component: () => import('pages/Worldcup.vue')},
       { path: 'main', component: () => import('pages/Main.vue')},
