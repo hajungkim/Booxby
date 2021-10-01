@@ -1,8 +1,8 @@
 <template>
     <div class="worldcup_container">
         <div class="explain_ox">
-            <div>
-                <h2>선호 책 조사</h2>
+            <div style="margin-top:20px;">
+                <h2 style="margin-bottom:30px;">선호 책 조사</h2>
                 <div style="font-size:20px;">1. 관심가는 책이라면<img class="text_img" src="~assets/check.png">를 눌러주세요</div>
                 <div style="font-size:20px;">2. 그저 그렇다면 <img class="text_img" src="~assets/warning.png">를 눌러주세요</div>
                 <div style="font-size:20px;">3. 별로 읽고 싶지 않다면 <img class="text_img" src="~assets/x_real.png">를 눌러주세요</div>
@@ -73,38 +73,64 @@ export default {
             hashtags_list.forEach(e => {
                 hashtag = hashtag + e
             });
-            store.dispatch('module/signup',{
-                age: infos.age,
-                email: infos.email,
-                hashScore:infos.hashScore,
-                worldcupScore:final_score,
-                gender: infos.gender,
-                hashtag: hashtag,
-                nickname: infos.nickname,
-                password: infos.password,
-            }).then((res)=>{
-                console.log(res.data.status,'res')
-                if (res.data.status == 'success'){
-                    Swal.fire({
-                        icon: 'success',
-                        title: '<span style="font-size:25px;">회원 가입이 완료 되었습니다.</span>',
-                        confirmButtonColor: '#ce1919',
-                        confirmButtonText: '<span style="font-size:18px;">확인</span>'
+            if (!localStorage.getItem('userId')){
+                store.dispatch('module/signup',{
+                    age: infos.age,
+                    email: infos.email,
+                    hashScore:infos.hashScore,
+                    worldcupScore:final_score,
+                    gender: infos.gender,
+                    hashtag: hashtag,
+                    nickname: infos.nickname,
+                    password: infos.password,
+                }).then((res)=>{
+                    console.log(res.data.status,'res')
+                    console.log(infos,'infos') // value 는 안나옴
+                    console.log(hashtag,'hash')
+                    if (res.data.status == 'success'){
+                        Swal.fire({
+                            icon: 'success',
+                            title: '<span style="font-size:25px;">회원 가입이 완료 되었습니다.</span>',
+                            confirmButtonColor: 'rgb(86,86,239)',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    }
+                    else{
+                        Swal.fire({
+                            icon: 'error',
+                            title: '<span style="font-size:25px;">오류발생 회원가입을 다시 시도해 주세요.</span>',
+                            confirmButtonColor: '#ce1919',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    }
+                    router.push('/login')
+                }).catch((err)=>{
+                    console.log(err,'err')
+                })
+            }
+            else{
+                const loginUser = store.getters['module/getLoginUser']
+                console.log(loginUser,'fasjgiag')
+                store.dispatch('module/modifyInfo', {
+                    hashtag : loginUser.hashtag, 
+                    nickname : loginUser.nickname, 
+                    password: loginUser.password, 
+                    worldcupScore: final_score, 
+                    hashScore: loginUser.hashScore 
                     })
-                }
-                else{
+                .then(()=>{
                     Swal.fire({
-                        icon: 'error',
-                        title: '<span style="font-size:25px;">오류발생 회원가입을 다시 시도해 주세요.</span>',
-                        confirmButtonColor: '#ce1919',
-                        confirmButtonText: '<span style="font-size:18px;">확인</span>'
-                    })
-                }
-                router.push('/')
-            }).catch((err)=>{
-                console.log(err,'err')
-            })
-            
+                            icon: 'success',
+                            title: '<span style="font-size:25px;">책 선호도 점수가 재설정 되었습니다.</span>',
+                            confirmButtonColor: 'rgb(86,86,239)',
+                            confirmButtonText: '<span style="font-size:18px;">확인</span>'
+                        })
+                    router.push('my')
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+            }         
         }
         return{
             select_books,
@@ -218,7 +244,6 @@ export default {
     align-items: center;
     width:650px;
     height:650px;
-    padding-bottom:50px;
 }
 .worldcup{
     display:flex;

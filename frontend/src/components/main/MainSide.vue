@@ -10,25 +10,43 @@
         </div>
         <div class="side_menu">
           <div @click="emojiRecommend" class="side_list">
-            <q-icon style="font-size: 2.5em; color: grey;" name="emoji_emotions"/>
+            <q-icon  style="font-size: 2em;" name="emoji_emotions"
+                v-bind:class="{'basic':cate1==false,
+                'main_color':cate1==true}"
+            />
             <span class="list_text">감성책 추천</span>
           </div>
-          <div @click="test" class="side_list">
-            <q-icon style="font-size: 2.5em; color: grey;" name="brush"/>
+          <div @click="myRecommend" class="side_list">
+            <q-icon style="font-size: 2em;" name="brush"
+                v-bind:class="{'basic':cate2==false,
+                'main_color':cate2==true}"
+            />
             <span class="list_text">나의 감성 책 추천</span>
           </div>
           <div @click="zzimRecommend" class="side_list">
-            <q-icon style="font-size: 2.5em; color: grey;" name="thumb_up"/>
+            <q-icon style="font-size: 2em;" name="favorite"
+              v-bind:class="{'basic':cate3==false,
+              'main_color':cate3==true}"
+            />
             <span class="list_text">찜기반 책 추천</span>
           </div>
           <div @click="ageRecommend" class="side_list">
-            <q-icon style="font-size: 2.5em; color: grey;" name="people"/>
-            <span class="list_text">나이와 성별 추천</span>
+            <q-icon style="font-size: 2em;" name="people"
+              v-bind:class="{'basic':cate4==false,
+              'main_color':cate4==true}"
+            />
+            <span  class="list_text">나이와 성별 추천</span>
           </div>
           <div @click="showCategory" class="side_list">
-            <q-icon style="font-size: 2.5em; color: grey;" name="widgets"/>
+            <q-icon style="font-size: 2em;" name="widgets"
+              v-bind:class="{'basic':cate5==false,
+              'main_color':cate5==true}"
+            />
             <span class="list_text">카테고리 추천</span>
-            <q-icon style="font-size: 2.0em; color: grey; margin-left:33px;" name="expand_more"/>
+            <q-icon class="basic" style="font-size: 2.0em; margin-left:33px;" name="expand_more"
+              v-bind:class="{'basic':cate5==false,
+              'main_color':cate5==true}"
+            />
           </div>
           <div class="side_category row" v-show="categoryMode">
             <div class="col-4">
@@ -82,18 +100,44 @@ export default {
     const category8= ref(false)
     const category9= ref(false)
     
+    let change=true
+
+    let cate1= computed(() => store.getters['module/getCate1'])
+    let cate2= computed(() => store.getters['module/getCate2'])
+    let cate3= computed(() => store.getters['module/getCate3'])
+    let cate4= computed(() => store.getters['module/getCate4'])
+    let cate5= computed(() => store.getters['module/getCate5'])
+
     let category = []
 
     const showCategory = function () {
+      if (cate5.value==false){
+        store.commit('module/setTrueCate5')
+      }
+      if (cate2.value == true || cate3.value == true || cate4.value == true || cate1.value == true){
+        store.commit('module/setfalseCate2')
+        store.commit('module/setfalseCate3')
+        store.commit('module/setfalseCate4')
+        store.commit('module/setfalseCate1')
+      }
       store.commit('module/setCategoryMode', !store.getters['module/getCategoryMode'])
     }
     const goMypage = function() {
       router.push('/my')
     }
     const logout = function() {
-      router.push('/')
+      router.push('/login')
     }
-    function emojiRecommend(){
+    function emojiRecommend(){  
+      if (cate1.value==false){
+        store.commit('module/setTrueCate1')
+      }
+      if (cate2.value == true || cate3.value == true || cate4.value == true || cate5.value == true){
+        store.commit('module/setfalseCate2')
+        store.commit('module/setfalseCate3')
+        store.commit('module/setfalseCate4')
+        store.commit('module/setfalseCate5')
+      }
       store.dispatch('module/emojiRecommend').then((result)=>{
         store.commit('module/setBookList', result.data)
         store.commit('module/setSelectBook', result.data[0])
@@ -101,16 +145,16 @@ export default {
         console.log(err)
       })
     }
-    function test(){
-      const isbn = '9788994780801'
-      store.dispatch('module/getisbnInfo',isbn).then((result)=>{
-        store.commit('module/setBookList', result.data)
-        store.commit('module/setSelectBook', result.data[0])
-      }).catch((err)=>{
-        console.log(err)
-      })
-    }
     function myRecommend(){
+      if (cate2.value==false){
+        store.commit('module/setTrueCate2')
+      }
+      if (cate1.value == true || cate3.value == true || cate4.value == true || cate5.value == true){
+        store.commit('module/setfalseCate1')
+        store.commit('module/setfalseCate3')
+        store.commit('module/setfalseCate4')
+        store.commit('module/setfalseCate5')
+      }
       let score = (loginUser.hashScore + loginUser.worldcupScore) / 2
       score = Math.floor(score)
       store.dispatch('module/myRecommend',score).then((result)=>{
@@ -121,6 +165,15 @@ export default {
       })
     }
     function zzimRecommend(){
+      if (cate3.value==false){
+        store.commit('module/setTrueCate3')
+      }
+      if (cate2.value == true || cate1.value == true || cate4.value == true || cate5.value == true){
+        store.commit('module/setfalseCate2')
+        store.commit('module/setfalseCate1')
+        store.commit('module/setfalseCate4')
+        store.commit('module/setfalseCate5')
+      }
       if (!zzimList.value.length){
         Swal.fire({
           icon: 'error',
@@ -162,6 +215,15 @@ export default {
       })
     }
     function ageRecommend(){
+      if (cate4.value==false){
+        store.commit('module/setTrueCate4')
+      }
+      if (cate2.value == true || cate3.value == true || cate1.value == true || cate5.value == true){
+        store.commit('module/setfalseCate2')
+        store.commit('module/setfalseCate3')
+        store.commit('module/setfalseCate1')
+        store.commit('module/setfalseCate5')
+      }
       const age = loginUser.age
       const gender = loginUser.gender=='0' ? "남성" : "여성"
       const ageGender = {
@@ -240,9 +302,14 @@ export default {
       category7,
       category8,
       category9,
+      change,
+      cate1,
+      cate2,
+      cate3,
+      cate4,
+      cate5,
       loginUser,
       categoryMode,
-      test,
       showCategory,
       goMypage,
       logout,
@@ -257,6 +324,12 @@ export default {
 </script>
 
 <style>
+.basic{
+  color:gray;
+}
+.main_color{
+  color:rgb(86,86,239); 
+}
 .main_side{
   width:350px;
   height:650px;
@@ -314,7 +387,7 @@ export default {
   margin: 15px auto;
 }
 .side_list{
-  margin-bottom:12px;
+  margin-bottom:17px;
   padding-left:20px;
   margin-left:10px;
   margin-right:10px;
@@ -325,7 +398,7 @@ export default {
   background-color:rgb(228, 228, 228)
 }
 .list_text{
-  margin-left:30px;
+  margin-left:20px;
   font-weight:550;
   font-size:15px;
   position: relative;
