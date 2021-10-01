@@ -11,7 +11,7 @@
                   <div @click="bookmark" id="heart"></div>
                 </div>
             </div>
-            <div style="position:relative; top:-30px;">
+            <div style="position:relative; top:-40px;">
             <div class="detail_name">
                 {{selectBook.title}}
             </div>

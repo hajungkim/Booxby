@@ -146,6 +146,7 @@ export default {
             console.log('tmp', tmp)
             store.commit('module/setLoginUser', tmp)
         })
+      router.push('/my')
     }
 
     return {
