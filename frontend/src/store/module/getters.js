@@ -17,7 +17,9 @@ export function getInfos (state) {
 export function getHashtags (state) {
   return state.hash_tags
 }
-
+export function getHashtag (state) {
+  return state.hashtag
+}
 export function getwords (state) {
   return state.words
 }
@@ -56,4 +58,20 @@ export function getMyReview(state) {
 
 export function getWriterList(state) {
   return state.writerList
+}
+
+export function getCate1(state) {
+  return state.cate1
+}
+export function getCate2(state) {
+  return state.cate2
+}
+export function getCate3(state) {
+  return state.cate3
+}
+export function getCate4(state) {
+  return state.cate4
+}
+export function getCate5(state) {
+  return state.cate5
 }

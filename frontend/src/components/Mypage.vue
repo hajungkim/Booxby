@@ -11,8 +11,11 @@
       <q-img class="user_img" src="~assets/images/book.jpg" />
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
-        <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
-          <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
+        <div style="display:flex; flex-wrap:wrap; width:400px; font-weight:bold;">
+          <q-btn outline size="11px" v-for="(word,idx) in hashtags" :key="idx" disable="true" 
+           style="margin:0px 5px 5px 0px; color:rgb(86,86,239); padding-right:7px; padding-left:7px;">#{{ word }}</q-btn>
+           <!-- background-color: #5656EF; color:white 주색 -->
+          <!-- <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div> -->
         </div>
       </div>
     </div>
@@ -23,7 +26,7 @@
         dense
         align="justify"
       >
-        <q-tab class="text-red" name="zzim" label="찜 목록" />
+        <q-tab class="text-red" name="zzim" label="찜 목록"/>
         <q-tab class="text-green" name="reviews" label="MY 리뷰" />
         <q-tab class="text-blue" name="settings" label="설정" />
       </q-tabs>
@@ -135,25 +138,27 @@
         <q-tab-panel class="three_options" name="settings">
           <div class="q-col-gutter-md row items-start">
             <div class="col-4">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveModify">
+              <q-img class="img" src="~assets/images/repair.png" @click="moveModify">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   개인 정보 수정
                 </div>
               </q-img>
             </div>
             <div class="col-4">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <q-img class="img" src="~assets/images/worldcup.png" @click="moveWorldcup">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
-                  Book World cup
+                  책 선호도 재설정
                 </div>
               </q-img>
             </div>
             <div class="col-4" >
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveHash">
+              <div>
+              <q-img class="img" src="~assets/images/hashtag.png" @click="moveHash">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   해시태그 재설정 하기
                 </div>
               </q-img>
+              </div>
             </div>
           </div>
         </q-tab-panel>
@@ -170,15 +175,19 @@ import { useRouter } from 'vue-router'
 
 export default {
   setup(){
+    const kindofcolor = ['rgb(86,86,239)','primary','secondary','deep-orange','amber','brown-5','purple','black']
+
     const store = useStore()
     const router = useRouter()
 
-    const loginUser = store.getters['module/getLoginUser']
-    const hashtag_contain = loginUser.hashtag
+    const loginUser = computed(()=>store.getters['module/getLoginUser'])
+    const hash = computed(()=>store.getters['module/getHashtag'])
+    // const hashtag_contain = loginUser.hashtag
     const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
-    
-    let hashtags = hashtag_contain.split('#')
+    console.log(hash.value,'해시')
+    console.log(loginUser.value,'@@@@')
+    let hashtags = loginUser.value.hashtag.split('#')
     hashtags.shift()
 
     const back = function() {
@@ -198,7 +207,9 @@ export default {
     function moveHash(){
       router.push('hashtag')
     }
-
+    function moveWorldcup() {
+      router.push('worldCup')
+    }
     function zzimDetail(isbn){
       store.dispatch('module/getisbnInfo',isbn)
       .then((res) =>{
@@ -208,21 +219,25 @@ export default {
     }
     
     onMounted(() => {
+      store.dispatch('module/oxbooks').then(function (res) {
+        store.commit('module/setOxbooks',res.data)
+      })  
       store.dispatch('module/requestMyReview')
         .then(function (result){
           store.commit('module/setMyReview', result.data.data)
-        })
-
+      })
     })
     return{
       tab: ref('zzim'),
       loginUser,
       hashtags,
+      kindofcolor,
       zzimDetail,
       moveModify,
       back,
       moveHash,
       moveDetail,
+      moveWorldcup,
       zzimList,
       myReview,
       score_5: ref(5),
@@ -303,6 +318,10 @@ export default {
 .zzim_img{
   width:160px;
   height: 200px;
+  transition: .5s;
+}
+.zzim_img:hover{
+  transform: scale(1.1);
 }
 .cardbooks{
   margin-right:30px;
@@ -320,6 +339,9 @@ export default {
   cursor: pointer;
   background: white;
   box-shadow: lightgrey 3px 3px 3px;
+}
+.review_container:hover{
+  background: rgb(233, 233, 233);
 }
 .review_info{
   display:flex;
