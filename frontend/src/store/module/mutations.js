@@ -61,3 +61,40 @@ export function setMyReview (state, myReview) {
 export function setWriterList (state, writerList) {
   state.writerList = writerList
 }
+
+export function setTrueCate1 (state) {
+  state.cate1 = true
+}
+
+export function setfalseCate1 (state) {
+  state.cate1 = false
+}
+
+export function setTrueCate2 (state) {
+  state.cate2 = true
+}
+
+export function setfalseCate2 (state) {
+  state.cate2 = false
+}
+export function setTrueCate3 (state) {
+  state.cate3 = true
+}
+
+export function setfalseCate3 (state) {
+  state.cate3 = false
+}
+export function setTrueCate4 (state) {
+  state.cate4 = true
+}
+
+export function setfalseCate4 (state) {
+  state.cate4 = false
+}
+export function setTrueCate5 (state) {
+  state.cate5 = true
+}
+
+export function setfalseCate5 (state) {
+  state.cate5 = false
+}
