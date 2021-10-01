@@ -172,8 +172,7 @@ export default {
         // 이메일 발송
         const findPwd = function() {
             store.dispatch('module/findPwd', { email: find.email })
-                .then((res) => {
-                    console.log(res)
+                .then(() => {
                     Swal.fire({
                         icon: 'success',
                         title: '<span style="font-size:25px;">이메일을 발송했습니다.</span>',

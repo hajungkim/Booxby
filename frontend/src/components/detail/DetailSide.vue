@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -37,53 +37,78 @@ export default {
     const selectBook = computed(() => store.getters['module/getSelectBook'])
     const zzim = computed(() => store.getters['module/getZzim'])
 
-    const zzimOn = function () {
-      const userId = localStorage.getItem('userId')
-      store.commit('module/setZzim', true)
-      console.log(selectBook.value)
-      store.dispatch('module/zzimOn', {isbn: selectBook.value.isbn13, userId: userId, title: selectBook.value.title, imgUrl: selectBook.value.img_url})
-        .then(function() {
-          store.dispatch('module/requestzzim', userId)
-                .then(function (result) {
-                    store.commit('module/setZzimList', result.data.data)
-                })
-        })
-    }
-    const zzimOff = function () {
-      const userId = localStorage.getItem('userId')
-      store.commit('module/setZzim', false)
-      store.dispatch('module/zzimOff', {isbn: selectBook.value.isbn13, userId: userId})
-        .then(function() {
-          store.dispatch('module/requestzzim', userId)
-                .then(function (result) {
-                    store.commit('module/setZzimList', result.data.data)
-                })
-        })
-    }
-
     const userId = localStorage.getItem('userId')
     store.dispatch('module/requestzzim', userId)
       .then(function (result) {
           for(let i = 0; i < result.data.data.length; i++) {
+            console.log('selectBook.value.isbn13', result.data.data[i].isbn)
               if(selectBook.value.isbn13 == result.data.data[i].isbn) {
                 store.commit('module/setZzim', true)
+                console.log('트루')
                 break
               }
               if(i==result.data.data.length-1) {
                 store.commit('module/setZzim', false)
+                console.log('펄스')
               }
+          }
+          const heart = document.getElementById('heart')
+          const zzim = store.getters['module/getZzim']
+          console.log('온마운트', zzim, heart)
+          if(zzim){
+            heart.classList.add('is-active')
+            console.log('1',heart)
+          }
+          else if(!zzim){
+            heart.classList.remove('is-active')
+            console.log('2',heart)
           }
       })
 
     const bookmark = function() {
       const heart = document.getElementById('heart')
-      heart.classList.add('is-active')
+      const zzim = store.getters['module/getZzim']
+      const userId = localStorage.getItem('userId')
+      if(zzim) {
+        store.commit('module/setZzim', false)
+        store.dispatch('module/zzimOff', {isbn: selectBook.value.isbn13, userId: userId})
+          .then(function() {
+            store.dispatch('module/requestzzim', userId)
+                  .then(function (result) {
+                      store.commit('module/setZzimList', result.data.data)
+                      heart.classList.remove('is-active')
+                  })
+          })
+      }
+      else if(!zzim) {
+        store.commit('module/setZzim', true)
+        store.dispatch('module/zzimOn', {isbn: selectBook.value.isbn13, userId: userId, title: selectBook.value.title, imgUrl: selectBook.value.img_url})
+          .then(function() {
+            store.dispatch('module/requestzzim', userId)
+                  .then(function (result) {
+                      store.commit('module/setZzimList', result.data.data)
+                      heart.classList.add('is-active')
+                  })
+          })
+      }
     }
+    
+    onMounted(() => {
+      // const heart = document.getElementById('heart')
+      // const zzim = store.getters['module/getZzim']
+      // console.log('온마운트', zzim, heart)
+      // if(zzim){
+      //   heart.classList.add('is-active')
+      //   console.log('1',heart)
+      // }
+      // else if(!zzim){
+      //   heart.classList.remove('is-active')
+      //   console.log('2',heart)
+      // }
+    })
     return {
       selectBook,
       zzim,
-      zzimOn,
-      zzimOff,
       bookmark
     }
   }

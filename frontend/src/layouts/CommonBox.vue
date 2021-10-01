@@ -121,10 +121,11 @@ body {
 }
 
 .circles li:nth-child(1){
-    left: 25%;
-    width: 80px;
-    height: 80px;
-    animation-delay: 6s;
+    left: 5%;
+    width: 120px;
+    height: 120px;
+    animation-delay: 1s;
+    animation-duration: 6s;
 }
 
 
@@ -137,32 +138,34 @@ body {
 }
 
 .circles li:nth-child(3){
-    left: 70%;
+    left: 15%;
     width: 20px;
     height: 20px;
     animation-delay: 4s;
+    animation-duration: 4s;
 }
 
 .circles li:nth-child(4){
-    left: 40%;
+    left: 20%;
     width: 60px;
     height: 60px;
     animation-delay: 7s;
-    animation-duration: 18s;
+    animation-duration: 12s;
 }
 
 .circles li:nth-child(5){
-    left: 65%;
+    left: 25%;
     width: 20px;
     height: 20px;
     animation-delay: 1s;
 }
 
 .circles li:nth-child(6){
-    left: 75%;
+    left: 30%;
     width: 110px;
     height: 110px;
-    animation-delay: 3s;
+    animation-delay: 5s;
+    animation-duration: 6s;
 }
 
 .circles li:nth-child(7){
@@ -170,18 +173,19 @@ body {
     width: 150px;
     height: 150px;
     animation-delay: 7s;
+    animation-duration: 3s;
 }
 
 .circles li:nth-child(8){
-    left: 50%;
-    width: 25px;
-    height: 25px;
-    animation-delay: 15s;
-    animation-duration: 45s;
+    left: 40%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 0s;
+    animation-duration: 6s;
 }
 
 .circles li:nth-child(9){
-    left: 20%;
+    left: 45%;
     width: 15px;
     height: 15px;
     animation-delay: 2s;
@@ -189,7 +193,7 @@ body {
 }
 
 .circles li:nth-child(10){
-    left: 85%;
+    left: 50%;
     width: 150px;
     height: 150px;
     animation-delay: 2s;
@@ -197,31 +201,31 @@ body {
 }
 
 .circles li:nth-child(11){
-    left: 40%;
+    left: 55%;
     width: 100px;
     height: 100px;
     animation-delay: 5s;
-    animation-duration: 11s;
+    animation-duration: 9s;
 }
 
 .circles li:nth-child(12){
-    left: 55%;
+    left: 60%;
     width: 120px;
     height: 110px;
     animation-delay: 0s;
-    animation-duration: 11s;
+    animation-duration: 9s;
 }
 
 .circles li:nth-child(13){
-    left: 22%;
+    left: 65%;
     width: 90px;
     height: 120px;
-    animation-delay: 3s;
-    animation-duration: 11s;
+    animation-delay: 5s;
+    animation-duration: 6s;
 }
 
 .circles li:nth-child(14){
-    left: 66%;
+    left: 70%;
     width: 40px;
     height: 40px;
     animation-delay: 3s;
@@ -229,15 +233,15 @@ body {
 }
 
 .circles li:nth-child(15){
-    left: 44%;
+    left: 75%;
     width: 50px;
     height: 50px;
     animation-delay: 6s;
-    animation-duration: 8s;
+    animation-duration: 4s;
 }
 
 .circles li:nth-child(16){
-    left: 7%;
+    left: 80%;
     width: 200px;
     height: 200px;
     animation-delay: 0s;
@@ -245,27 +249,27 @@ body {
 }
 
 .circles li:nth-child(17){
-    left: 12%;
-    width: 80px;
-    height: 80px;
-    animation-delay: 2s;
-    animation-duration: 6s;
-}
-
-.circles li:nth-child(18){
-    left: 25%;
-    width: 40px;
-    height: 70px;
-    animation-delay: 2s;
+    left: 85%;
+    width: 60px;
+    height: 60px;
+    animation-delay: 3s;
     animation-duration: 7s;
 }
 
+.circles li:nth-child(18){
+    left: 90%;
+    width: 40px;
+    height: 40px;
+    animation-delay: 5s;
+    animation-duration: 3s;
+}
+
 .circles li:nth-child(19){
-    left: 60%;
+    left: 95%;
     width: 90px;
     height: 120px;
     animation-delay: 6s;
-    animation-duration: 5s;
+    animation-duration: 10s;
 }
 
 *{
@@ -334,12 +338,12 @@ body {
 } */
 
 @font-face {
-    font-family: 'IM_Hyemin-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/IM_Hyemin-Bold.woff2') format('woff');
+    font-family: 'MapoPeacefull';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
 body {
-  font-family: 'IM_Hyemin-Bold';
+  font-family: 'MapoPeacefull';
 }
 </style>

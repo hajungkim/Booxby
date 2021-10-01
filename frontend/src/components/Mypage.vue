@@ -135,25 +135,27 @@
         <q-tab-panel class="three_options" name="settings">
           <div class="q-col-gutter-md row items-start">
             <div class="col-4">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveModify">
+              <q-img class="img" src="~assets/images/repair.png" @click="moveModify">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   개인 정보 수정
                 </div>
               </q-img>
             </div>
             <div class="col-4">
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg">
+              <q-img class="img" src="~assets/images/worldcup.png" @click="moveWorldcup">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
-                  Book World cup
+                  책 선호도 재설정
                 </div>
               </q-img>
             </div>
             <div class="col-4" >
-              <q-img class="img" src="https://cdn.quasar.dev/img/parallax2.jpg" @click="moveHash">
+              <div>
+              <q-img class="img" src="~assets/images/hashtag.png" @click="moveHash">
                 <div class="absolute-bottom text-subtitle1 text-center" style="font-weight:bold; font-size:18px;">
                   해시태그 재설정 하기
                 </div>
               </q-img>
+              </div>
             </div>
           </div>
         </q-tab-panel>
@@ -198,7 +200,9 @@ export default {
     function moveHash(){
       router.push('hashtag')
     }
-
+    function moveWorldcup() {
+      router.push('worldCup')
+    }
     function zzimDetail(isbn){
       store.dispatch('module/getisbnInfo',isbn)
       .then((res) =>{
@@ -223,6 +227,7 @@ export default {
       back,
       moveHash,
       moveDetail,
+      moveWorldcup,
       zzimList,
       myReview,
       score_5: ref(5),
@@ -303,6 +308,10 @@ export default {
 .zzim_img{
   width:160px;
   height: 200px;
+  transition: .5s;
+}
+.zzim_img:hover{
+  transform: scale(1.1);
 }
 .cardbooks{
   margin-right:30px;
@@ -320,6 +329,9 @@ export default {
   cursor: pointer;
   background: white;
   box-shadow: lightgrey 3px 3px 3px;
+}
+.review_container:hover{
+  background: rgb(233, 233, 233);
 }
 .review_info{
   display:flex;

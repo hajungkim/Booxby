@@ -18,7 +18,7 @@
             <span class="list_text">나의 감성 책 추천</span>
           </div>
           <div @click="zzimRecommend" class="side_list">
-            <q-icon style="font-size: 2.5em; color: grey;" name="thumb_up"/>
+            <q-icon style="font-size: 2.5em; color: grey;" name="favorite"/>
             <span class="list_text">찜기반 책 추천</span>
           </div>
           <div @click="ageRecommend" class="side_list">
@@ -91,7 +91,7 @@ export default {
       router.push('/my')
     }
     const logout = function() {
-      router.push('/')
+      router.push('/login')
     }
     function emojiRecommend(){
       store.dispatch('module/emojiRecommend').then((result)=>{
