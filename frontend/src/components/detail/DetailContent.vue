@@ -137,73 +137,73 @@
                                         <q-rating
                                             v-model="score_5"
                                             max="5"
-                                            size="1.8em"
+                                            size="1.3em"
                                             color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
                                             readonly
                                         />
-                                        <q-linear-progress class="progress" rounded size="15px" :value="progress5" color="secondary"/>
+                                        <q-linear-progress class="progress" rounded size="10px" :value="progress5" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
                                             v-model="score_4"
                                             max="5"
-                                            size="1.8em"
+                                            size="1.3em"
                                             color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
                                             readonly
                                         />
-                                        <q-linear-progress class="progress" rounded size="15px" :value="progress4" color="secondary"/>
+                                        <q-linear-progress class="progress" rounded size="10px" :value="progress4" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
                                             v-model="score_3"
                                             max="5"
-                                            size="1.8em"
+                                            size="1.3em"
                                             color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
                                             readonly
                                         />
-                                        <q-linear-progress class="progress" rounded size="15px" :value="progress3" color="secondary"/>
+                                        <q-linear-progress class="progress" rounded size="10px" :value="progress3" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
                                             v-model="score_2"
                                             max="5"
-                                            size="1.8em"
+                                            size="1.3em"
                                             color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
                                             readonly
                                         />
-                                        <q-linear-progress class="progress" rounded size="15px" :value="progress2" color="secondary"/>
+                                        <q-linear-progress class="progress" rounded size="10px" :value="progress2" color="secondary"/>
                                     </div>
                                     <div>
                                         <q-rating
                                             v-model="score_1"
                                             max="5"
-                                            size="1.8em"
+                                            size="1.3em"
                                             color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
                                             readonly
                                         />
-                                        <q-linear-progress class="progress" rounded size="15px" :value="progress1" color="secondary"/>
+                                        <q-linear-progress class="progress" rounded size="10px" :value="progress1" color="secondary"/>
                                     </div>
                                 </div>
                                 <div class="state_right">
-                                        <q-linear-progress class="progress2" style="margin-left:27px;" size="35px" :value="progress6" color="primary"/>
-                                        <q-linear-progress class="progress2" style="margin-left:26px;" size="35px" :value="progress7" color="warning"/>
-                                        <q-linear-progress class="progress2" style="margin-left:25px;" size="35px" :value="progress8" color="accent"/>
-                                        <q-linear-progress class="progress2" style="margin-left:25px;" size="35px" :value="progress9" color="negative"/>
+                                        <q-linear-progress stripe class="progress2" style="margin-left:27px;" size="30px" :value="progress6" color="blue-3"/>
+                                        <q-linear-progress stripe class="progress2" style="margin-left:26px;" size="30px" :value="progress7" color="blue-3"/>
+                                        <q-linear-progress stripe class="progress2" style="margin-left:25px;" size="30px" :value="progress8" color="blue-3"/>
+                                        <q-linear-progress stripe class="progress2" style="margin-left:25px;" size="30px" :value="progress9" color="blue-3"/>
                                     <div class="state_categories">
                                         <div class="state_category">
                                             <img class="review_icon" src="../../assets/Surprised_Emoji.png">
@@ -236,7 +236,7 @@
                                         <q-rating
                                             v-model="item.reviewScore"
                                             max="5"
-                                            size="1.5em"
+                                            size="1.4em"
                                             color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
@@ -520,7 +520,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .detail_box{
     /* border:1px solid red; */
     width:900px;
@@ -534,9 +534,9 @@ export default {
 .back_btn{
     margin-top:15px;
     margin-right:10px;
-    height:54px;
-    width:54px;
-    font-size:18px;
+    height:45px;
+    width:45px;
+    font-size:13px;
 }
 .detail_content{
     clear:both;
@@ -677,7 +677,7 @@ export default {
     margin-bottom:8px;
 }
 .review_list{
-    margin-top:5px;
+    margin-top:18px;
 }
 .progress{
     margin-top:7px;
@@ -709,7 +709,6 @@ export default {
 }
 .state_categories{
     margin-left:5px;
-    margin-top:5px;
     position:absolute;
     top:100px;
     left:20px;
@@ -719,13 +718,13 @@ export default {
   display: flex;
   width:90px;
   height:30px;
-  background-color: rgb(187, 221, 241);
-  border-radius: 20px;
+//   background-color: rgb(187, 221, 241);
+//   border-radius: 20px;
   margin-right:20px;
 }
 .review_item{
     border:1px solid lightgrey;
-    height:125px;
+    height:130px;
     margin-bottom: 15px;
     margin-right:25px;
     border-radius: 15px;
@@ -735,7 +734,7 @@ export default {
 }
 .review_left{
     width:20%;
-    height:125px;
+    height:130px;
     display: inline-block;
     vertical-align: top;
     border-right:0.5px solid rgb(209, 209, 209);
@@ -818,4 +817,5 @@ export default {
    90% { transform: rotate(-1.7deg); }
    100% { transform: rotate(1.7deg); }
 }
+
 </style>

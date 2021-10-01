@@ -2,8 +2,8 @@
   <div class="main_box">
       <div class="main_search">
           <q-select outlined v-model="model" :options="options" style="width:117px; height:10px; margin-right:5px;"/>
-          <q-input v-model="form.keyword" class="main_search_input" outlined label="검색" @keyup.enter="onInput"/>
-          <q-btn @click="onInput" round class="main_search_btn" style="background:rgb(86,86,239); color:white;" icon="search" />
+          <q-input v-model="form.keyword" class="main_search_input" outlined label="검색" @keyup.enter="onInput" size="2"/>
+          <span class="main_search_btn_span"><q-btn @click="onInput" round class="main_search_btn" style="background:rgb(86,86,239); color:white;" icon="search" /></span>
       </div>
       <div class="main_content">
           <div class="main_content_view">
@@ -168,15 +168,18 @@ export default {
     float:right;
 }
 .main_search_input{
-    width:270px;
+    width:240px;
     display:inline-block;
 }
 .main_search_btn{
     margin-left:10px;
     margin-bottom:20px;
-    height:54px;
-    width:54px;
-    font-size:18px;
+    height:45px;
+    width:45px;
+    font-size:13px;
+}
+.main_search_btn_span{
+    margin-top:5px;
 }
 .main_content{
     clear:both;
