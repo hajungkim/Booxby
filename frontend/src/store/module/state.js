@@ -35,7 +35,18 @@ export default function () {
   const oxbooks = []
   const selectoxbooks = {}
 
+  const cate1 = false
+  const cate2 = false
+  const cate3 = false
+  const cate4 = false
+  const cate5 = false
+
   return {
+    cate1,
+    cate2,
+    cate3,
+    cate4,
+    cate5,
     textMode,
     categoryMode,
     loginUser,

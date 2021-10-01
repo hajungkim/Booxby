@@ -23,7 +23,7 @@
         dense
         align="justify"
       >
-        <q-tab class="text-red" name="zzim" label="찜 목록" />
+        <q-tab class="text-red" name="zzim" label="찜 목록"/>
         <q-tab class="text-green" name="reviews" label="MY 리뷰" />
         <q-tab class="text-blue" name="settings" label="설정" />
       </q-tabs>
