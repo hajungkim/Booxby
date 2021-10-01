@@ -9,6 +9,9 @@ export default function () {
   const user_info = {}
   const hash_tags = []
 
+  //해시태그
+  const hashtag = ''
+
   // 로그인 유저 정보
   const loginUser = {}
   
@@ -35,7 +38,7 @@ export default function () {
   const oxbooks = []
   const selectoxbooks = {}
 
-  const cate1 = false
+  const cate1 = true
   const cate2 = false
   const cate3 = false
   const cate4 = false
@@ -61,6 +64,7 @@ export default function () {
     oxbooks,
     selectoxbooks,
     writerList,
-    words
+    words,
+    hashtag
   }
 }

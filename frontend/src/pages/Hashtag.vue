@@ -67,7 +67,6 @@ export default {
         ]
         let select_hashtag = []
         let hashscore = 0
-        const loginUser = store.getters['module/getLoginUser']
         if (localStorage.getItem('userId') != null){
             hashflag = false
         }
@@ -88,18 +87,17 @@ export default {
             }
         }
         function goWorldcup() {
-            store.commit('module/setHashtags',select_hashtag)
+            store.commit('module/setHashtag_list',select_hashtag)
             store.commit('module/setHashscore',hashscore)
             router.push('worldCup')
         }
         function goMy() {
             // store에 저장
-            store.commit('module/setLoginUser', loginUser)
+            const loginUser = store.getters['module/getLoginUser']
             let hashString = ''
             select_hashtag.forEach(e=>{
                 hashString = hashString + e
             })
-            store.commit('module/setHashtags',select_hashtag,hashString)
             store.dispatch('module/modifyInfo', {
                     hashtag : hashString, 
                     nickname : loginUser.nickname, 
@@ -107,15 +105,15 @@ export default {
                     worldcupScore: loginUser.worldcupScore, 
                     hashScore: hashscore 
                     })
-                .then((res)=>{
-                    console.log(res)
-                    console.log(loginUser,'~!~!~1`')
+                .then(()=>{
+                    console.log(hashString,'!!')
+                    store.commit('module/setHashtags',hashString)
+                    store.commit('module/setHashscore',hashscore)
+                    router.push('my')
                 })
                 .catch((err)=>{
                     console.log(err)
                 })
-            store.commit('module/setHashscore',hashscore)
-            router.push('my')
         }
         onMounted(()=>{
             store.dispatch('module/oxbooks').then(function (res) {

@@ -12,8 +12,9 @@
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
         <div style="display:flex; flex-wrap:wrap; width:400px; font-weight:bold;">
-          <q-btn size="11px" v-for="(word,idx) in hashtags" :key="idx" disable="true"
-           style="margin:0px 5px 5px 0px; background-color: #5656EF; color:white">#{{ word }}</q-btn>
+          <q-btn outline size="11px" v-for="(word,idx) in hashtags" :key="idx" disable="true" 
+           style="margin:0px 5px 5px 0px; color:rgb(86,86,239); padding-right:7px; padding-left:7px;">#{{ word }}</q-btn>
+           <!-- background-color: #5656EF; color:white 주색 -->
           <!-- <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div> -->
         </div>
       </div>
@@ -174,17 +175,19 @@ import { useRouter } from 'vue-router'
 
 export default {
   setup(){
-    const kindofcolor = ['primary','secondary','deep-orange','amber','brown-5','purple','black']
+    const kindofcolor = ['rgb(86,86,239)','primary','secondary','deep-orange','amber','brown-5','purple','black']
 
     const store = useStore()
     const router = useRouter()
 
-    const loginUser = store.getters['module/getLoginUser']
-    const hashtag_contain = loginUser.hashtag
+    const loginUser = computed(()=>store.getters['module/getLoginUser'])
+    const hash = computed(()=>store.getters['module/getHashtag'])
+    // const hashtag_contain = loginUser.hashtag
     const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
-    console.log(hashtag_contain,'!!!')
-    let hashtags = hashtag_contain.split('#')
+    console.log(hash.value,'해시')
+    console.log(loginUser.value,'@@@@')
+    let hashtags = loginUser.value.hashtag.split('#')
     hashtags.shift()
 
     const back = function() {
@@ -216,11 +219,13 @@ export default {
     }
     
     onMounted(() => {
+      store.dispatch('module/oxbooks').then(function (res) {
+        store.commit('module/setOxbooks',res.data)
+      })  
       store.dispatch('module/requestMyReview')
         .then(function (result){
           store.commit('module/setMyReview', result.data.data)
-        })
-
+      })
     })
     return{
       tab: ref('zzim'),
