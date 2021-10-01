@@ -49,7 +49,7 @@
             <div v-for="item in myReview" :key="item.reviewId" class="review_container" @click="moveDetail(item.isbn)">
               <div class="review_info">
                 <div class="title">
-                  <p style="font-size:25px;">{{item.title}}</p>
+                  <p style="font-size:25px; width:600px;">{{item.title}}</p>
                   <q-rating
                       class="star"
                       v-if="item.reviewScore == 5"
@@ -396,7 +396,9 @@ export default {
 }
 /* 설정 */
 .img{
-  height: 318px;
+  margin-left:20px;
+  width:250px;
+  height: 300px;
   cursor: pointer;
 }
 </style>

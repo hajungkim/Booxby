@@ -47,7 +47,7 @@ export default {
         let i = 0
         select_books = oxbooks[i]
         store.commit('module/setselectOxbooks', oxbooks[i])
-
+        
         function next(){
             i = i + 1
             if (i==7){
