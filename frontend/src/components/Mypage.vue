@@ -11,8 +11,10 @@
       <q-img class="user_img" src="~assets/images/book.jpg" />
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
-        <div style="display:flex; flex-wrap:wrap; width:200px; font-weight:bold;">
-          <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div>
+        <div style="display:flex; flex-wrap:wrap; width:400px; font-weight:bold;">
+          <q-btn size="11px" v-for="(word,idx) in hashtags" :key="idx" disable="true"
+           style="margin:0px 5px 5px 0px; background-color: #5656EF; color:white">#{{ word }}</q-btn>
+          <!-- <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div> -->
         </div>
       </div>
     </div>
@@ -172,6 +174,8 @@ import { useRouter } from 'vue-router'
 
 export default {
   setup(){
+    const kindofcolor = ['primary','secondary','deep-orange','amber','brown-5','purple','black']
+
     const store = useStore()
     const router = useRouter()
 
@@ -179,7 +183,7 @@ export default {
     const hashtag_contain = loginUser.hashtag
     const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
-    
+    console.log(hashtag_contain,'!!!')
     let hashtags = hashtag_contain.split('#')
     hashtags.shift()
 
@@ -222,6 +226,7 @@ export default {
       tab: ref('zzim'),
       loginUser,
       hashtags,
+      kindofcolor,
       zzimDetail,
       moveModify,
       back,
