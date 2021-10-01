@@ -23,21 +23,6 @@ def toJson(df):
     res = make_response(result)   
     return res
 
-@api.route('/hello')  # 데코레이터 이용, '/hello' 경로에 클래스 등록
-class HelloWorld(Resource):
-    def get(self):  # GET 요청시 리턴 값에 해당 하는 dict를 JSON 형태로 반환
-        data = {}
-        with open('./sample_five.csv',encoding='CP949') as csvf:
-            csvReader = csv.DictReader(csvf)
-            for rows in csvReader:
-                key = rows['no']
-                data[key] = rows
-            result = json.dumps(data,ensure_ascii=False)
-            print(result,'result')
-            res = make_response(result)
-        return res
-
-
 @api.route('/data/myrecommend/<score>')
 class userEmotionRecommend(Resource):
     def get(self,score):
@@ -87,9 +72,7 @@ class ageGenderRecommend(Resource):
         # gender = '남성' # 남성 여성
         df = pd.read_csv('booxby_gender_age_emotion_data.csv', encoding='cp949')
         df2 = df[(df['isbn13'] == 9788950976903)]['emotion_score']
-        print(df2,'@@@')
         df1 = df[(df['age'] == age) & (df['sex'] == gender)].sample(n=7)
-        print(df1,'!!!!')
         return toJson(df1)
 
 @api.route('/data/category/<category>')
@@ -116,7 +99,6 @@ class categoryRecommend(Resource):
 class getIsbn(Resource):
     def get(self,isbn):
         """isbn으로 책 상세정보 반환하기"""
-        print(isbn)
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         df1 = df[(df['isbn13'] == int(isbn))]
         return toJson(df1)
@@ -202,7 +184,6 @@ class nounsCount(Resource):
         """워드클라우드 배열 보내기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         description = df[(df['isbn13'] == int(isbn))]['description'].to_string()
-        print(description,'@@@@@@@@@@2')
         okt = Okt()
         noun = okt.nouns(description)
         temp = []

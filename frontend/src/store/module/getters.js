@@ -57,3 +57,19 @@ export function getMyReview(state) {
 export function getWriterList(state) {
   return state.writerList
 }
+
+export function getCate1(state) {
+  return state.cate1
+}
+export function getCate2(state) {
+  return state.cate2
+}
+export function getCate3(state) {
+  return state.cate3
+}
+export function getCate4(state) {
+  return state.cate4
+}
+export function getCate5(state) {
+  return state.cate5
+}
