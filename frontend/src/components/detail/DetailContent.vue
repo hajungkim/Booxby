@@ -33,13 +33,13 @@
                         </div>  
                         <div class="view_bot">
                             <div style="font-weight:bold; font-size:25px;">키워드</div>
-                            <div class="keyword" style="width:60%">
-                                <div class="word_cloud" v-for="(word,index) in words" :key="index" style="display:inline-block;">
+                            <div id="main" class="keyword" style="width:60%">
+                                <!-- <div class="word_cloud" v-for="(word,index) in words" :key="index" style="display:inline-block;">
                                     <div class="word_item" v-bind:style="{ 'color': color[index] }" v-if="word.value===1" style="font-size:25px;">{{word.name}},</div>
                                     <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===2" style="font-size:40px;">{{word.name}},</div>
                                     <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===3" style="font-size:60px;">{{word.name}},</div>
                                     <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===4" style="font-size:60px;">{{word.name}},</div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                                 <q-card-section class="row items-center">
                                     <div class="review_modal">
                                         <div class="modal_name">
-                                            모던웹을 위한 HTML+CSS
+                                            리뷰 남기기
                                         </div>
                                         <div class="modal_score">
                                             <span style="font-weight:bold;">장점 </span>- 이 책에 대한 별점을 남겨주세요
@@ -65,7 +65,7 @@
                                             v-model="review_score"
                                             max="5"
                                             size="2em"
-                                            color="green-5"
+                                            color="secondary"
                                             icon="star_border"
                                             icon-selected="star"
                                             icon-half="star_half"
@@ -290,14 +290,75 @@
         </div>
       </div>
   </div>
+
 </template>
+
 <script>
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import * as echarts from 'echarts'
+import 'echarts-wordcloud'
 
 export default {
     setup () {
+        initEcharts()
+        function initEcharts () {
+            setTimeout(function() {
+                let newPromise = new Promise((resolve) => {
+                resolve()
+            })
+            newPromise.then(() => {
+                // this dom shows dom for echarts icon
+                echarts.init(document.getElementById('main'))
+                var myChart = echarts.init(document.getElementById('main'));
+                const words = computed(() => store.getters['module/getwords'])
+                let infos = []
+                words.value.forEach(e => {
+                    const colors = [
+                    'lightred', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)'
+                    ]
+                    var i = Math.round(Math.random() * 6)
+                    var info = {
+                        textStyle: {
+                            fontWeight: 'bold',
+                            color: colors[i]
+                            // color: 'rgb(' + [
+                            //         Math.round(Math.random() * 160),
+                            //         Math.round(Math.random() * 160),
+                            //         Math.round(Math.random() * 160)
+                            //     ].join(',') + ')'
+                        },
+                    }
+                    info.name = e.name
+                    info.value = e.value
+                    infos.push(info)
+                });
+                myChart.setOption({
+                title: {
+                        link: 'http://www.metrolyrics.com/my-heart-is-broken-lyrics-evanescence.html'
+                    },
+                    tooltip: {
+                        show: true
+                    },
+                    series: [{
+                        name: 'Booxby',
+                        type: 'wordCloud',
+                        sizeRange: [20,60],
+                        textRotation : [0, 30, -30, -330],
+                        textPadding: 2,
+                        autoSize: {
+                            enable: true,
+                            minSize: 120
+                        },
+                        data: infos
+                    }]
+                });
+
+            })
+            },100)
+        }
+
         const store = useStore()
         const router = useRouter()
         
@@ -309,9 +370,7 @@ export default {
         const writerList = computed(() => store.getters['module/getWriterList'])
         const words = computed(() => store.getters['module/getwords'])
 
-        const color = [
-            'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)', 'red', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)',
-        ]
+
 
         const show = reactive({
             writer: ''
@@ -337,7 +396,7 @@ export default {
         })
 
         // word cloud
-        console.log(words,'스토어 워드')
+        console.log(words.value[0],'스토어 워드')
         const back = function() {
             store.commit('module/setZzim', false)
             router.go(-1)
@@ -492,6 +551,7 @@ export default {
             score_3: ref(3),
             score_2: ref(2),
             score_1: ref(1),
+            initEcharts,
             back,
             form,
             review,
@@ -514,13 +574,41 @@ export default {
             show,
             writerDetail,
             words,
-            color
         }
     }
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped>
+body {
+	background-color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 16px; 
+	color: #000;
+}
+
+a:link, a:visited {
+	color: #4682b4;
+}
+
+a:hover {
+	color: #4169e1;
+}
+
+#main	{
+    margin-top:-20px;
+    margin-left:-30px;
+	width: 600px;
+	height: 250px;
+	/* border: 1px solid #ccc; */
+	padding: 30px;
+}
+
+#container {
+  min-width: 310px;
+  max-width: 800px;
+  margin: 0 auto
+}
 .detail_box{
     /* border:1px solid red; */
     width:900px;
@@ -563,7 +651,6 @@ export default {
     height:280px;
 }
 .keyword{
-    border:1px solid grey;
     margin-left:40px;
     margin-top:10px;
     width:500px;
@@ -718,8 +805,8 @@ export default {
   display: flex;
   width:90px;
   height:30px;
-//   background-color: rgb(187, 221, 241);
-//   border-radius: 20px;
+  /* background-color: rgb(187, 221, 241);
+  border-radius: 20px; */
   margin-right:20px;
 }
 .review_item{
@@ -796,13 +883,19 @@ export default {
     width:170px;
     height:200px;
     cursor: pointer;
-    margin-left:20px;
-    margin-bottom:20px;
 }
 .word_item{
     display:inline-block;
     margin:0px 7px;
     animation: wiggle 2.3s infinite;
+}
+.cardbooks{
+    transition: .5s;
+    margin-left:25px;
+    margin-bottom:25px;
+}
+.cardbooks:hover{
+    transform:scale(1.1)
 }
 @keyframes wiggle {
     0% { transform: rotate(1.7deg); }
@@ -817,5 +910,4 @@ export default {
    90% { transform: rotate(-1.7deg); }
    100% { transform: rotate(1.7deg); }
 }
-
 </style>

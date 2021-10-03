@@ -2,9 +2,14 @@
 const routes = [
   {
     path: '/',
+    component: () => import('pages/intro.vue')
+  },
+  {
+    path: '/',
     component: () => import('layouts/CommonBox.vue'),
+    redirect: 'login',
     children: [
-      { path: '', component: () => import('pages/Login.vue') },
+      { path: 'login', component: () => import('pages/Login.vue')},
       { path: 'hashtag', component: () => import('pages/Hashtag.vue')},
       { path: 'worldCup', component: () => import('pages/Worldcup.vue')},
       { path: 'main', component: () => import('pages/Main.vue')},
