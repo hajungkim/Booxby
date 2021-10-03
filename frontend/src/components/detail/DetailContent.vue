@@ -27,8 +27,11 @@
                     <div class="detail_view">
                         <div class="view_head">
                             <div style="font-weight:bold; font-size:25px;">책 소개</div>
-                            <div class="detail_view_introduce">
+                            <div v-if="selectBook.description" class="detail_view_introduce">
                                 {{selectBook.description}} 
+                            </div>
+                            <div v-else>
+                                책 소개가 없어요.
                             </div>
                         </div>  
                         <div class="view_bot">
@@ -299,7 +302,7 @@ export default {
     setup () {
         const store = useStore()
         const router = useRouter()
-        
+
         const selectBook = computed(() => store.getters['module/getSelectBook'])
         const review_score = ref(4)
         const writeMode = ref(false)
@@ -515,6 +518,14 @@ export default {
 </script>
 
 <style scoped>
+.no_keyword{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size:20px;
+    width:500px;
+    height:200px;
+}
 ul.cloud {
   list-style: none;
   padding-left: 0;
@@ -524,7 +535,7 @@ ul.cloud {
   justify-content: center;
   line-height: 3.5rem;
   width: 450px;
-  margin-top: 20px;
+  margin-top: 10px;
   margin-left: 150px;
 }
 ul.cloud a {
