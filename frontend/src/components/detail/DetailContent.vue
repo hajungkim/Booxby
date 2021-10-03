@@ -33,14 +33,11 @@
                         </div>  
                         <div class="view_bot">
                             <div style="font-weight:bold; font-size:25px;">키워드</div>
-                            <div id="main" class="keyword" style="width:60%">
-                                <!-- <div class="word_cloud" v-for="(word,index) in words" :key="index" style="display:inline-block;">
-                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-if="word.value===1" style="font-size:25px;">{{word.name}},</div>
-                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===2" style="font-size:40px;">{{word.name}},</div>
-                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===3" style="font-size:60px;">{{word.name}},</div>
-                                    <div class="word_item" v-bind:style="{ 'color': color[index] }" v-else-if="word.value===4" style="font-size:60px;">{{word.name}},</div>
-                                </div> -->
-                            </div>
+                            <ul class="cloud" role="navigation" aria-label="Webdev word cloud">
+                                <li v-for="(item, index) in words" :key='index'>
+                                    <a :data-weight="item.value">{{item.name}}</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </q-tab-panel>
@@ -297,68 +294,9 @@
 import { ref, computed, reactive, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import * as echarts from 'echarts'
-import 'echarts-wordcloud'
 
 export default {
     setup () {
-        initEcharts()
-        function initEcharts () {
-            setTimeout(function() {
-                let newPromise = new Promise((resolve) => {
-                resolve()
-            })
-            newPromise.then(() => {
-                // this dom shows dom for echarts icon
-                echarts.init(document.getElementById('main'))
-                var myChart = echarts.init(document.getElementById('main'));
-                const words = computed(() => store.getters['module/getwords'])
-                let infos = []
-                words.value.forEach(e => {
-                    const colors = [
-                    'lightred', 'blue', 'rgb(225, 102, 19)', 'green', 'navy', 'purple', 'rgb(255, 183, 0)'
-                    ]
-                    var i = Math.round(Math.random() * 6)
-                    var info = {
-                        textStyle: {
-                            fontWeight: 'bold',
-                            color: colors[i]
-                            // color: 'rgb(' + [
-                            //         Math.round(Math.random() * 160),
-                            //         Math.round(Math.random() * 160),
-                            //         Math.round(Math.random() * 160)
-                            //     ].join(',') + ')'
-                        },
-                    }
-                    info.name = e.name
-                    info.value = e.value
-                    infos.push(info)
-                });
-                myChart.setOption({
-                title: {
-                        link: 'http://www.metrolyrics.com/my-heart-is-broken-lyrics-evanescence.html'
-                    },
-                    tooltip: {
-                        show: true
-                    },
-                    series: [{
-                        name: 'Booxby',
-                        type: 'wordCloud',
-                        sizeRange: [20,60],
-                        textRotation : [0, 30, -30, -330],
-                        textPadding: 2,
-                        autoSize: {
-                            enable: true,
-                            minSize: 120
-                        },
-                        data: infos
-                    }]
-                });
-
-            })
-            },100)
-        }
-
         const store = useStore()
         const router = useRouter()
         
@@ -369,8 +307,6 @@ export default {
         const reviewList = computed(() => store.getters['module/getReviewList'])
         const writerList = computed(() => store.getters['module/getWriterList'])
         const words = computed(() => store.getters['module/getwords'])
-
-
 
         const show = reactive({
             writer: ''
@@ -551,7 +487,6 @@ export default {
             score_3: ref(3),
             score_2: ref(2),
             score_1: ref(1),
-            initEcharts,
             back,
             form,
             review,
@@ -580,30 +515,76 @@ export default {
 </script>
 
 <style scoped>
-body {
-	background-color: #fff;
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px; 
-	color: #000;
+ul.cloud {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  line-height: 3.5rem;
+  width: 450px;
+  margin-top: 20px;
+  margin-left: 150px;
 }
-
-a:link, a:visited {
-	color: #4682b4;
+ul.cloud a {
+  /*   
+  Not supported by any browser at the moment :(
+  --size: attr(data-weight number); 
+  */
+  --size: 2;
+  --color: #a33;
+  color: var(--color);
+  font-size: calc(var(--size) * 0.25rem + 0.5rem);
+  display: block;
+  padding: 0.125rem 0.25rem;
+  position: relative;
+  text-decoration: none;
+  /* 
+  For different tones of a single color
+  opacity: calc((15 - (9 - var(--size))) / 15); 
+  */
 }
-
-a:hover {
-	color: #4169e1;
+ul.cloud a[data-weight="1"] { --size: 4; }
+ul.cloud a[data-weight="2"] { --size: 8; }
+ul.cloud a[data-weight="3"] { --size: 12; }
+ul.cloud a[data-weight="4"] { --size: 16; }
+ul.cloud a[data-weight="5"] { --size: 14; }
+ul.cloud a[data-weight="6"] { --size: 16; }
+ul.cloud a[data-weight="7"] { --size: 18; }
+ul.cloud a[data-weight="8"] { --size: 21; }
+ul.cloud a[data-weight="9"] { --size: 24; }
+ul[data-show-value] a::after {
+  content: " (" attr(data-weight) ")";
+  font-size: 1rem;
 }
-
-#main	{
-    margin-top:-20px;
-    margin-left:-30px;
-	width: 600px;
-	height: 250px;
-	/* border: 1px solid #ccc; */
-	padding: 30px;
+ul.cloud li:nth-child(2n+1) a { --color: #181; transform: rotate( 30deg );}
+ul.cloud li:nth-child(3n+1) a { --color: #33a;transform: rotate( 90deg ); }
+ul.cloud li:nth-child(4n+1) a { --color: #c38;transform: rotate( -45deg ); }
+ul.cloud a:focus {
+  outline: 1px dashed;
 }
-
+ul.cloud a::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 100%;
+  background: var(--color);
+  transform: translate(-50%, 0);
+  opacity: 0.15;
+  transition: width 0.25s;
+}
+ul.cloud a:focus::before,
+ul.cloud a:hover::before {
+  width: 100%;
+}
+@media (prefers-reduced-motion) {
+  ul.cloud * {
+    transition: none !important;
+  }
+}
 #container {
   min-width: 310px;
   max-width: 800px;
