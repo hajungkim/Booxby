@@ -1,12 +1,12 @@
 import $axios from 'axios'
 
 // [서버] 배포 url
-// const baseUrl = 'https://j5b203.p.ssafy.io/api'
-// const basePythonUrl = 'https://j5b203.p.ssafy.io/data'
+const baseUrl = 'https://j5b203.p.ssafy.io/api'
+const basePythonUrl = 'https://j5b203.p.ssafy.io/data'
 
 // [로컬] 기본 url
-const baseUrl = 'http://localhost:7777/api'
-const basePythonUrl = 'http://localhost:5000/data'
+// const baseUrl = 'http://localhost:7777/api'
+// const basePythonUrl = 'http://localhost:5000/data'
 
 // 회원가입 axios
 export function signup ({}, info) {
@@ -62,23 +62,17 @@ export function zzimRecommend ({},isbn_list) {
 }
 // age/gender 추천
 export function ageRecommend ({},ageGender) {
-  console.log(ageGender.gender)
   const url = basePythonUrl + '/agegender/' + ageGender.age + '/' + ageGender.gender
-  console.log(url,'url')
   return $axios.get(url)
 }
 // category 추천
 export function getCategory ({},category) {
-  console.log(category,'액션카테고리')
   const url = basePythonUrl + '/category/' + category
-  console.log(url,'url')
   return $axios.get(url)
 }
 // 책 검색
 export function getSearchbook ({},keyword) {
-  console.log(keyword,'서치북')
   const url = basePythonUrl + '/title/' + keyword
-  console.log(url,'url')
   return $axios.get(url)
 }
 // 작가 검색
@@ -88,7 +82,6 @@ export function getWriterList ({},keyword) {
 }
 // isbn 정보반환
 export function getisbnInfo ({},isbn) {
-  console.log(isbn)
   const url = basePythonUrl + '/isbn/' + isbn
   return $axios.get(url)
 }
@@ -126,9 +119,7 @@ export function requestMyReview ({}) {
 
 // 워드클라우드
 export function getwords ({},isbn) {
-  console.log(isbn,'워드클라우드')
   const url = basePythonUrl + '/nouns-count/' + isbn
-  console.log(url,'확인 url')
   return $axios.get(url)
 }
 

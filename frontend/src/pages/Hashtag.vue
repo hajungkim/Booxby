@@ -106,7 +106,6 @@ export default {
                     hashScore: hashscore 
                     })
                 .then(()=>{
-                    console.log(hashString,'!!')
                     store.commit('module/setHashtags',hashString)
                     store.commit('module/setHashscore',hashscore)
                     router.push('my')

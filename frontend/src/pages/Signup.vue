@@ -39,7 +39,7 @@
         </div>
 
         <div>
-          <q-input class="input" label="닉네임"
+          <q-input class="input" label="nickname"
             v-model="form.nickname"
             lazy-rules
               :rules="[
@@ -54,7 +54,7 @@
         </div>
         <!-- 나이 -->
         <div style="margin-top:10px;">
-           <q-select v-model="model" :options="options" label="연령대" />
+           <q-select v-model="model" :options="options" label="age" />
         </div>
         <!-- 버튼 -->
         <div class="submit_bt">

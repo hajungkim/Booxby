@@ -27,11 +27,8 @@
                     <div class="detail_view">
                         <div class="view_head">
                             <div style="font-weight:bold; font-size:25px;">책 소개</div>
-                            <div v-if="selectBook.description" class="detail_view_introduce">
+                            <div class="detail_view_introduce">
                                 {{selectBook.description}} 
-                            </div>
-                            <div v-else>
-                                책 소개가 없어요.
                             </div>
                         </div>  
                         <div class="view_bot">
@@ -227,6 +224,14 @@
                             <div v-for="(item, index) in reviewList" :key='index' class='review_item'>
                                 <div class="review_left">
                                     <q-img src="~assets/images/book.jpg" class="review_profile"/>
+                                    <!-- score = (item.hashScore + item.worldcupScore) / 2 -->
+                                    <!-- <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="review_profile"/>
+                                    <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="review_profile"/>
+                                    <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="review_profile"/>
+                                    <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="review_profile"/>
+                                    <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="review_profile"/>
+                                    <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="review_profile"/>
+                                    <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="review_profile"/> -->
                                     <div class="review_name">
                                         {{item.nickname}}
                                     </div>
@@ -335,7 +340,6 @@ export default {
         })
 
         // word cloud
-        console.log(words.value[0],'스토어 워드')
         const back = function() {
             store.commit('module/setZzim', false)
             router.go(-1)
