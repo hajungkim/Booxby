@@ -170,7 +170,6 @@ export default {
 }
 .main_search_input{
     width:240px;
-    font-size:23px;
     display:inline-block;
 }
 .main_search_btn{
