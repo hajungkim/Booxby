@@ -29,19 +29,19 @@ class userEmotionRecommend(Resource):
         """감정점수에 따라 책 반환하기"""
         user_number = int(score)
         colornum=0
-        if -29726<=user_number <=-1170:
+        if -29726<=user_number <=-1261:
             colornum=7
-        elif -1169<=user_number <= -241:
+        elif -1261<user_number <= -318:
             colornum=6
-        elif -240<=user_number <= 0:
+        elif -318<user_number <= 0:
             colornum=5
-        elif 1<=user_number <= 295:
+        elif 0<user_number <= 361:
             colornum=4
-        elif 296<=user_number <= 777:
+        elif 361<user_number <= 845:
             colornum=3
-        elif 778<=user_number <= 1539:
+        elif 845<user_number <= 1576:
             colornum=2
-        elif 1540<=user_number <= 24386:
+        elif 1576<user_number <= 24386:
             colornum=1
         df1 = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
         recommend = df1['color'] == colornum
@@ -90,7 +90,6 @@ class categoryRecommend(Resource):
             for c in category:
                 # category = c # 아동 문학 취미 청소년 학문 오락 가정 교육 기타
                 temp_df = df[(df['category'] == c)]
-                print(temp_df,'for temp')
                 df1 = pd.concat([df1,temp_df])
         df1 = df1.sample(n=7)
         return toJson(df1)
@@ -108,10 +107,23 @@ class OXbooks(Resource):
     def get(self):
         """"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
-        df1 = df[df['color'] == 1].sample(n=1)
-        for i in range(2,8):
-            temp_df = df[df['color'] == i].sample(n=1)    
-            df1 = pd.concat([df1,temp_df])
+        df1 = df[df['isbn13']==9791161781358]
+        df2 = df[df['isbn13']==9791190977234]
+        df3 = df[df['isbn13']==9788960981768]
+        df4 = df[df['isbn13']==9788967355265]
+        df5 = df[df['isbn13']==9788950982249]
+        df6 = df[df['isbn13']==9788935212187]
+        df7 = df[df['isbn13']==9791187252016]
+        df1 = pd.concat([df1,df2])
+        df1 = pd.concat([df1,df3])
+        df1 = pd.concat([df1,df4])
+        df1 = pd.concat([df1,df5])
+        df1 = pd.concat([df1,df6])
+        df1 = pd.concat([df1,df7])
+        # df1 = df[df['color'] == 1].sample(n=1)
+        # for i in range(2,8):
+        #     temp_df = df[df['color'] == i].sample(n=1)    
+        #     df1 = pd.concat([df1,temp_df])
 
         return toJson(df1)
 
@@ -183,7 +195,6 @@ class nounsCount(Resource):
     def get(self, isbn):
         """워드클라우드 배열 보내기"""
         df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
-        print(isbn,'~!~!~')
         description = df[(df['isbn13'] == int(isbn))]['description'].to_string()
         okt = Okt()
         noun = okt.nouns(description)
@@ -195,9 +206,6 @@ class nounsCount(Resource):
         count = Counter(temp)
 
         noun_list = count.most_common(100)
-
-        for v in noun_list:
-            print(v)
 
         return noun_list
 

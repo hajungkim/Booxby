@@ -143,7 +143,6 @@ export default {
                                 }
                                 // store에 저장
                                 store.commit('module/setLoginUser', loginUser)
-                                console.log('로그인정보', store.getters['module/getLoginUser'])
                                 router.push('/main')
                             })
                     }
