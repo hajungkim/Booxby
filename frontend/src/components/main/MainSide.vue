@@ -5,7 +5,13 @@
       </div>
       <div class="side_content">
         <div class="side_user">
-          <q-img @click="goMypage" :src="loginUser.profile" class="user_profile"/>
+          <q-img v-if="-29726<=score && score <=-1261" @click="goMypage" src='~assets/character/purple.png' class="user_profile"/>
+          <q-img v-if="-1261<score && score <=-318" @click="goMypage" src='~assets/character/navy.png' class="user_profile"/>
+          <q-img v-if="-318<=score && score <=0" @click="goMypage" src='~assets/character/blue.png' class="user_profile"/>
+          <q-img v-if="0<score && score <=361" @click="goMypage" src='~assets/character/green.png' class="user_profile"/>
+          <q-img v-if="361<score && score <=845" @click="goMypage" src='~assets/character/orange.png' class="user_profile"/>
+          <q-img v-if="845<score && score <=1576" @click="goMypage" src='~assets/character/yellow.png' class="user_profile"/>
+          <q-img v-if="1576<score && score <=24386" @click="goMypage" src='~assets/character/red.png' class="user_profile"/>
           <div @click="goMypage" class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">
@@ -79,6 +85,7 @@
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { login } from 'src/store/module/actions'
 
 export default {
   setup () {
@@ -89,6 +96,8 @@ export default {
     const loginUser = store.getters['module/getLoginUser']
     const categoryMode = computed(() => store.getters['module/getCategoryMode'])
     const zzimList = computed(() => store.getters['module/getZzimList'])
+
+    const score = (loginUser.hashScore + loginUser.worldcupScore) / 2
 
     const category1= ref(false)
     const category2= ref(false)
@@ -308,6 +317,7 @@ export default {
       cate3,
       cate4,
       cate5,
+      score,
       loginUser,
       categoryMode,
       showCategory,
@@ -371,7 +381,6 @@ export default {
   margin-left:20px;
   float:left;
   cursor: pointer;
-  background: grey;
 }
 .user_name{
   float:right;
@@ -379,7 +388,7 @@ export default {
   font-size:24px;
   font-weight:bold;
   margin-top:38px;
-  /* border:1px solid green; */
+  cursor: pointer;
 }
 .side_menu{
   width:85%;

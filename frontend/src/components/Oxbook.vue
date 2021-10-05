@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-card class="my-card" id="card">
-        <q-img :src="selectbook.img_url" class="worldcup_img"
+        <q-img :src="selectbook.img_url" id="worldcup_img" class="worldcup_img"
            v-bind:class="{'shadow_red':selectbook.emotion_score<24386 && selectbook.emotion_score>1540,
                         'shadow_orange':selectbook.emotion_score<1540 && selectbook.emotion_score>=778,
                         'shadow_yellow':selectbook.emotion_score<778 && selectbook.emotion_score>=296,
@@ -35,11 +35,11 @@ export default {
     const selectbook = computed(()=> store.getters['module/getselectOxbooks'])
     
     onMounted(()=>{
-      const card = document.getElementById('card')
-      card.addEventListener('mouseover',function(){
+      const card = document.getElementById('worldcup_img')
+      card.addEventListener('mouseenter',function(){
         store.commit('module/setTextMode',true)
       },true)
-      card.addEventListener('mouseout',function(){
+      card.addEventListener('mouseleave',function(){
         store.commit('module/setTextMode',false)
       },true)
     })

@@ -8,14 +8,18 @@
     </div>
     <!-- 유저 정보들 -->
     <div class="user_info_container">
-      <q-img class="user_img" src="~assets/images/book.jpg" />
+      <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="user_img"/>
+      <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="user_img"/>
+      <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="user_img"/>
+      <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="user_img"/>
+      <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="user_img"/>
+      <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="user_img"/>
+      <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="user_img"/>
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
         <div style="display:flex; flex-wrap:wrap; width:400px; font-weight:bold;">
           <q-btn outline size="11px" v-for="(word,idx) in hashtags" :key="idx" disable="true" 
            style="margin:0px 5px 5px 0px; color:rgb(86,86,239); padding-right:7px; padding-left:7px;">#{{ word }}</q-btn>
-           <!-- background-color: #5656EF; color:white 주색 -->
-          <!-- <div v-for="(word,idx) in hashtags" :key="idx">#{{ word }} </div> -->
         </div>
       </div>
     </div>
@@ -181,12 +185,10 @@ export default {
     const router = useRouter()
 
     const loginUser = computed(()=>store.getters['module/getLoginUser'])
-    const hash = computed(()=>store.getters['module/getHashtag'])
-    // const hashtag_contain = loginUser.hashtag
+    const score = (loginUser.value.hashScore + loginUser.value.worldcupScore) / 2
     const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
-    console.log(hash.value,'해시')
-    console.log(loginUser.value,'@@@@')
+    
     let hashtags = loginUser.value.hashtag.split('#')
     hashtags.shift()
 
@@ -255,6 +257,7 @@ export default {
       moveWorldcup,
       zzimList,
       myReview,
+      score,
       score_5: ref(5),
       score_4: ref(4),
       score_3: ref(3),
