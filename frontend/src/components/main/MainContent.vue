@@ -108,7 +108,6 @@ export default {
         }
 
         const goDetail = function() {
-            console.log(selectBook.value.isbn13,'@@@@@@@@@@@@')
             store.dispatch('module/getwords',selectBook.value.isbn13)
                 .then((res)=>{
                     let tmp = []
@@ -138,7 +137,6 @@ export default {
             const userId = localStorage.getItem('userId')
             store.dispatch('module/requestzzim', userId)
                 .then(function (result) {
-                    console.log(result.data.data)
                     store.commit('module/setZzimList', result.data.data)
                 })
         })

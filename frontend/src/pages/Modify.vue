@@ -9,7 +9,14 @@
       </div>
       <div class="form-group">
         
-        <img class="change_img" :src="form.profile" alt="">
+        <!-- <img class="change_img" :src="form.profile" alt=""> -->
+        <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="change_img"/>
+        <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="change_img"/>
+        <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="change_img"/>
+        <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="change_img"/>
+        <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="change_img"/>
+        <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="change_img"/>
+        <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="change_img"/>
 
         <div class="form-mb">
           <q-input
@@ -105,6 +112,8 @@ export default {
       const reg = /^[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
       return (reg.test(val)||'이메일 형식이 잘못되었습니다.')
     }
+    const loginUser = store.getters['module/getLoginUser']
+    const score = (loginUser.hashScore + loginUser.worldcupScore) / 2
 
     onMounted(() => {
       // 초기값 셋팅
@@ -151,6 +160,7 @@ export default {
 
     return {
       form,
+      score,
       checkName,
       checkPassWord,
       checkEmail,

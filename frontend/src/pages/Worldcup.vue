@@ -84,9 +84,6 @@ export default {
                     nickname: infos.nickname,
                     password: infos.password,
                 }).then((res)=>{
-                    console.log(res.data.status,'res')
-                    console.log(infos,'infos') // value 는 안나옴
-                    console.log(hashtag,'hash')
                     if (res.data.status == 'success'){
                         Swal.fire({
                             icon: 'success',
@@ -110,7 +107,6 @@ export default {
             }
             else{
                 const loginUser = store.getters['module/getLoginUser']
-                console.log(loginUser,'fasjgiag')
                 store.dispatch('module/modifyInfo', {
                     hashtag : loginUser.hashtag, 
                     nickname : loginUser.nickname, 

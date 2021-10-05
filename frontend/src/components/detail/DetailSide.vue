@@ -41,27 +41,21 @@ export default {
     store.dispatch('module/requestzzim', userId)
       .then(function (result) {
           for(let i = 0; i < result.data.data.length; i++) {
-            console.log('selectBook.value.isbn13', result.data.data[i].isbn)
               if(selectBook.value.isbn13 == result.data.data[i].isbn) {
                 store.commit('module/setZzim', true)
-                console.log('트루')
                 break
               }
               if(i==result.data.data.length-1) {
                 store.commit('module/setZzim', false)
-                console.log('펄스')
               }
           }
           const heart = document.getElementById('heart')
           const zzim = store.getters['module/getZzim']
-          console.log('온마운트', zzim, heart)
           if(zzim){
             heart.classList.add('is-active')
-            console.log('1',heart)
           }
           else if(!zzim){
             heart.classList.remove('is-active')
-            console.log('2',heart)
           }
       })
 
@@ -92,20 +86,6 @@ export default {
           })
       }
     }
-    
-    onMounted(() => {
-      // const heart = document.getElementById('heart')
-      // const zzim = store.getters['module/getZzim']
-      // console.log('온마운트', zzim, heart)
-      // if(zzim){
-      //   heart.classList.add('is-active')
-      //   console.log('1',heart)
-      // }
-      // else if(!zzim){
-      //   heart.classList.remove('is-active')
-      //   console.log('2',heart)
-      // }
-    })
     return {
       selectBook,
       zzim,
