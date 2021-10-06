@@ -74,7 +74,6 @@
 import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
-import { useQuasar } from 'quasar'
 
 export default {
     setup() {
@@ -100,10 +99,6 @@ export default {
         function checkId (val) {
             const reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
             return (reg.test(val) || '이메일 형식이 잘못되었습니다.')
-        }
-        function checkemail (val) {
-            const reg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
-            return (reg.test(val) || false)
         }
         // 비밀번호 유효성 검사
         function checkPassWord (val) {

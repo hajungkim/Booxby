@@ -223,15 +223,13 @@
                             </div>
                             <div v-for="(item, index) in reviewList" :key='index' class='review_item'>
                                 <div class="review_left">
-                                    <q-img src="~assets/images/book.jpg" class="review_profile"/>
-                                    <!-- score = (item.hashScore + item.worldcupScore) / 2 -->
-                                    <!-- <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="review_profile"/>
-                                    <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="review_profile"/>
-                                    <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="review_profile"/>
-                                    <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="review_profile"/>
-                                    <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="review_profile"/>
-                                    <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="review_profile"/>
-                                    <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="review_profile"/> -->
+                                    <q-img v-if="-29726<=(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=-1261" src='~assets/character/purple.png' class="review_profile"/>
+                                    <q-img v-if="-1261<(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=-318" src='~assets/character/navy.png' class="review_profile"/>
+                                    <q-img v-if="-318<=(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=0" src='~assets/character/blue.png' class="review_profile"/>
+                                    <q-img v-if="0<(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=361" src='~assets/character/green.png' class="review_profile"/>
+                                    <q-img v-if="361<(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=845" src='~assets/character/orange.png' class="review_profile"/>
+                                    <q-img v-if="845<(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=1576" src='~assets/character/yellow.png' class="review_profile"/>
+                                    <q-img v-if="1576<(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=24386" src='~assets/character/red.png' class="review_profile"/>
                                     <div class="review_name">
                                         {{item.nickname}}
                                     </div>
@@ -315,7 +313,8 @@ export default {
         const reviewList = computed(() => store.getters['module/getReviewList'])
         const writerList = computed(() => store.getters['module/getWriterList'])
         const words = computed(() => store.getters['module/getwords'])
-
+        console.log(reviewList,'@@')
+        console.log(selectBook,'@@')
         const show = reactive({
             writer: ''
         })
