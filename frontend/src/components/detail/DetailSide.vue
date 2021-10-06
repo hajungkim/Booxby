@@ -7,8 +7,15 @@
             <div>
                 <!-- <q-icon v-if="zzim" @click="zzimOff" class="bookmark" style="font-size: 3.7em; color: red;" name="bookmark"/>
                 <q-icon v-if="!zzim" @click="zzimOn" class="bookmark" style="font-size: 3.7em; color: black;" name="bookmark_border"/> -->
-                <div class="placement">
+                <div class="placement" style="display:flex;">
                   <div @click="bookmark" id="heart"></div>
+                  <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="book_character"/>
+                  <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="book_character"/>
+                  <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="book_character"/>
+                  <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="book_character"/>
+                  <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="book_character"/>
+                  <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="book_character"/>
+                  <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="book_character"/>
                 </div>
             </div>
             <div style="position:relative; top:-40px;">
@@ -27,7 +34,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 import { useStore } from 'vuex'
 
 export default {
@@ -38,6 +45,8 @@ export default {
     const zzim = computed(() => store.getters['module/getZzim'])
 
     const userId = localStorage.getItem('userId')
+    const score = selectBook.value.emotion_score
+
     store.dispatch('module/requestzzim', userId)
       .then(function (result) {
           for(let i = 0; i < result.data.data.length; i++) {
@@ -89,6 +98,7 @@ export default {
     return {
       selectBook,
       zzim,
+      score,
       bookmark
     }
   }
@@ -96,6 +106,12 @@ export default {
 </script>
 
 <style lang="scss">
+.book_character{
+  width:60px;
+  height: 60px;
+  margin-top:5px;
+  margin-left:140px;
+}
 .detail_side{
   width:350px;
   height:650px;
