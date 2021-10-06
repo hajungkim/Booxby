@@ -63,7 +63,7 @@ export default {
             { hashtag:'#개방적인', score:-45 },
             { hashtag:'#귀요미', score:13 },
             { hashtag:'#귀찮은', score:-123 },
-            { hashtag:'#주도적인', score:236 },
+                { hashtag:'#주도적인', score:236 },
             { hashtag:'#까다로운', score:-20 },
         ]
         let select_hashtag = []
