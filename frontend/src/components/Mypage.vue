@@ -189,6 +189,7 @@ export default {
     const zzimList = computed(() => store.getters['module/getZzimList'])
     const myReview = computed(() => store.getters['module/getMyReview'])
     
+    console.log(loginUser.value.hashScore,'@@@')
     let hashtags = loginUser.value.hashtag.split('#')
     hashtags.shift()
 

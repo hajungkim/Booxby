@@ -27,6 +27,7 @@
 import Oxbook from '../components/Oxbook.vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { login } from 'src/store/module/actions'
 export default {
     components: {
         Oxbook,
@@ -115,6 +116,18 @@ export default {
                     hashScore: loginUser.hashScore 
                     })
                 .then(()=>{
+                    store.commit('module/setLoginUser', {
+                        age:loginUser.age,
+                        email:loginUser.email,
+                        gender:loginUser.gender,
+                        hashScore:loginUser.hashScore,
+                        hashtag:loginUser.hashtag,
+                        nickname:loginUser.nickname,
+                        password:loginUser.password,
+                        token:loginUser.token,
+                        userId:loginUser.userId,
+                        worldcupScore:final_score,
+                    })
                     Swal.fire({
                             icon: 'success',
                             title: '<span style="font-size:25px;">책 선호도 점수가 재설정 되었습니다.</span>',

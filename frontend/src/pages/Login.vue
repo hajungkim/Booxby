@@ -132,7 +132,6 @@ export default {
                                     age: data.age,
                                     worldcupScore: data.worldcupScore,
                                     hashScore: data.hashScore,
-                                    profile: data.profilePath,
                                     hashtag: data.hashtag,
                                     token: token
                                 }
