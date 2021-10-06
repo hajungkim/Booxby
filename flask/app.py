@@ -43,7 +43,7 @@ class userEmotionRecommend(Resource):
             colornum=2
         elif 1576<user_number <= 24386:
             colornum=1
-        df1 = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        df1 = pd.read_csv('booxby_color_data.csv', encoding='cp949')
         recommend = df1['color'] == colornum
         df1 = df1[recommend]
         df1 = df1.sample(n=7)
@@ -54,7 +54,7 @@ class userEmotionRecommend(Resource):
 class randomEmotion(Resource):
     def get(self):
         """메인 책 7권 반환하기"""
-        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
+        df = pd.read_csv('booxby_color_data.csv', encoding='cp949')
         df1 = df[df['color'] == 1].sample(n=1)
 
         for i in range(2,8):
@@ -106,24 +106,24 @@ class getIsbn(Resource):
 class OXbooks(Resource):
     def get(self):
         """"""
-        df = pd.read_csv('booxby_emotion_data.csv', encoding='cp949')
-        df1 = df[df['isbn13']==9791161781358]
-        df2 = df[df['isbn13']==9791190977234]
-        df3 = df[df['isbn13']==9788960981768]
-        df4 = df[df['isbn13']==9788967355265]
-        df5 = df[df['isbn13']==9788950982249]
-        df6 = df[df['isbn13']==9788935212187]
-        df7 = df[df['isbn13']==9791187252016]
-        df1 = pd.concat([df1,df2])
-        df1 = pd.concat([df1,df3])
-        df1 = pd.concat([df1,df4])
-        df1 = pd.concat([df1,df5])
-        df1 = pd.concat([df1,df6])
-        df1 = pd.concat([df1,df7])
-        # df1 = df[df['color'] == 1].sample(n=1)
-        # for i in range(2,8):
-        #     temp_df = df[df['color'] == i].sample(n=1)    
-        #     df1 = pd.concat([df1,temp_df])
+        df = pd.read_csv('booxby_color_data.csv', encoding='cp949')
+        # df1 = df[df['isbn13']==9791190382267]
+        # df2 = df[df['isbn13']==9788934972204]
+        # df3 = df[df['isbn13']==9788960981768]
+        # df4 = df[df['isbn13']==9788967355265]
+        # df5 = df[df['isbn13']==9788950982249]
+        # df6 = df[df['isbn13']==9788935212187]
+        # df7 = df[df['isbn13']==9791187252016]
+        # df1 = pd.concat([df1,df2])
+        # df1 = pd.concat([df1,df3])
+        # df1 = pd.concat([df1,df4])
+        # df1 = pd.concat([df1,df5])
+        # df1 = pd.concat([df1,df6])
+        # df1 = pd.concat([df1,df7])
+        df1 = df[df['color'] == 1].sample(n=1)
+        for i in range(2,8):
+            temp_df = df[df['color'] == i].sample(n=1)    
+            df1 = pd.concat([df1,temp_df])
 
         return toJson(df1)
 
