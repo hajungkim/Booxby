@@ -150,9 +150,10 @@ export default {
               score: loginUser.score,
               profile: form.profile,
               hashtag: loginUser.hashtag,
-              token: loginUser.token
+              token: loginUser.token,
+              hashScore: loginUser.hashScore,
+              worldcupScore: loginUser.worldcupScore
             }
-            console.log('tmp', tmp)
             store.commit('module/setLoginUser', tmp)
         })
       router.push('/my')
