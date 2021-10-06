@@ -23,6 +23,7 @@
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
 import { onMounted } from 'vue'
+import { login } from 'src/store/module/actions'
 export default {
     setup() {
         let hashflag = true
@@ -106,6 +107,18 @@ export default {
                     hashScore: hashscore 
                     })
                 .then(()=>{
+                    store.commit('module/setLoginUser', {
+                        age:loginUser.age,
+                        email:loginUser.email,
+                        gender:loginUser.gender,
+                        hashScore:hashscore,
+                        hashtag:hashString,
+                        nickname:loginUser.nickname,
+                        password:loginUser.password,
+                        token:loginUser.token,
+                        userId:loginUser.userId,
+                        worldcupScore:loginUser.worldcupScore,
+                    })
                     store.commit('module/setHashtags',hashString)
                     store.commit('module/setHashscore',hashscore)
                     router.push('my')
