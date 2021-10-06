@@ -30,9 +30,9 @@ export default {
         const store = useStore()
         const router = useRouter()
         const hashtag_list = [
-            { hashtag:'#공격적', score:177 },
+            { hashtag:'#공격적', score:-177 },
             { hashtag:'#대담한', score:-133 },
-            { hashtag:'#고집센', score:103 },
+            { hashtag:'#고집센', score:-103 },
             { hashtag:'#낙천적', score:-22 },
             { hashtag:'#성실한', score:15 },
             { hashtag:'#용감한', score:6 },
@@ -52,7 +52,7 @@ export default {
             { hashtag:'#절제된', score:-17 },
             { hashtag:'#포용력', score:57 },
             { hashtag:'#이해심많은', score:-16 },
-            { hashtag:'#영향력', score:-383 },
+            { hashtag:'#영향력', score:383 },
             { hashtag:'#완벽주의', score:284 },
             { hashtag:'#희생적인', score:-150 },
             { hashtag:'#변덕스러운', score:-9 },
@@ -62,7 +62,7 @@ export default {
             { hashtag:'#잘생긴', score:23 },
             { hashtag:'#개방적인', score:-45 },
             { hashtag:'#귀요미', score:13 },
-            { hashtag:'#귀찮은', score:123 },
+            { hashtag:'#귀찮은', score:-123 },
             { hashtag:'#주도적인', score:236 },
             { hashtag:'#까다로운', score:-20 },
         ]
