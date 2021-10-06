@@ -107,7 +107,7 @@ public class ReviewController {
 
             for(Review review : reviewList){
                 User user = userService.findUserByUserId(review.getUserId());
-                ReviewDto.reviewAllResponse reviewAllResponse = new ReviewDto.reviewAllResponse(review, user.getNickname());
+                ReviewDto.reviewAllResponse reviewAllResponse = new ReviewDto.reviewAllResponse(review, user.getNickname(), user.getWorldcupScore(), user.getHashScore());
                 list.add(reviewAllResponse);
             }
 
