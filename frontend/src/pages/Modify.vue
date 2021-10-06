@@ -229,9 +229,11 @@ export default {
 .signupImg{
   float:right;
   width:650px;
-  height:648px;
+  height:650px;
   background-color : lightblue;
   border-top-right-radius: 38px;
   border-bottom-right-radius: 38px;
+  background-image: url('assets/images/book3.png');
+  background-size:700px;
 }
 </style>

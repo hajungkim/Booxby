@@ -221,6 +221,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <div v-if="!reviewList" style="font-size:20px; text-align:center; margin-top:85px; color:lightgrey;">
+                                리뷰가 없습니다. 리뷰를 작성해주세요.
+                            </div>
                             <div v-for="(item, index) in reviewList" :key='index' class='review_item'>
                                 <div class="review_left">
                                     <q-img v-if="-29726<=(item.hashScore + item.worldcupScore) / 2 && (item.hashScore + item.worldcupScore) / 2 <=-1261" src='~assets/character/purple.png' class="review_profile"/>
@@ -277,6 +280,9 @@
                     <div class="detail_view_author">
                         <!-- <div class="author_head">{{ show.writer }}의 다른 책</div> -->
                         <div class="author_list">
+                            <div v-if="!writerList" style="font-size:30px; color:lightgrey; margin:0 auto; margin-top:185px;">
+                                작가의 다른책이 없습니다.
+                            </div>
                             <!-- <q-img v-for="item in writerList" :key="item.isbn" class="author_img" :src="item.img_url"/> -->
                             <q-card v-for="item in writerList" :key="item.isbn13" @click="writerDetail(item.isbn13)" class="my-card no-shadow cardbooks">
                                 <q-img class="author_img" :src="item.img_url">
