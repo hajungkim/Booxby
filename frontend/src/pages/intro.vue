@@ -191,19 +191,19 @@ $clouds:#ecf0f1;
 $key: #55A4E9;
 
 .intro_word_box{
-    width:470px;
+    width:430px;
     margin:0 auto;
 }
 .intro_word{
   margin: auto;
   color: white;
-  font: 700 normal 3em/1.5 'SDSamliphopangche_Outline',sans-serif;
+  font: 700 normal 3em/1.5 'MapoPeacefull',sans-serif;
   text-shadow: longshadow(10,darken($key,10%));
 }
 
 @font-face {
-    font-family: 'SDSamliphopangche_Outline';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts-20-12@1.0/SDSamliphopangche_Outline.woff%27') format('woff');
+    font-family: 'MapoPeacefull';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
