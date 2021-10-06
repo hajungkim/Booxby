@@ -20,7 +20,7 @@
                 v-bind:class="{'basic':cate1==false,
                 'main_color':cate1==true}"
             />
-            <span class="list_text">감성책 추천</span>
+            <span class="list_text">색깔별 감성책</span>
           </div>
           <div @click="myRecommend" class="side_list">
             <q-icon style="font-size: 2em;" name="brush"
@@ -72,8 +72,8 @@
             </div>
           </div>
           <div @click="logout" id="logout">
-            <q-icon style="font-size: 2.5em; color: grey;" name="logout"/>
-            <span class="list_text">로그아웃</span>
+            <q-icon style="font-size: 2em; color: grey; margin-left:20px;" name="logout"/>
+            <span class="list_text" style="margin-left:5px;">로그아웃</span>
           </div>
         </div>
         
