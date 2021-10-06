@@ -191,7 +191,7 @@ $clouds:#ecf0f1;
 $key: #55A4E9;
 
 .intro_word_box{
-    width:470px;
+    width:430px;
     margin:0 auto;
 }
 .intro_word{
@@ -203,7 +203,7 @@ $key: #55A4E9;
 
 @font-face {
     font-family: 'MapoPeacefull';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff%27') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/MapoPeacefullA.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }

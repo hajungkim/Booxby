@@ -13,9 +13,11 @@
             <div class="worldcup_main">
                 <Oxbook :abc="select_books"></Oxbook>
                 <q-card-actions style="margin: 30px 0px 0px 155px;">
-                    <a @click="Bad" class="button bgred" style="margin-right:30px;"><span class="button-text">싫어요</span> <i class="fa fa-times" aria-hidden="true"></i></a>
-                    <a @click="next" class="button bgorange" style="margin-right:30px;"><span class="button-text">별로에요</span> <i class="fa fa-exclamation" aria-hidden="true"></i></a>
-                    <a @click="Like" class="button bggreen"><span class="button-text">좋아요</span> <i class="fa fa-check" aria-hidden="true"></i></a>
+                    <div class="button_box">
+                        <a @click="Bad" class="button bgred bt1" style="margin-right:30px;"><span class="button-text">싫어요</span> <i class="fa fa-times" aria-hidden="true"></i></a>
+                        <a @click="next" class="button bgorange bt2" style="margin-right:30px;"><span class="button-text">몰라요</span> <i class="fa fa-exclamation" aria-hidden="true"></i></a>
+                        <a @click="Like" class="button bggreen bt3"><span class="button-text">좋아요</span> <i class="fa fa-check" aria-hidden="true"></i></a>
+                    </div>
                 </q-card-actions>
             </div>
         </div>
@@ -160,15 +162,30 @@ export default {
     height:60px;
     top:20px;
 }
+.button_box{
+    border:1px solid red;
+    position:relative;
+}
 .button{
   text-decoration: none;
   color:white;
   display:inline-block;
   padding:30px 0;
   border-radius:50px;
-  position:relative;
   width: 60px;
   cursor: pointer;
+}
+.bt1{
+    position:absolute;
+    left:-15px;
+}
+.bt2{
+    position:absolute;
+    left:90px;
+}
+.bt3{
+    position:absolute;
+    left:195px;
 }
 .bgred{
     background-color:red;
@@ -189,7 +206,7 @@ export default {
   left:10%;
   top:50%;
   transform:translate(0,-50%);
-  font-size:21px;
+  font-size:18px;
 }
 .button:hover .button-text{
   animation: showText 0.3s;
@@ -197,7 +214,7 @@ export default {
 }
 .button .fa{
   position:absolute;
-  font-size:21px;
+  font-size:18px;
   top:50%;
   right:50%;
   transform: translate(50%,-50%);
@@ -213,7 +230,7 @@ export default {
 }
 
 @keyframes expandWidth {
-  0% { width: 100px; }
+  0% { width: 70px; }
   80% {
     transform:scale(0.8,0.8) translate3d(0,0,0);
   }
@@ -221,7 +238,7 @@ export default {
     transform:scale(1.2,1.2) translate3d(0,0,0);
   }
   100% { 
-    width: 120px; 
+    width: 90px; 
     transform:scale(1,1) translate3d(0,0,0);
   }
 }
@@ -232,12 +249,12 @@ export default {
 }
 @keyframes translateArrow {
   0% { right:50%; }
-  100% { right:15%; }
+  100% { right:20%; }
 }
 
 @keyframes translateleftArrow {
   0% { left:50%; }
-  100% { left:15%; }
+  100% { left:20%; }
 }
 
 .worldcup_container{
