@@ -9,25 +9,33 @@
                 <q-icon v-if="!zzim" @click="zzimOn" class="bookmark" style="font-size: 3.7em; color: black;" name="bookmark_border"/> -->
                 <div class="placement" style="display:flex;">
                   <div @click="bookmark" id="heart"></div>
+                </div>
+            </div>
+            <div style="position:relative; top:-40px;">
+              <div class="detail_name">
+                  {{selectBook.title}}
+              </div>
+              <div class="detail_author">
+                  {{selectBook.author}}
+              </div>
+              <div class="detail_book">
                   <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="book_character"/>
                   <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="book_character"/>
                   <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="book_character"/>
                   <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="book_character"/>
-                  <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="book_character"/>
-                  <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="book_character"/>
+                  <q-img v-if="361<score && score <=845" src='~assets/character/yellow.png' class="book_character"/>
+                  <q-img v-if="845<score && score <=1576" src='~assets/character/orange.png' class="book_character"/>
                   <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="book_character"/>
-                </div>
-            </div>
-            <div style="position:relative; top:-40px;">
-            <div class="detail_name">
-                {{selectBook.title}}
-            </div>
-            <div class="detail_author">
-                {{selectBook.author}}
-            </div>
-            <div class="detail_book">
-                <q-img :src="selectBook.img_url" class="detail_img" />
-            </div>
+                  <q-img :src="selectBook.img_url" class="detail_img" 
+                  v-bind:class="{'shadow_red':selectBook.emotion_score<24386 && selectBook.emotion_score>=1576,
+                        'shadow_orange':selectBook.emotion_score<1576 && selectBook.emotion_score>=845,
+                        'shadow_yellow':selectBook.emotion_score<845 && selectBook.emotion_score>361,
+                        'shadow_green':selectBook.emotion_score<=361 && selectBook.emotion_score>0,
+                        'shadow_blue':selectBook.emotion_score<=0 && selectBook.emotion_score>-318,
+                        'shadow_navy':selectBook.emotion_score<=-318 && selectBook.emotion_score>-1261,
+                        'shadow_purple':selectBook.emotion_score<=-1261 && selectBook.emotion_score>=-29726
+                        }"      />
+              </div>
             </div>
       </div>
   </div>
@@ -109,16 +117,19 @@ export default {
 .book_character{
   width:60px;
   height: 60px;
-  margin-top:5px;
-  margin-left:140px;
+  position:absolute;
+  z-index:100;
+  top:-25px;
+  left:-20px;
+}
+.detail_book{
+  position: relative;
 }
 .detail_side{
   width:350px;
   height:650px;
-  /* border:1px solid red; */
 }
 .logo{
-  /* border:1px solid blue; */
   font-size:50px;
   font-weight:bold;
   text-align:center;
@@ -181,6 +192,27 @@ export default {
     transition-duration: 1s;
     background-position: -2800px 0;
   }
+}
+.shadow_red{
+    box-shadow: 10px 10px 15px rgb(253, 185, 185);
+}
+.shadow_orange{
+    box-shadow: 10px 10px 15px rgb(255, 202, 159);
+}
+.shadow_yellow{
+    box-shadow: 10px 10px 15px rgb(254, 235, 168);
+}
+.shadow_green{
+    box-shadow: 10px 10px 15px rgb(211, 236, 197);
+}
+.shadow_blue{
+    box-shadow: 10px 10px 15px rgb(164, 194, 242);
+}
+.shadow_navy{
+    box-shadow: 10px 10px 15px rgb(124, 138, 210);
+}
+.shadow_purple{
+    box-shadow: 10px 10px 15px rgb(200, 167, 213);
 }
 // .placement {
 //   // transform: translate(-50%, -50%);

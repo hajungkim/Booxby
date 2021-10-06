@@ -20,13 +20,13 @@
                   </div>
                   <div class="main_book_box">
                     <q-img :src="selectBook.img_url" class="main_book"
-                        v-bind:class="{'shadow_red':selectBook.emotion_score<24386 && selectBook.emotion_score>1540,
-                            'shadow_orange':selectBook.emotion_score<1540 && selectBook.emotion_score>=778,
-                            'shadow_yellow':selectBook.emotion_score<778 && selectBook.emotion_score>=296,
-                            'shadow_green':selectBook.emotion_score<296 && selectBook.emotion_score>=1,
-                            'shadow_blue':selectBook.emotion_score<1 && selectBook.emotion_score>=-240,
-                            'shadow_navy':selectBook.emotion_score<-240 && selectBook.emotion_score>=-1169,
-                            'shadow_purple':selectBook.emotion_score<-1169 && selectBook.emotion_score>=-29726
+                        v-bind:class="{'shadow_red':selectBook.emotion_score<24386 && selectBook.emotion_score>=1576,
+                        'shadow_orange':selectBook.emotion_score<1576 && selectBook.emotion_score>=845,
+                        'shadow_yellow':selectBook.emotion_score<845 && selectBook.emotion_score>361,
+                        'shadow_green':selectBook.emotion_score<=361 && selectBook.emotion_score>0,
+                        'shadow_blue':selectBook.emotion_score<=0 && selectBook.emotion_score>-318,
+                        'shadow_navy':selectBook.emotion_score<=-318 && selectBook.emotion_score>-1261,
+                        'shadow_purple':selectBook.emotion_score<=-1261 && selectBook.emotion_score>=-29726
                         }"
                     />
                   </div>
@@ -35,14 +35,14 @@
           <div class="main_content_list" style="display: flex;">
                 <div v-for="(book, index) in bookList" :key="index">
                     <q-img  :src="book.img_url"  @click="select(index)" class="list_book"
-                        v-bind:class="{'shadow_red':book.emotion_score<24386 && book.emotion_score>1540,
-                        'shadow_orange':book.emotion_score<1540 && book.emotion_score>=778,
-                        'shadow_yellow':book.emotion_score<778 && book.emotion_score>=296,
-                        'shadow_green':book.emotion_score<296 && book.emotion_score>=1,
-                        'shadow_blue':book.emotion_score<1 && book.emotion_score>=-240,
-                        'shadow_navy':book.emotion_score<-240 && book.emotion_score>=-1169,
-                        'shadow_purple':book.emotion_score<-1169 && book.emotion_score>=-29726
-                        }"     
+                        v-bind:class="{'shadow_red':book.emotion_score<24386 && book.emotion_score>=1576,
+                        'shadow_orange':book.emotion_score<1576 && book.emotion_score>=845,
+                        'shadow_yellow':book.emotion_score<845 && book.emotion_score>361,
+                        'shadow_green':book.emotion_score<=361 && book.emotion_score>0,
+                        'shadow_blue':book.emotion_score<=0 && book.emotion_score>-318,
+                        'shadow_navy':book.emotion_score<=-318 && book.emotion_score>-1261,
+                        'shadow_purple':book.emotion_score<=-1261 && book.emotion_score>=-29726
+                        }"    
                     />
                 </div>
           </div>
