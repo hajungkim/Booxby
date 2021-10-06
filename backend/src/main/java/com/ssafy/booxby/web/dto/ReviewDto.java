@@ -71,7 +71,10 @@ public class ReviewDto {
         private Long userId;
         private String nickname;
 
-        public reviewAllResponse(Review review, String nickname){
+        private int worldcupScore;
+        private int hashScore;
+
+        public reviewAllResponse(Review review, String nickname, int worldcupScore, int hashScore){
             this.reviewId = review.getReviewId();
             this.reviewScore = review.getReviewScore();
             this.reviewContent=review.getReviewContent();
@@ -81,6 +84,8 @@ public class ReviewDto {
             this.reviewRead = review.isReviewRead();
             this.userId = review.getUserId();
             this.nickname = nickname;
+            this.worldcupScore=worldcupScore;
+            this.hashScore=hashScore;
         }
     }
 }
