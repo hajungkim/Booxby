@@ -5,13 +5,13 @@
       </div>
       <div class="side_content">
         <div class="side_user">
-          <q-img v-if="-29726<=score && score <=-1261" @click="goMypage" src='~assets/character/purple.png' class="user_profile"/>
-          <q-img v-if="-1261<score && score <=-318" @click="goMypage" src='~assets/character/navy.png' class="user_profile"/>
-          <q-img v-if="-318<=score && score <=0" @click="goMypage" src='~assets/character/blue.png' class="user_profile"/>
-          <q-img v-if="0<score && score <=361" @click="goMypage" src='~assets/character/green.png' class="user_profile"/>
-          <q-img v-if="361<score && score <=845" @click="goMypage" src='~assets/character/orange.png' class="user_profile"/>
-          <q-img v-if="845<score && score <=1576" @click="goMypage" src='~assets/character/yellow.png' class="user_profile"/>
-          <q-img v-if="1576<score && score <=24386" @click="goMypage" src='~assets/character/red.png' class="user_profile"/>
+          <q-img v-if="-2972.6<=score && score <=-126.1" @click="goMypage" src='~assets/character/purple.png' class="user_profile"/>
+          <q-img v-if="-126.1<score && score <=-31.8" @click="goMypage" src='~assets/character/navy.png' class="user_profile"/>
+          <q-img v-if="-31.8<=score && score <=0" @click="goMypage" src='~assets/character/blue.png' class="user_profile"/>
+          <q-img v-if="0<score && score <=36.1" @click="goMypage" src='~assets/character/green.png' class="user_profile"/>
+          <q-img v-if="36.1<score && score <=84.5" @click="goMypage" src='~assets/character/orange.png' class="user_profile"/>
+          <q-img v-if="84.5<score && score <=157.6" @click="goMypage" src='~assets/character/yellow.png' class="user_profile"/>
+          <q-img v-if="157.6<score && score <=24386" @click="goMypage" src='~assets/character/red.png' class="user_profile"/>
           <div @click="goMypage" class="user_name">{{ loginUser.nickname }}</div>
         </div>
         <div class="side_menu">

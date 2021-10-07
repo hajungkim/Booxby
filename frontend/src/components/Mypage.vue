@@ -8,13 +8,13 @@
     </div>
     <!-- 유저 정보들 -->
     <div class="user_info_container">
-      <q-img v-if="-29726<=score && score <=-1261" src='~assets/character/purple.png' class="user_img"/>
-      <q-img v-if="-1261<score && score <=-318" src='~assets/character/navy.png' class="user_img"/>
-      <q-img v-if="-318<=score && score <=0" src='~assets/character/blue.png' class="user_img"/>
-      <q-img v-if="0<score && score <=361" src='~assets/character/green.png' class="user_img"/>
-      <q-img v-if="361<score && score <=845" src='~assets/character/orange.png' class="user_img"/>
-      <q-img v-if="845<score && score <=1576" src='~assets/character/yellow.png' class="user_img"/>
-      <q-img v-if="1576<score && score <=24386" src='~assets/character/red.png' class="user_img"/>
+      <q-img v-if="-2972.6<=score && score <=-126.1" src='~assets/character/purple.png' class="user_img"/>
+      <q-img v-if="-126.1<score && score <=-31.8" src='~assets/character/navy.png' class="user_img"/>
+      <q-img v-if="-31.8<=score && score <=0" src='~assets/character/blue.png' class="user_img"/>
+      <q-img v-if="0<score && score <=36.1" src='~assets/character/green.png' class="user_img"/>
+      <q-img v-if="36.1<score && score <=84.5" src='~assets/character/orange.png' class="user_img"/>
+      <q-img v-if="84.5<score && score <=157.6" src='~assets/character/yellow.png' class="user_img"/>
+      <q-img v-if="157.6<score && score <=2438.6" src='~assets/character/red.png' class="user_img"/>
       <div class="user_info">
         <p style="font-size:30px;">{{loginUser.nickname}}</p>
         <div style="display:flex; flex-wrap:wrap; width:400px; font-weight:bold;">
