@@ -207,6 +207,8 @@ class nounsCount(Resource):
 
         noun_list = count.most_common(100)
 
+        print(isbn)
+
         return noun_list
 
 
