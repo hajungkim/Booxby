@@ -29,19 +29,19 @@ class userEmotionRecommend(Resource):
         """감정점수에 따라 책 반환하기"""
         user_number = int(score)
         colornum=0
-        if -29726<=user_number <=-1261:
+        if -2972.6<=user_number <=-126.1:
             colornum=7
-        elif -1261<user_number <= -318:
+        elif -126.1<user_number <= -31.8:
             colornum=6
-        elif -318<user_number <= 0:
+        elif -31.8<user_number <= 0:
             colornum=5
-        elif 0<user_number <= 361:
+        elif 0<user_number <= 36.1:
             colornum=4
-        elif 361<user_number <= 845:
+        elif 36.1<user_number <= 84.5:
             colornum=3
-        elif 845<user_number <= 1576:
+        elif 84.5<user_number <= 157.6:
             colornum=2
-        elif 1576<user_number <= 24386:
+        elif 157.6<user_number <= 2438.6:
             colornum=1
         df1 = pd.read_csv('booxby_color_data.csv', encoding='cp949')
         recommend = df1['color'] == colornum
