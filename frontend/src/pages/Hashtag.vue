@@ -12,8 +12,8 @@
                 <div class="hashtag_form_main" >
                     <q-btn :id="idx" @click="selectHashtag(hashtags,idx)" v-for="(hashtags,idx) in hashtag_list" :key="idx" class="tag notselect" :label="hashtags.hashtag"/>
                 </div>
-                <q-btn @click="goWorldcup" class="nextBt" color="primary" label="Next" v-if="hashflag"/>
-                <q-btn @click="goMy" class="nextBt" color="primary" label="변경하기" v-else/>
+                <q-btn @click="goWorldcup" class="nextBt main_color" label="Next" v-if="hashflag"/>
+                <q-btn @click="goMy" class="nextBt main_color" label="변경하기" v-else/>
             </div>
         </div>
     </div>
@@ -22,51 +22,52 @@
 <script>
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { onMounted } from 'vue'
+import { login } from 'src/store/module/actions'
 export default {
     setup() {
         let hashflag = true
         const store = useStore()
         const router = useRouter()
         const hashtag_list = [
-            { hashtag:'#공격적', score:177 },
+            { hashtag:'#공격적', score:-177 },
             { hashtag:'#대담한', score:-133 },
-            { hashtag:'#고집센', score:103 },
+            { hashtag:'#고집센', score:-103 },
             { hashtag:'#낙천적', score:-22 },
-            { hashtag:'#성실한', score:15 },
+            { hashtag:'#성실한', score:305 },
             { hashtag:'#용감한', score:6 },
             { hashtag:'#조심스러운', score:37 },
             { hashtag:'#호기심많은', score:123 },
             { hashtag:'#열혈', score:30 },
             { hashtag:'#온화한', score:4 },
-            { hashtag:'#활발한', score:26 },
+            { hashtag:'#활발한', score:360 },
             { hashtag:'#신중한', score:-27 },
             { hashtag:'#표현력있는', score:663 },
             { hashtag:'#인심좋은', score:11 },
             { hashtag:'#분석적인', score:-242 },
             { hashtag:'#체계적인', score:137 },
-            { hashtag:'#친절한', score:7 },
+            { hashtag:'#친절한', score:307 },
             { hashtag:'#참신한', score:-95 },
             { hashtag:'#느긋한', score:-9 },
             { hashtag:'#절제된', score:-17 },
             { hashtag:'#포용력', score:57 },
             { hashtag:'#이해심많은', score:-16 },
-            { hashtag:'#영향력', score:-383 },
+            { hashtag:'#영향력', score:383 },
             { hashtag:'#완벽주의', score:284 },
             { hashtag:'#희생적인', score:-150 },
             { hashtag:'#변덕스러운', score:-9 },
             { hashtag:'#차분한', score:10 },
             { hashtag:'#태평한', score:60 },
             { hashtag:'#이쁜', score:452 },
-            { hashtag:'#잘생긴', score:23 },
+            { hashtag:'#잘생긴', score:430 },
             { hashtag:'#개방적인', score:-45 },
             { hashtag:'#귀요미', score:13 },
-            { hashtag:'#귀찮은', score:123 },
+            { hashtag:'#귀찮은', score:-123 },
             { hashtag:'#주도적인', score:236 },
             { hashtag:'#까다로운', score:-20 },
         ]
         let select_hashtag = []
         let hashscore = 0
-
         if (localStorage.getItem('userId') != null){
             hashflag = false
         }
@@ -87,15 +88,50 @@ export default {
             }
         }
         function goWorldcup() {
-            store.commit('module/setHashtags',select_hashtag)
+            store.commit('module/setHashtag_list',select_hashtag)
             store.commit('module/setHashscore',hashscore)
             router.push('worldCup')
         }
         function goMy() {
-            store.commit('module/setHashtags',select_hashtag)
-            store.commit('module/setHashscore',hashscore)
-            router.push('my')
+            // store에 저장
+            const loginUser = store.getters['module/getLoginUser']
+            let hashString = ''
+            select_hashtag.forEach(e=>{
+                hashString = hashString + e
+            })
+            store.dispatch('module/modifyInfo', {
+                    hashtag : hashString, 
+                    nickname : loginUser.nickname, 
+                    password: loginUser.password, 
+                    worldcupScore: loginUser.worldcupScore, 
+                    hashScore: hashscore 
+                    })
+                .then(()=>{
+                    store.commit('module/setLoginUser', {
+                        age:loginUser.age,
+                        email:loginUser.email,
+                        gender:loginUser.gender,
+                        hashScore:hashscore,
+                        hashtag:hashString,
+                        nickname:loginUser.nickname,
+                        password:loginUser.password,
+                        token:loginUser.token,
+                        userId:loginUser.userId,
+                        worldcupScore:loginUser.worldcupScore,
+                    })
+                    store.commit('module/setHashtags',hashString)
+                    store.commit('module/setHashscore',hashscore)
+                    router.push('my')
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
         }
+        onMounted(()=>{
+            store.dispatch('module/oxbooks').then(function (res) {
+                store.commit('module/setOxbooks',res.data)
+        })  
+        })
         return {
             hashtag_list,
             hashflag,
@@ -108,6 +144,10 @@ export default {
 </script>
 
 <style scoped>
+.main_color{
+  background-color: rgb(86,86,239);
+  color : white;
+}
 .hashtag_container{
     width:1300px;
     height:650px;
@@ -155,13 +195,12 @@ export default {
 }
 
 .select{
-    background-color: #1976d2;
+    background-color: rgb(86,86,239);
     color:white;
 }
 
 .notselect{
-    /* border: 1px solid #1976d2; */
-    color:#1976d2;
+    color:rgb(86,86,239);
     background-color: white;
 }
 

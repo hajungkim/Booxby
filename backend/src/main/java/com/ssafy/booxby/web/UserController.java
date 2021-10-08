@@ -2,6 +2,7 @@ package com.ssafy.booxby.web;
 
 import com.ssafy.booxby.domain.user.User;
 import com.ssafy.booxby.service.UserService;
+import com.ssafy.booxby.web.dto.EmailDto;
 import com.ssafy.booxby.web.dto.UserDto;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -77,26 +78,13 @@ public class UserController {
         return response;
     }
 
-    @ApiOperation(value = "유저 정보 수정", notes = "일단 닉네임,패스워드,프로필 해놓음", response = ControllerResponse.class)
+    @ApiOperation(value = "유저 정보 수정", notes = "닉네임, 비밀번호, 해시태그 수정하기", response = ControllerResponse.class)
     @PutMapping("/user/{id}")
     public ControllerResponse updateUser(@PathVariable("id") Long userId, @RequestBody UserDto.updateUserRequest request) {
         ControllerResponse response = null;
         try {
             userService.updateUser(userId, request);
             response = new ControllerResponse("success", "회원 수정 성공");
-        } catch (Exception e) {
-            response = new ControllerResponse("fail", e.getMessage());
-        }
-        return response;
-    }
-
-    @ApiOperation(value = "유저 해시태그 수정", notes = "", response = ControllerResponse.class)
-    @PutMapping("/user/hash/{id}")
-    public ControllerResponse updateHashtag(@PathVariable("id") Long userId, @RequestParam String hashtag) {
-        ControllerResponse response = null;
-        try {
-            userService.updateHashtag(userId, hashtag);
-            response = new ControllerResponse("success", "해시태그 수정 성공");
         } catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
         }
@@ -115,4 +103,21 @@ public class UserController {
         }
         return response;
     }
+
+    @ApiOperation(value = "임시 비밀번호 발급", notes = "임시비밀번호 발급 및 이메일 전송 성공시 '전송 성공' 반환 / 실패 시 에러메시지", response = ControllerResponse.class)
+    @PutMapping("/changepw")
+    public ControllerResponse sendTempPwEmail(@RequestBody EmailDto emailDto){
+        ControllerResponse response = null;
+
+        User user = userService.findUserByEmail(emailDto.getEmail());
+        try{
+            userService.sendTempPwEmail(user);
+            response = new ControllerResponse("success", "전송 성공");
+        }catch (Exception e){
+            response = new ControllerResponse("fail", e.getMessage());
+        }
+
+        return response;
+    }
+
 }
