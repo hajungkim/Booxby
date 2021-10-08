@@ -20,23 +20,25 @@ public class ScrapService {
     public void saveScrap(ScrapDto.saveScrapRequest request) {
         Scrap scrap = Scrap.builder()
                 .userId(request.getUserId())
-                .bookId(request.getBookId())
+                .isbn(request.getIsbn())
+                .imgUrl(request.getImgUrl())
+                .title(request.getTitle())
                 .build();
         scrapRepository.save(scrap);
     }
 
     @Transactional
-    public List<Long> findScrap(Long userId) {
-        List<Long> userIdList = new ArrayList<>();
+    public List<ScrapDto.scrapResponse> findScrap(Long userId) {
+        List<ScrapDto.scrapResponse> userScrapList = new ArrayList<>();
         List<Scrap> scrapList = scrapRepository.findByUserId(userId);
         for (Scrap scrap : scrapList) {
-            userIdList.add(scrap.getBookId());
+            userScrapList.add(new ScrapDto.scrapResponse(scrap));
         }
-        return userIdList;
+        return userScrapList;
     }
 
     @Transactional
-    public void deleteScrap(ScrapDto.saveScrapRequest request) {
-        scrapRepository.deleteByUserIdAndBookId(request.getUserId(), request.getBookId());
+    public void deleteScrap(Long userId, String isbn) {
+        scrapRepository.deleteByUserIdAndIsbn(userId, isbn);
     }
 }

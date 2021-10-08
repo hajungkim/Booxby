@@ -21,14 +21,20 @@ public class Scrap {
 
     private Long userId;
 
-    private Long bookId;
+    private String isbn;
 
-    private LocalDateTime createdDate;
+    private String imgUrl;
+
+    private String title;
+
+    //private LocalDateTime createdDate;
 
     @Builder
-    public Scrap(Long userId, Long bookId) {
+    public Scrap(Long userId, String isbn, String imgUrl, String title) {
         this.userId = userId;
-        this.bookId = bookId;
-        this.createdDate = LocalDateTime.now();
+        this.isbn = isbn;
+        this.imgUrl= imgUrl;
+        this.title = title;
+        //this.createdDate = LocalDateTime.now();
     }
 }
