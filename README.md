@@ -58,7 +58,7 @@
 
 <br>
 
-![hashtag](C:\Users\multicampus\Downloads\hashtag.gif)
+![hashtag](/uploads/fb3ce2f57837dba1e4f478863c22d155/hashtag.gif)
 
 - 해시태그 입력
 
@@ -66,7 +66,7 @@
 
 <br>
 
-![bookworldcup](C:\Users\multicampus\Downloads\bookworldcup.gif)
+![bookworldcup](/uploads/088fcba316c46a4113c3aee16a2197dc/bookworldcup.gif)
 
 - 책 선호도 조사
 
@@ -80,7 +80,7 @@
 
 ### [메인화면]
 
-![main](C:\Users\multicampus\Downloads\main.gif)
+![main](/uploads/82eb5a2c6fe243d204d8ba1510882eea/main.gif)
 
 > 메인에서는 책 추천 기능, 검색기능을 이용할 수 있습니다.
 >
@@ -90,7 +90,7 @@
 
 ### [책 검색 기능]
 
-![search-func](C:\Users\multicampus\Downloads\search-func.gif)
+![search-func](/uploads/15dfa64797430bdb44d7586550000bac/search-func.gif)
 
 > 책 제목과 작가 이름으로 책을 검색할 수 있습니다.
 
@@ -100,23 +100,24 @@
 
 - 자세히 보기를 클릭하면 책의 상세 정보 및 리뷰를 확인할 수 있습니다.
 
-![detail-content](C:\Users\multicampus\Downloads\detail-content.gif)
+![detail-content](/uploads/112c8528d0b85bbfb6de57b79bb63224/detail-content.gif)
 
 > 책의 상세 정보 - 작가, 책의 감성 색, 책 설명글, 워드 클라우드를 확인할 수 있습니다.
+<br>
 
-<br>![detail-review](C:\Users\multicampus\Downloads\detail-review.gif)
+![detail-review](/uploads/24e5e47d1e8d3843d77a55626ea18f26/detail-review.gif)
 
 > 리뷰를 작성하고 등록된 리뷰도 확인할 수 있습니다.
 
 <br>
 
-![detail-author](C:\Users\multicampus\Downloads\detail-author.gif)
+![detail-author](/uploads/bb2f1d61ec977b16f93c065c8b5012d0/detail-author.gif)
 
 > 작가의 다른 책도 확인할 수 있습니다.
 
 <br>
 
-![scrap-func](C:\Users\multicampus\Downloads\scrap-func.gif)
+![scrap-func](/uploads/8de9839f866b28b75edf99eeb7e79100/scrap-func.gif)
 
 > 찜(스크랩) 기능을 통해 관심이 있는 책을 저장할 수 있습니다.
 >
@@ -128,7 +129,7 @@
 
 ### [추천서비스]
 
-![recommendation](C:\Users\multicampus\Downloads\recommendation.gif)
+![recommendation](/uploads/866132d13fe98a14739ffd19ce53e25d/recommendation.gif)
 
 > 총 5가지의 추천 서비스를 제공합니다.
 >
@@ -142,9 +143,9 @@
 
 #### ❤찜 기반 책 추천 서비스
 
-![scrap](C:\Users\multicampus\Downloads\scrap.gif)
+![scrap](/uploads/4abf3ab5422ad8bbd027fb3e97b97f7c/scrap.gif)
 
-![scrap-recommendation](C:\Users\multicampus\Downloads\scrap-recommendation.gif)
+![scrap-recommendation](/uploads/e603d6821e7a99be06ef511456351805/scrap-recommendation.gif)
 
 >  프로그래밍과 주식 관련된 책을 찜하고 
 >
@@ -158,7 +159,7 @@
 
 ### [마이페이지]
 
-![mypage](C:\Users\multicampus\Downloads\mypage.gif)
+![mypage](/uploads/4ad59ef710de4096f1667301b1080b54/mypage.gif)
 
 > 마이페이지에서는 찜(스크랩)한 책과 작성한 리뷰를 확인할 수 있고, 클릭시 해당 책 페이지로 이동합니다.
 >
