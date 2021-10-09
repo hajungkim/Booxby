@@ -42,7 +42,7 @@
 
 ### [인트로 화면]
 
-![intro](C:\Users\multicampus\Downloads\intro.gif)
+![intro](/uploads/95f08015e373cea9e5cea15b5cf0edf1/intro.gif)
 
 > 주소를 입력하여 Booxby에 접속하면 인트로화면이 나옵니다.
 
@@ -50,7 +50,7 @@
 
 ###  [회원가입]
 
-![signup](C:\Users\multicampus\Downloads\signup.gif)
+![signup](/uploads/49887bdb90706af10d6506d31bae7f58/signup.gif)
 
 - 회원 정보 입력
 
