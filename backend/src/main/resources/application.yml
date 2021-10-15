@@ -11,7 +11,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: booxby21@gmail.com
-    password: booxbyssafy2021
+    password: {{password}}
     properties:
       mail:
         smtp:
@@ -27,7 +27,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/booxby?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: root
-    password: ssafy
+    password: {{password}}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 ---
@@ -37,5 +37,5 @@ spring:
   datasource:
     url: jdbc:mysql://j5b203.p.ssafy.io:3306/booxby?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true
     username: root
-    password: ssafybooxby
+    password: {{password}}
     driver-class-name: com.mysql.cj.jdbc.Driver
