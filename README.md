@@ -12,18 +12,27 @@
 
    ### 사용자 감성 기반 책 추천 서비스, 북스비
    - 사용자의 책 선호도와 성향에 따라 감성 점수를 계산하여, 감성 점수와 일치하는 책을 추천하는 서비스
+   - 약 1만개의 도서 데이터와 5만개의 도서 감성 데이터를 이용했습니다.
+   - [도서 데이터](https://www.culture.go.kr/bigdata/user/data_market/detail.do?id=63513d7b-9b87-4ec1-a398-0a18ecc45411)
+   - [도서 감성 데이터](https://www.culture.go.kr/bigdata/user/data_market/detail.do?id=32bc97f3-79ca-4cc0-bab3-fa6603bd8222)
 
   ### 북스비가 제공하는 추천 기능
-  - 사용자가 좋아하는 책과 성향을 바탕으로 감성과 일치하는 책 추천
-  - 사용자의 나이와 성별에 따른 추천
-  - 사용자가 찜한 책을 바탕으로 컨텐츠 기반 필터링 추천
+  - 사용자가 좋아하는 책과 성향을 바탕으로 **감성과 일치하는 책** 추천
+  - 사용자의 **나이**와 **성별**에 따른 추천
+  - 사용자가 **찜한 책**을 바탕으로 **컨텐츠 기반 필터링** 추천
   - 카테고리별 추천
 
 <br>
 
+# 🎬 UCC 영상
+<https://youtu.be/Js8PqntSck0>
+
+<br>
+
 # 🎨북스비 감성점수란?
+
   ![image](https://user-images.githubusercontent.com/36887393/136736218-68060997-f770-4ed1-9abc-8c09447baefe.png)
-  > 감성점수는 내가 좋아요한 책의 디스크립션 단어들로 계산됩니다.
+  > 감성점수는 내가 좋아요한 책의 description 단어들로 계산됩니다.
   점수가 높으면 밝은 분위기의 책을, 점수가 낮으면 어두운 분위기의 책을 추천해줍니다.
 
   ![image](https://user-images.githubusercontent.com/36887393/136736241-e2a25086-36d9-485d-89b0-737bc53d3bf3.png)
@@ -31,13 +40,13 @@
   ![image](https://user-images.githubusercontent.com/36887393/136736168-ff12de4c-ce10-4c63-9a9d-eeb90351d037.png)
   > 이용된 도서 감성 데이터는 단어의 긍정점수와 부정점수를 가지고 있는데 이걸 바탕으로 밝은 분위기를 가진 책의 설명을 점수로 계산하면 1264점, 어두운 분위기를 가진 책의 설명은 -1313점이 나오게 됩니다.
 
-<br>  
+<br>
 
   ![image](https://user-images.githubusercontent.com/36887393/136737396-c165c122-f6e9-41c3-a493-28c1f848a565.png)
-  > 회원가입시, 좋아하는 책 선택하기
+  > 회원가입시, 좋아하는 책을 선택
 
   ![image](https://user-images.githubusercontent.com/36887393/136737414-fcd3fc51-30a2-469c-8ced-8e43731c94e7.png)
-  > 회원가입시, 나의 성향 선택하기
+  > 회원가입시, 나의 성향을 선택
 
   ![image](https://user-images.githubusercontent.com/36887393/136736644-5dc7a319-6844-4b71-9e03-0fb909cb37a6.png)
   > 좋아요한 책과 성향으로 계산된 나의 감성점수는 각각의 캐릭터를 가집니다.
@@ -60,29 +69,6 @@
 > ### Devops : docker, jenkins, nginx
 > ### Server : AWS
 > ### DB : Mysql
-
-<br>
-
-# 📝개발 규칙
-
-   ### ✔Git 규칙
-   
-   - #### Branch 규칙
-      ### ``` develop -> BE,FE/feature/기능명 ``` 
-      #### ex) FE/feature/login  
-   
-   - #### Commit 규칙
-      ### ``` [ FE / BE ] Git 컨벤션(대문자) : Commit 메시지 ```
-      #### ex) [FE] ADD : 로그인 버튼 추가
-
-<br>
-
-### ✔ Naming Rule
-
-|프론트엔드|백엔드|
-|------|---|
-|폴더명 : 소문자 <br>파일명 : Pascal case <br>변수/함수명 : Camel case |클래스명 : 첫글자 대문자 + Camel case<br>변수/함수명 : 첫글자 소문자 + Camel case|
-
 
 <br>
 
@@ -130,7 +116,7 @@
 
 ![image](./exec/gif/5.gif)
 
-> 메인에서는 밝은 분위기~어두운 분위기의 색깔별 감성책, 검색기능을 이용할 수 있습니다.
+> 메인에서는 밝은 분위기~어두운 분위기의 색깔별 감성책 , 검색기능을 이용할 수 있습니다.
 >
 > 빨,주,노,초,파,남,보 7가지의 대표 책을 보여줍니다.
 
@@ -215,4 +201,26 @@
 
 <br>
 
+# 📝개발 규칙
+
+   ### ✔Git 규칙
+   
+   - #### Branch 규칙
+      ### ``` develop -> BE,FE/feature/기능명 ``` 
+      #### ex) FE/feature/login  
+   
+   - #### Commit 규칙
+      ### ``` [ FE / BE ] Git 컨벤션(대문자) : Commit 메시지 ```
+      #### ex) [FE] ADD : 로그인 버튼 추가
+
+<br>
+
+### ✔ Naming Rule
+
+|프론트엔드|백엔드|
+|------|---|
+|폴더명 : 소문자 <br>파일명 : Pascal case <br>변수/함수명 : Camel case |클래스명 : 첫글자 대문자 + Camel case<br>변수/함수명 : 첫글자 소문자 + Camel case|
+
+
+<br>
 <br>
