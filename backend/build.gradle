@@ -17,7 +17,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation ('org.springframework.boot:spring-boot-starter-thymeleaf')
-    implementation ('org.springframework.session:spring-session-jdbc')
+    //implementation ('org.springframework.session:spring-session-jdbc')
 
     testImplementation("org.junit.vintage:junit-vintage-engine") {
         exclude group: "org.hamcrest", module: "hamcrest-core"
@@ -40,6 +40,8 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
+    //email
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 test {

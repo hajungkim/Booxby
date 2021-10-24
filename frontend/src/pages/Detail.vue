@@ -30,6 +30,6 @@ export default {
     width:1298px;
     height:648px;
     border-radius: 38px;
-    background-color: rgb(241, 237, 237);
+    background-color: whitesmoke;
 }
 </style>

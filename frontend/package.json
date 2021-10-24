@@ -13,8 +13,12 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.2.1",
+    "echarts-wordcloud": "^2.0.0",
     "quasar": "^2.0.0",
     "sweetalert2": "^11.1.5",
+    "vue-d3-cloud": "^0.2.0",
+    "vuewordcloud": "^18.7.12",
     "vuex": "^4.0.1"
   },
   "devDependencies": {

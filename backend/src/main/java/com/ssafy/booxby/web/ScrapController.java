@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = { "*" }, maxAge = 6000)
 @RequiredArgsConstructor
 @RestController
 @RequestMapping
@@ -28,12 +29,12 @@ public class ScrapController {
         return response;
     }
 
-    @ApiOperation(value = "책 찜목록 리스트", notes = "찜목록이 없으면 false, 있으면 bookId 리스트 반환", response = ControllerResponse.class)
+    @ApiOperation(value = "책 찜목록 리스트", notes = "찜목록이 없으면 false, 있으면 [isbn, imgUrl, title] 리스트 반환", response = ControllerResponse.class)
     @GetMapping("/scrap/{id}")
     public ControllerResponse findScrap(@PathVariable("id") Long userId) {
         ControllerResponse response = null;
         try {
-            List<Long> scrapList = scrapService.findScrap(userId);
+            List<ScrapDto.scrapResponse> scrapList = scrapService.findScrap(userId);
             if (scrapList.size() == 0) {
                 response = new ControllerResponse("success", false);
             } else {
@@ -46,11 +47,11 @@ public class ScrapController {
     }
 
     @ApiOperation(value = "책 찜하기 취소", notes = "", response = ControllerResponse.class)
-    @DeleteMapping("/scrap")
-    public ControllerResponse deleteScrap(@RequestBody ScrapDto.saveScrapRequest request) {
+    @DeleteMapping("/scrap/{userId}/{isbn}")
+    public ControllerResponse deleteScrap(@PathVariable Long userId, @PathVariable String isbn) {
         ControllerResponse response = null;
         try {
-            scrapService.deleteScrap(request);
+            scrapService.deleteScrap(userId, isbn);
             response = new ControllerResponse("success", "찜하기 취소 성공");
         } catch (Exception e) {
             response = new ControllerResponse("fail", e.getMessage());
