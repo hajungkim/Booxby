@@ -90,7 +90,7 @@
 
 ### [인트로 화면]
 
-![intro](/uploads/95f08015e373cea9e5cea15b5cf0edf1/intro.gif)
+![image](./exec/gif/1.gif)
 
 > 주소를 입력하여 Booxby에 접속하면 인트로화면이 나옵니다.
 
@@ -98,7 +98,7 @@
 
 ###  [회원가입]
 
-![signup](/uploads/49887bdb90706af10d6506d31bae7f58/signup.gif)
+![image](./exec/gif/2.gif)
 
 - 회원 정보 입력
 
@@ -106,7 +106,7 @@
 
 <br>
 
-![hashtag](/uploads/fb3ce2f57837dba1e4f478863c22d155/hashtag.gif)
+![image](./exec/gif/3.gif)
 
 - 해시태그 입력
 
@@ -114,7 +114,7 @@
 
 <br>
 
-![bookworldcup](/uploads/088fcba316c46a4113c3aee16a2197dc/bookworldcup.gif)
+![image](./exec/gif/4.gif)
 
 - 책 선호도 조사
 
@@ -128,17 +128,17 @@
 
 ### [메인화면]
 
-![main](/uploads/82eb5a2c6fe243d204d8ba1510882eea/main.gif)
+![image](./exec/gif/5.gif)
 
-> 메인에서는 책 추천 기능, 검색기능을 이용할 수 있습니다.
+> 메인에서는 밝은 분위기~어두운 분위기의 색깔별 감성책, 검색기능을 이용할 수 있습니다.
 >
-> 각 추천 별로 7가지의 책을 보여줍니다.
+> 빨,주,노,초,파,남,보 7가지의 대표 책을 보여줍니다.
 
 <br><br>
 
 ### [책 검색 기능]
 
-![search-func](/uploads/15dfa64797430bdb44d7586550000bac/search-func.gif)
+![image](./exec/gif/6.gif)
 
 > 책 제목과 작가 이름으로 책을 검색할 수 있습니다.
 
@@ -148,24 +148,24 @@
 
 - 자세히 보기를 클릭하면 책의 상세 정보 및 리뷰를 확인할 수 있습니다.
 
-![detail-content](/uploads/112c8528d0b85bbfb6de57b79bb63224/detail-content.gif)
+![image](./exec/gif/7.gif)
 
 > 책의 상세 정보 - 작가, 책의 감성 색, 책 설명글, 워드 클라우드를 확인할 수 있습니다.
 <br>
 
-![detail-review](/uploads/24e5e47d1e8d3843d77a55626ea18f26/detail-review.gif)
+![image](./exec/gif/8.gif)
 
 > 리뷰를 작성하고 등록된 리뷰도 확인할 수 있습니다.
 
 <br>
 
-![detail-author](/uploads/bb2f1d61ec977b16f93c065c8b5012d0/detail-author.gif)
+![image](./exec/gif/9.gif)
 
 > 작가의 다른 책도 확인할 수 있습니다.
 
 <br>
 
-![scrap-func](/uploads/8de9839f866b28b75edf99eeb7e79100/scrap-func.gif)
+![image](./exec/gif/10.gif)
 
 > 찜(스크랩) 기능을 통해 관심이 있는 책을 저장할 수 있습니다.
 >
@@ -177,7 +177,7 @@
 
 ### [추천서비스]
 
-![recommendation](/uploads/866132d13fe98a14739ffd19ce53e25d/recommendation.gif)
+![image](./exec/gif/11.gif)
 
 > 총 5가지의 추천 서비스를 제공합니다.
 >
@@ -189,17 +189,17 @@
 
 
 
-#### ❤찜 기반 책 추천 서비스
+### ❤ [찜 기반 책 추천 서비스]
 
-![scrap](/uploads/4abf3ab5422ad8bbd027fb3e97b97f7c/scrap.gif)
+![image](./exec/gif/12.gif)
 
-![scrap-recommendation](/uploads/e603d6821e7a99be06ef511456351805/scrap-recommendation.gif)
+>  프로그래밍과 주식 관련된 책을 찜하고
 
->  프로그래밍과 주식 관련된 책을 찜하고 
->
+![image](./exec/gif/13.gif)
+
 > 찜 추천 서비스를 클릭하면 비슷한 내용의 책을 추천 받을 수 있습니다.
 >
-> - 컨텐츠 기반 필터링 활용
+> - 컨텐츠 기반 필터링을 적용했습니다.
 
 <br>
 
@@ -207,11 +207,11 @@
 
 ### [마이페이지]
 
-![mypage](/uploads/4ad59ef710de4096f1667301b1080b54/mypage.gif)
+![image](./exec/gif/14.gif)
 
 > 마이페이지에서는 찜(스크랩)한 책과 작성한 리뷰를 확인할 수 있고, 클릭시 해당 책 페이지로 이동합니다.
 >
-> 개인정보 수정 및 회원가입시에 진행한 해시태그 선택/책 선호도 조사를 다시 진행할 수 있습니다.
+> 개인정보 수정 및 회원가입 시에 진행한 해시태그 선택 / 책 선호도 조사를 다시 진행할 수 있습니다.
 
 <br>
 
